@@ -1,0 +1,49 @@
+.page {
+  --text-primary: #FFFFFF;
+  --text-required-fields: #ff4236;
+
+  --input-background: #333232;
+  --input-border-radius: 2px;
+}
+
+
+.textRequiredFields {
+	color: var(--text-required-fields);
+}
+
+.formTitle {
+	color: var(--text-primary);
+	text-align: center;
+	margin-bottom: 100px;
+}
+
+.formInputGroup {
+	margin-block: 30px;
+}
+
+.form input {
+	background-color: var(--input-background);
+	color: var(--text-primary);
+	font-size: 16;
+	border: none;
+	outline: 1px solid #7B7D85;
+	border-radius: var(--input-border-radius);
+	min-width: 250px;
+	max-width: 350px;
+	padding: 10px 5px;
+}
+
+.formSubmit {
+	background: linear-gradient(to left, rgba(75, 69, 186, 1), rgba(106, 100, 255, 0.8));
+	color: var(--text-primary);
+	font-size: 20px;
+	font-weight: 400;
+	font-family: inherit;
+	width: 100%;
+	margin-top: 20px;
+	padding: 10px;
+	border: none;
+	border-radius: var(--input-border-radius);
+	outline: none;
+	cursor: pointer;
+}
