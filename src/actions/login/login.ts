@@ -3,6 +3,7 @@
 import { LoginUserInterface, FormState } from "@/lib";
 import ValidateUserInput from "@/utils/validateUserInput";
 import handleLogin from "@/api/login/handleLogin";
+import { setSession } from "@/utils/session/sessionUtils";
 import { redirect } from "next/navigation";
 
 export default async function login(prevState: FormState, formData: FormData): Promise<FormState> {
@@ -19,13 +20,14 @@ export default async function login(prevState: FormState, formData: FormData): P
 	};
 
 	const userData = validation.data;
-	const loginResult = await handleLogin(userData);
+	const loginResult = await handleLogin(userData); // function responsible for checking the user in db
 
-	console.log(loginResult);
-	
+
 	if (!loginResult.success) {
 		return loginResult;
 	} else {
+		const { password_hash, ...sessionData } = loginResult.data;
+		await setSession(sessionData);
 		redirect("/dashboard");
 		return loginResult;
 	};

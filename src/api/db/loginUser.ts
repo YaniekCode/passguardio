@@ -1,10 +1,10 @@
 "use server";
 
-import { UserDatabaseRecord, LoginUserInterface, ResultMessage } from "@/lib";
+import { UserDatabaseRecord, LoginUserInterface, LoginResult } from "@/lib";
 import compareHash from "@/utils/compareHash";
 import openDb from "@/api/db/openDb";
 
-export default async function loginUser(userData: LoginUserInterface): Promise<ResultMessage> {
+export default async function loginUser(userData: LoginUserInterface): Promise<LoginResult> {
 	const db = openDb();
 
 	try {
@@ -23,7 +23,7 @@ export default async function loginUser(userData: LoginUserInterface): Promise<R
 		const isEqual = compareHash(userData.password, user.password_hash);
 
 		if (isEqual) {
-			return { success: true, message: "User logged in successfully" };
+			return { success: true, data: user };
 		} else {
 			return { success: false, error: "Invalid email or password "};
 		};

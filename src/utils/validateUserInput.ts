@@ -35,8 +35,6 @@ export default function ValidateUserInput(UserData: UserInterface | LoginUserInt
 
 	};
 	
-	console.log(result);
-
 	if (result.success) {
 		const validationError: ValidationResult = { success: true, data: result.data };
 		return validationError;

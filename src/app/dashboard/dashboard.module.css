@@ -1,0 +1,71 @@
+.page {
+  --background: #1c1c1c;
+  --foreground: #1c1c1c;
+
+  --text-primary: #FFFFFF;
+  --text-secondary: #666;
+
+  --text-large: 20px;
+
+  --text-required-fields: #ff4236;
+
+  --input-background: #333232;
+
+  --button-primary-hover: #383838;
+  --button-secondary-hover: #f2f2f2;
+  --button-secondary-border: #ebebeb;
+
+  --input-border-radius: 2px;
+
+  min-height: 100vh;
+  font-family: var(--font-poppins);
+  background-color: var(--background);
+  padding-inline: 150px;
+  padding-top: 100px;
+}
+
+.pageTitle {
+	color: var(--text-primary);
+	font-weight: 600;
+}
+
+.pageSubtitle {
+	color: var(--text-primary);
+	font-size: var(--text-large);
+	font-weight: 500;
+}
+
+.textPrimary {
+	color: var(--text-primary);
+}
+
+.main {
+}
+
+.mainBar {
+	display: flex;
+	align-items: center;
+	margin-inline: 100px;
+	margin-top: 30px;
+	justify-content: space-between;
+}
+
+.topBar {
+	padding: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.userIcon {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	background-color: #9046CF;
+	font-size: var(--text-large);
+	font-weight: 600;
+	cursor: pointer;
+}
