@@ -1,7 +1,7 @@
 "use server";
 
 import { PasswordData } from "@/lib";
-import handleAddPassword from "@/api/add_password/handleAddPassword";
+import handleAddPassword from "@/api/password/handleAddPassword";
 
 export default async function addPasswordAction(formData: FormData) {
 	const rawPasswordData: PasswordData = {
@@ -10,6 +10,6 @@ export default async function addPasswordAction(formData: FormData) {
 		url: formData.get('url')?.toString() || "",
 	};
 
-	handleAddPassword(rawPasswordData);
+	const result = await handleAddPassword(rawPasswordData);
 
 };

@@ -2,7 +2,7 @@
 
 import crypto from "node:crypto";
 
-export default async function encryptPassword(password: string): Promise<{ encryptedPassword: string }> {
+export default async function encryptPassword(password: string) {
 	const passwordUUID = crypto.randomUUID();
 	const salt = crypto.randomBytes(16);
 	const iv = crypto.randomBytes(16);
@@ -14,6 +14,6 @@ export default async function encryptPassword(password: string): Promise<{ encry
 	let encryptedPassword = cipher.update(password, 'utf-8', 'hex');
 	encryptedPassword += cipher.final('hex');
 	
-	return { encryptedPassword }
+	return { encryptedPassword, passwordUUID, salt, iv }
 
 }

@@ -15,7 +15,7 @@ export default function createTables() {
 
 	const createPasswordsTable = db.prepare(`
 		CREATE TABLE IF NOT EXISTS passwords (
-			user_id INTEGER PRIMARY KEY REFERENCES users(id),
+			user_id INTEGER REFERENCES users(id),
 			uuid BLOB UNIQUE NOT NULL,
 			name TEXT,
 			password TEXT,

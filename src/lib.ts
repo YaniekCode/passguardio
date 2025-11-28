@@ -15,6 +15,16 @@ export interface UserDatabaseRecord {
 	role: "user" | "admin";
 };
 
+export interface PasswordDatabaseRecord {
+	user_id: number;
+	uuid: string;
+	name: string;
+	password: string;
+	url: string;
+	salt: Buffer;
+	iv: Buffer;
+};
+
 export interface LoginUserInterface {
 	email: string;
 	password: string;
@@ -25,6 +35,7 @@ export interface PasswordData {
 	password: string;
 	url: string;
 };
+
 
 export type FormState = {
 	success: boolean;
@@ -43,6 +54,10 @@ export type ResultMessage =
 
 export type LoginResult = 
 	| { success: true, data: UserDatabaseRecord }
+	| { success: false, error: string };
+
+export type PasswordDatabaseResult =
+	| { success: true, data: Partial<PasswordDatabaseRecord>[] }
 	| { success: false, error: string };
 
 export interface SessionData {
