@@ -1,45 +1,35 @@
-"use client";
+"use server";
 
-import { useState, useEffect } from "react";
 import { getSession } from "@/utils/session/sessionUtils";
 import handleGetPasswords from "@/api/password/handleGetPasswords";
-import { PasswordDatabaseRecord } from "@/lib";
+import PasswordSection from "@/components/PasswordsSection";
+import { PasswordData } from "@/lib";
 import styles from "@/app/dashboard/dashboard.module.css";
 import Link from "next/link";
 
-export default function Dashboard() {
-	const [passwords, setPasswords] = useState<PasswordDatabaseRecord[]>([]);
-	const [error, setError] = useState("");
-	const [loading, setLoading] = useState(true);
-	//const session = await getSession();
+export default async function Dashboard() {
 
-	//const firstUsernameLetter = session.username[0].toUpperCase();
+	const session = await getSession();
+	const firstUsernameLetter = session.username[0].toUpperCase();
+
+	let getPasswordsResult = await handleGetPasswords();
+
+	let userPasswords: PasswordData[] = [];
+	if (getPasswordsResult.success) {
+		userPasswords = getPasswordsResult.data;
+	}
+
 	
-	useEffect(() => {
-		async function load() {
-			const res = await handleGetPasswords();
-
-			if (res.success) {
-				setPasswords(res.data);
-			} else {
-				setError(res.error);
-			};
-
-			setLoading(false);
-		}
-
-		load();
-	}, []);
-
 
 	return (
 		<div className={styles.page}>
 			<section className={styles.topBar}>
 				<div>
       					<h1 className={styles.pageTitle}>Dashboard</h1>
+						<h2>Hello {session.username}</h2>
 				</div>
 				<div className={styles.userIcon}>
-				{/*<p>{firstUsernameLetter}</p>*/}	
+				<p>{firstUsernameLetter}</p>
 				</div>
 			</section>
       			<main className={styles.main}>
@@ -47,8 +37,9 @@ export default function Dashboard() {
 					<h2 className={styles.pageSubtitle}>My passwords: </h2>
 					<Link href="/dashboard/add_password">Add a password</Link>
 				</section>
-				<section>
-				</section>
+				{ getPasswordsResult.success && (
+					<PasswordSection userPasswords={userPasswords}></PasswordSection>
+				)}
       			</main>
     		</div>
 	);

@@ -16,6 +16,7 @@ export async function setSession(sessionData: SessionData) {
 	session.username = sessionData.username;
 	session.email = sessionData.email;
 	session.role = sessionData.role;
+	session.dek = sessionData.dek;
 
 	await session.save();
 };

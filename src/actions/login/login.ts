@@ -26,11 +26,9 @@ export default async function login(prevState: FormState, formData: FormData): P
 	if (!loginResult.success) {
 		return loginResult;
 	} else {
-		const { password_hash, ...sessionData } = loginResult.data;
-		await setSession(sessionData);
+		const userSessionData = loginResult.data;
+		await setSession(userSessionData);
 		redirect("/dashboard");
-		return loginResult;
+		//return loginResult;
 	};
-       
-	
 };

@@ -12,7 +12,6 @@ export default async function getPasswords(userId: number): Promise<PasswordData
             		`SELECT * FROM passwords WHERE user_id=?`	
         	);
 		const passwordList = query.all(userId) as PasswordDatabaseRecord[];
-		console.log(passwordList);
 
 		return { success: true, data: passwordList };
 

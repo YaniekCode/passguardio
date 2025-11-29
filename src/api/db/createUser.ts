@@ -1,21 +1,25 @@
 "use server";
 
-import { UserInterface, ResultMessage } from "@/lib";
+import { UserDatabaseRecord, ResultMessage } from "@/lib";
 import openDb from "@/api/db/openDb";
 
-export default async function createUser(userData: UserInterface): Promise<ResultMessage> {
+export default async function createUser(userData: UserDatabaseRecord): Promise<ResultMessage> {
 	const db = openDb();
 
 	try {
 		const query = db.prepare(
-      			"INSERT INTO users (username, email, password_hash, role) VALUES (?, ?, ?, ?)"
+      			"INSERT INTO users (username, email, password_hash, role, encryption_salt, wrapped_dek, dek_wrap_iv, dek_wrap_tag) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
 		);
 
 		query.run(
 			userData.username,
 			userData.email,
-			userData.password,
-			userData.role
+			userData.password_hash,
+			userData.role,
+			userData.encryption_salt,
+			userData.wrapped_dek,
+			userData.dek_wrap_iv,
+			userData.dek_wrap_tag
 		);
 
 		return { success: true, message: "User created successfully" };

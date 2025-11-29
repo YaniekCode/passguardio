@@ -1,15 +1,15 @@
 "use server";
 
-import { UserDatabaseRecord, LoginUserInterface, LoginResult } from "@/lib";
+import { UserDatabaseRecord, LoginUserInterface, HandleLogin } from "@/lib";
 import compareHash from "@/utils/compareHash";
 import openDb from "@/api/db/openDb";
 
-export default async function loginUser(userData: LoginUserInterface): Promise<LoginResult> {
+export default async function loginUser(userData: LoginUserInterface): Promise<HandleLogin>{
 	const db = openDb();
 
 	try {
 		const query = db.prepare(
-      			"SELECT id, username, email, password_hash, role FROM users WHERE email=?"
+      			"SELECT * FROM users WHERE email=?"
 		);
 
 		const user = query.get(

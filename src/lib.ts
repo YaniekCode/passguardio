@@ -7,7 +7,9 @@ export interface UserInterface {
 	role: "user" | "admin";
 };
 
-export interface UserDatabaseRecord {
+export type UserDatabaseRecord = UserData & UserEncryptionData;
+
+export interface UserData {
 	id: number;
 	username: string;
 	email: string;
@@ -15,14 +17,21 @@ export interface UserDatabaseRecord {
 	role: "user" | "admin";
 };
 
+export interface UserEncryptionData {
+	encryption_salt: Buffer;
+	wrapped_dek: Buffer;
+	dek_wrap_iv: Buffer;
+	dek_wrap_tag: Buffer;
+};
+
 export interface PasswordDatabaseRecord {
 	user_id: number;
 	uuid: string;
 	name: string;
-	password: string;
+	password: Buffer;
 	url: string;
-	salt: Buffer;
 	iv: Buffer;
+	tag: Buffer;
 };
 
 export interface LoginUserInterface {
@@ -53,11 +62,15 @@ export type ResultMessage =
 	| { success: false; error: string };
 
 export type LoginResult = 
-	| { success: true, data: UserDatabaseRecord }
+	| { success: true, data: SessionData }
 	| { success: false, error: string };
 
 export type PasswordDatabaseResult =
-	| { success: true, data: Partial<PasswordDatabaseRecord>[] }
+	| { success: true, data: PasswordDatabaseRecord[] }
+	| { success: false, error: string };
+
+export type HandleLogin = 
+	| { success: true, data: UserDatabaseRecord }
 	| { success: false, error: string };
 
 export interface SessionData {
@@ -65,6 +78,7 @@ export interface SessionData {
 	username: string;
 	email: string;
 	role: string;
+	dek: string;
 };
 
 

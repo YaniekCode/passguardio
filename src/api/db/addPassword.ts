@@ -9,8 +9,8 @@ export default async function addPassword(passwordDatabaseInput: PasswordDatabas
 	try {
 
 		const query = db.prepare(
-            		`INSERT INTO passwords (user_id, uuid, name, password, url, salt, iv)
-             		VALUES (@user_id, @uuid, @name, @password, @url, @salt, @iv)`
+            		`INSERT INTO passwords (user_id, uuid, name, password, url, iv, tag)
+             		VALUES (@user_id, @uuid, @name, @password, @url, @iv, @tag)`
         	);
 		query.run({ ...passwordDatabaseInput});
 

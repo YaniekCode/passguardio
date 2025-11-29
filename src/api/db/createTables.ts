@@ -9,7 +9,11 @@ export default function createTables() {
 			username TEXT NOT NULL,
 			email TEXT NOT NULL UNIQUE,
 			password_hash TEXT NOT NULL,
-			role TEXT NOT NULL DEFAULT 'user'
+			role TEXT NOT NULL DEFAULT 'user',
+			encryption_salt BLOB,
+			wrapped_dek BLOB,
+			dek_wrap_iv BLOB,
+			dek_wrap_tag BLOB
 		)`);
 	createUsersTable.run();
 
@@ -20,8 +24,8 @@ export default function createTables() {
 			name TEXT,
 			password TEXT,
 			url TEXT,
-			salt BLOB NOT NULL,
-			iv BLOB NOT NULL
+			iv BLOB NOT NULL,
+			tag BLOB NOT NULL
 		)`);
 	createPasswordsTable.run();
 };

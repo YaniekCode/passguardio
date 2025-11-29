@@ -1,5 +1,6 @@
-import AddPasswordForm from "@/components/AddPasswordForm";
+"use server";
 
+import AddPasswordForm from "@/components/AddPasswordForm";
 import { getSession } from "@/utils/session/sessionUtils";
 
 export default async function AddPassword() {
