@@ -12,14 +12,13 @@ export default async function Dashboard() {
 	const session = await getSession();
 	const firstUsernameLetter = session.username[0].toUpperCase();
 
-	let getPasswordsResult = await handleGetPasswords();
+	const getPasswordsResult = await handleGetPasswords();
 
 	let userPasswords: PasswordData[] = [];
 	if (getPasswordsResult.success) {
 		userPasswords = getPasswordsResult.data;
 	}
 
-	
 
 	return (
 		<div className={styles.page}>

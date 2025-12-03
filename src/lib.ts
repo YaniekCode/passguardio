@@ -41,6 +41,7 @@ export interface LoginUserInterface {
 
 export interface PasswordData {
 	name: string;
+	uuid: string;
 	password: string;
 	url: string;
 };
