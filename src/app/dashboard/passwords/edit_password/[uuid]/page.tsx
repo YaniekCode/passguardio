@@ -1,9 +1,8 @@
 "use server";
 
 import getPasswordByUUID from "@/api/db/getPasswordByUUID";
+import editPasswordAction from "@/actions/editPasswordAction";
 import { validate as uuidValidate } from "uuid";
-
-// todo Fix not working params
 
 interface PageProps {
 	params: {
@@ -22,14 +21,13 @@ export default async function EditPassword({ params } : PageProps ) {
 	};
 
 	const passwordEntry = await getPasswordByUUID(uuid);
-	const data = passwordEntry.data;
-
 	if (!passwordEntry.success) {
 		return <h1>Failed reading the password entry</h1>
 	};
 
-	const password = Array.isArray(data) ? data[0] : data;
+	const data = passwordEntry.data;
 
+	const password = Array.isArray(data) ? data[0] : data;
 	if (!password) {
 		return <h1>Password not found</h1>
 	};
@@ -37,11 +35,12 @@ export default async function EditPassword({ params } : PageProps ) {
 
     	return (
 		<main>
-        		<h1>Password entry for { password.name } </h1>
-			<form>
+        	<h1>Password entry for { password.name } </h1>
+			<form action={editPasswordAction}>
 				<label htmlFor="name">Name</label>	
 				<input type="text" name="name"></input>
 				<br />
+				<input type="hidden" name="uuid" value={uuid}></input>
 				<label htmlFor="password">Password</label>	
 				<input type="password" name="password"></input>
 				<br />
