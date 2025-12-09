@@ -112,3 +112,8 @@
 .passwordVisibilityIcon {
 	margin-inline: 5px;
 }
+
+.deletePasswordDialog {
+	position: absolute;
+	margin: auto;
+}

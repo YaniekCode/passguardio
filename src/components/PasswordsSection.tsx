@@ -3,6 +3,7 @@
 import { PasswordData } from "@/lib";
 import styles from "@/app/dashboard/dashboard.module.css";
 import { FaPenToSquare, FaRegEye, FaTrash } from "react-icons/fa6";
+import DeletePasswordButton from "@/components/DeletePasswordButton";
 import Link from "next/link";
 
 export default async function PasswordSection({ userPasswords } : { userPasswords: PasswordData[] }) {
@@ -29,18 +30,17 @@ export default async function PasswordSection({ userPasswords } : { userPassword
 					<div className={styles.action}>
                         			<Link href={`/dashboard/passwords/edit_password/${password.uuid}`}>
 							<FaPenToSquare className={styles.actionIcon}/>
-                        			</Link>
 						<small className={styles.actionLabel}>Edit</small>
+                        			</Link>
 					</div>
 					<div className={styles.action}>
                         			<Link href={`/dashboard/passwords/view_password/${password.uuid}`}>
 							<FaRegEye className={styles.actionIcon}/>
-						</Link>
 						<small className={styles.actionLabel}>View</small>
+						</Link>
 					</div>
 					<div className={styles.action}>
-						<FaTrash className={styles.actionIcon}/>	
-						<small className={styles.actionLabel}>Delete</small>
+						<DeletePasswordButton name={password.name} uuid={password.uuid} />
 					</div>
 				</div> 
 			    </td>
