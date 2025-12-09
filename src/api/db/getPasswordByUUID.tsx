@@ -15,6 +15,10 @@ export default async function getPasswordByUUID(uuid: string) {
         	);
 		const passwordEntry = query.get(uuid) as PasswordDatabaseRecord;
 
+		if (!passwordEntry) {
+			return { success: false, error: "Password not found" };
+		};
+
 		const session = await getSession();
 		const { dek } = session;
 

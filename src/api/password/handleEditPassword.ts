@@ -10,10 +10,10 @@ export default async function handleEditPassword(passwordData: PasswordData) {
 	const session = await getSession();
 	const { id, dek }  = session;
 
-	const isPasswordInDb = await isPasswordUUIDInDb(id, passwordData.uuid); // checking if the password to edit exists and that the user has accesst to edit it
+	const isPasswordInDb = await isPasswordUUIDInDb(id, passwordData.uuid); // checking if the password to edit exists and that the user is the owner of it 
 
 	if (!isPasswordInDb.success) {
-		return { success: false, error: "Password not found in DB" };
+		return { success: false, error: "Password not found" };
 	};
 
 	const { encryptedPassword, iv, tag } = encryptPassword(passwordData.password, Buffer.from(dek, "hex"));
@@ -22,7 +22,4 @@ export default async function handleEditPassword(passwordData: PasswordData) {
 	const passwordUpdateResult = updatePassword(updatedPasswordEntry);
 
 	return passwordUpdateResult;
-
-
-
 };

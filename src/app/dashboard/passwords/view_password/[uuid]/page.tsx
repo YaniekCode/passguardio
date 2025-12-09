@@ -1,7 +1,7 @@
 "use server";
 
 import getPasswordByUUID from "@/api/db/getPasswordByUUID";
-import editPasswordAction from "@/actions/editPasswordAction";
+import PasswordField from "@/components/PasswordField";
 import { validate as uuidValidate } from "uuid";
 
 interface PageProps {
@@ -10,7 +10,7 @@ interface PageProps {
 	};
 };
 
-export default async function EditPassword({ params } : PageProps ) {
+export default async function ViewPassword({ params }: PageProps) {
 	const { uuid } = await params;
 	const isValidUUID = uuidValidate(uuid);
 	
@@ -33,23 +33,15 @@ export default async function EditPassword({ params } : PageProps ) {
 	};
 
 
-    	return (
+	return (
 		<main>
-        	<h1>Password entry for { password.name } </h1>
-			<form action={editPasswordAction}>
-				<label htmlFor="name">Name</label>	
-				<input type="text" name="name"></input>
-				<br />
-				<input type="hidden" name="uuid" value={uuid}></input>
-				<label htmlFor="password">Password</label>	
-				<input type="password" name="password"></input>
-				<br />
-				<label htmlFor="url">URL</label>	
-				<input type="text" name="url"></input>
-				<br />
-				<button>Save</button>
-			</form>
+			<h1>Hello to view password</h1>
+			<section>
+				<p>Name: { password.name }</p>	
+				<PasswordField password={password.password}></PasswordField>
+				<p>URL: { password.url }</p>	
+			</section>
 		</main>
-    	)
+	);
 
-}
+};

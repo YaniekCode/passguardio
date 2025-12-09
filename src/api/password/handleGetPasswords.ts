@@ -13,7 +13,13 @@ export default async function handleGetPasswords() {
 		return getPasswordResult;
 	};
 
-	const passwordList = getPasswordResult.data;
-	const userPasswords = await decryptUserPasswords(passwordList, dek);
+	const passwordList = Array.isArray(getPasswordResult.data)
+		? getPasswordResult.data
+		: [getPasswordResult.data];
+
+	const userPasswordsRaw = await decryptUserPasswords(passwordList, dek);
+	const userPasswords = Array.isArray(userPasswordsRaw)
+		? userPasswordsRaw
+		: [userPasswordsRaw];
 	return { success: true, data: userPasswords };
 };

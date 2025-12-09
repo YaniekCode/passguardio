@@ -103,3 +103,12 @@
 	font-size: 22px;
 	margin-bottom: 4px;
 }
+
+.passwordDiv {
+	display: flex;
+	align-items: center;
+}
+
+.passwordVisibilityIcon {
+	margin-inline: 5px;
+}

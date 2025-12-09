@@ -27,13 +27,15 @@ export default async function PasswordSection({ userPasswords } : { userPassword
 			    <td className={styles.tableData}>
 			   	<div className={styles.actionsDiv}>
 					<div className={styles.action}>
-                        <Link href={`/dashboard/passwords/edit_password/${password.uuid}`}>
-						    <FaPenToSquare className={styles.actionIcon}/>
-                        </Link>
+                        			<Link href={`/dashboard/passwords/edit_password/${password.uuid}`}>
+							<FaPenToSquare className={styles.actionIcon}/>
+                        			</Link>
 						<small className={styles.actionLabel}>Edit</small>
 					</div>
 					<div className={styles.action}>
-						<FaRegEye className={styles.actionIcon}/>
+                        			<Link href={`/dashboard/passwords/view_password/${password.uuid}`}>
+							<FaRegEye className={styles.actionIcon}/>
+						</Link>
 						<small className={styles.actionLabel}>View</small>
 					</div>
 					<div className={styles.action}>
