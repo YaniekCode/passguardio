@@ -18,7 +18,7 @@ export default function DeletePasswordButton({ name, uuid }: { name: string, uui
 
 	return (
 		<>
-			<div onClick={showDialog}>
+			<div className={styles.action} onClick={showDialog}>
 				<FaTrash className={styles.actionIcon}/>	
 				<small className={styles.actionLabel}>Delete</small>
 			</div>

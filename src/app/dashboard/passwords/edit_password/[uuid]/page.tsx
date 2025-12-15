@@ -2,6 +2,7 @@
 
 import getPasswordByUUID from "@/api/db/getPasswordByUUID";
 import editPasswordAction from "@/actions/editPasswordAction";
+import formStyles from "@/app/styles/formStyles.module.css";
 import { validate as uuidValidate } from "uuid";
 
 interface PageProps {
@@ -36,7 +37,7 @@ export default async function EditPassword({ params } : PageProps ) {
     	return (
 		<main>
         	<h1>Password entry for { password.name } </h1>
-			<form action={editPasswordAction}>
+			<form action={editPasswordAction} className={formStyles.form}>
 				<label htmlFor="name">Name</label>	
 				<input type="text" name="name"></input>
 				<br />

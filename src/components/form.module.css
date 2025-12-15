@@ -4,6 +4,13 @@
 
   --input-background: #333232;
   --input-border-radius: 2px;
+
+
+	display: flex;
+  	align-items: center;
+  	justify-content: center;
+  	font-family: var(--font-poppins);
+  	background-color: var(--background);
 }
 
 
@@ -22,12 +29,12 @@
 }
 
 .form input {
-	background-color: var(--input-background);
+	background-color: #333232;
 	color: var(--text-primary);
 	font-size: 16;
 	border: none;
 	outline: 1px solid #7B7D85;
-	border-radius: var(--input-border-radius);
+	border-radius: 2px;
 	min-width: 250px;
 	max-width: 350px;
 	padding: 10px 5px;
@@ -43,7 +50,7 @@
 	margin-top: 20px;
 	padding: 10px;
 	border: none;
-	border-radius: var(--input-border-radius);
+	border-radius: 2px;
 	outline: none;
 	cursor: pointer;
 }

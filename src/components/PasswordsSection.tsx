@@ -29,8 +29,8 @@ export default async function PasswordSection({ userPasswords } : { userPassword
 			   	<div className={styles.actionsDiv}>
 					<div className={styles.action}>
                         			<Link href={`/dashboard/passwords/edit_password/${password.uuid}`}>
-							<FaPenToSquare className={styles.actionIcon}/>
-						<small className={styles.actionLabel}>Edit</small>
+							            <FaPenToSquare className={styles.actionIcon}/>
+						                <small className={styles.actionLabel}>Edit</small>
                         			</Link>
 					</div>
 					<div className={styles.action}>

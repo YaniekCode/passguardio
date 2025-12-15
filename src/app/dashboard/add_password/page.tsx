@@ -1,15 +1,24 @@
 "use server";
 
 import AddPasswordForm from "@/components/AddPasswordForm";
-import { getSession } from "@/utils/session/sessionUtils";
+import styles from "@/app/dashboard/add_password/addPassword.module.css";
+import iconStyles from "@/app/styles/iconStyles.module.css";
+
+import Link from "next/link";
+import { FaArrowLeft } from "react-icons/fa6";
 
 export default async function AddPassword() {
-	const session = await getSession();
-
 	return (
 		<div>
-			<h1>Hello { session.username }</h1>
-			<AddPasswordForm></AddPasswordForm>
+			<section className="topBar">
+				<Link href="/dashboard"><FaArrowLeft className={iconStyles.leftArrowIcon}/></Link>
+				<h1 className="pageTitle">Add a new password</h1>
+			</section>
+			<main>
+				<div className={styles.formDiv}>
+					<AddPasswordForm></AddPasswordForm>
+				</div>
+			</main>
 		</div>
 	);
 };

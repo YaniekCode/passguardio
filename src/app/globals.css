@@ -1,11 +1,11 @@
 :root {
   --background: #1c1c1c;
-  --foreground: #1c1c1c;
+  --foreground: #ededed;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
+    --background: #1c1c1c;
     --foreground: #ededed;
   }
 }
@@ -16,6 +16,15 @@ body {
   overflow-x: hidden;
 }
 
+.pageTitle {
+	color: var(--foreground);
+	font-weight: 600;
+}
+
+.topBar {
+  margin: 20px;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
@@ -23,6 +32,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
 
 * {
   box-sizing: border-box;

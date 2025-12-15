@@ -6,7 +6,7 @@ import { getSession } from "@/utils/session/sessionUtils";
 export async function proxy(request: NextRequest) {
 	const session = await getSession();
 	// If the user is not logged in, so there is no session they get redirected to the login page
-	if (!session) {
+	if (!session || !session.username) {
  		 return NextResponse.redirect(new URL('/login', request.url))
 	};
 }

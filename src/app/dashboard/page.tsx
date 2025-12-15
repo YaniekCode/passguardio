@@ -5,6 +5,7 @@ import handleGetPasswords from "@/api/password/handleGetPasswords";
 import PasswordSection from "@/components/PasswordsSection";
 import { PasswordData } from "@/lib";
 import styles from "@/app/dashboard/dashboard.module.css";
+import "@/app/globals.css";
 import Link from "next/link";
 
 export default async function Dashboard() {
@@ -25,7 +26,6 @@ export default async function Dashboard() {
 			<section className={styles.topBar}>
 				<div>
       					<h1 className={styles.pageTitle}>Dashboard</h1>
-						<h2>Hello {session.username}</h2>
 				</div>
 				<div className={styles.userIcon}>
 				<p>{firstUsernameLetter}</p>
@@ -34,7 +34,7 @@ export default async function Dashboard() {
       			<main className={styles.main}>
 				<section className={styles.mainBar}>
 					<h2 className={styles.pageSubtitle}>My passwords: </h2>
-					<Link href="/dashboard/add_password">Add a password</Link>
+					<Link href="/dashboard/add_password"><button className={styles.addPasswordButton}>Add a new password</button></Link>
 				</section>
 				{ getPasswordsResult.success && (
 					<PasswordSection userPasswords={userPasswords}></PasswordSection>
