@@ -1,0 +1,66 @@
+.page {
+  	--background: #1c1c1c;
+  	--foreground: #1c1c1c;
+
+  	--text-primary: #FFFFFF;
+  	--text-secondary: #666;
+
+  	--text-required-fields: #ff4236;
+
+  	--input-background: #333232;
+
+  	--button-primary-hover: #383838;
+  	--button-secondary-hover: #f2f2f2;
+	--button-secondary-border: #ebebeb;
+
+  	--input-border-radius: 2px;
+
+  	display: flex;
+  	min-height: 100vh;
+  	align-items: center;
+  	justify-content: center;
+  	font-family: var(--font-poppins);
+  	background-color: var(--background);
+}
+
+.pageTitle {
+	color: var(--text-primary);
+	font-weight: 600;
+}
+
+.topBar {
+	position: fixed;
+	margin: 2rem;
+}
+
+.textPrimary {
+	color: var(--text-primary);
+}
+
+.btnCancel {
+	background-color: oklch(0.5 0 0);
+	color: var(--text-primary);
+	font-size: 20px;
+	font-weight: 400;
+	font-family: inherit;
+	margin-top: 20px;
+	padding: 10px;
+	border: none;
+	border-radius: 2px;
+	outline: none;
+	cursor: pointer;
+}
+
+.btnDanger {
+	background: linear-gradient(to left, oklch(0.5682 0.1924 24.35), oklch(0.5682 0.1924 24.35));
+	color: var(--text-primary);
+	font-size: 20px;
+	font-weight: 400;
+	font-family: inherit;
+	margin-top: 20px;
+	padding: 10px;
+	border: none;
+	border-radius: 2px;
+	outline: none;
+	cursor: pointer;
+}

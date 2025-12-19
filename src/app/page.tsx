@@ -1,11 +1,11 @@
-import styles from "./page.module.css";
+import overallStyles from "@/app/styles/overallStyles.module.css";
 import SignupForm from "@/components/signup/signupForm";
 
 export default function SignupPage() {
 	return (
-		<div className={styles.page}>
-      			<main className={styles.main}>
-      				<h1 className={`${styles.pageTitle} ${styles.formTitle}`}>Sign up</h1>
+		<div className={overallStyles.page}>
+      			<main className={overallStyles.main}>
+      				<h1 className={`${overallStyles.pageTitle}`}>Sign up</h1>
 				<SignupForm />
       			</main>
     		</div>

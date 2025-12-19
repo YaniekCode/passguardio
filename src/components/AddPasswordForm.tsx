@@ -1,7 +1,7 @@
 "use server";
 
 import addPasswordAction from "@/actions/addPasswordAction";
-import formStyles from "@/components/form.module.css";
+import formStyles from "@/app/styles/formStyles.module.css";
 
 export default async function AddPasswordForm() {
 	return (
@@ -18,7 +18,7 @@ export default async function AddPasswordForm() {
 				<label htmlFor="url">URL</label><br />
 				<input type="text" name="url"></input>	
 			</div>
-			<button className={formStyles.formSubmit}>Add password</button>
+			<button className={formStyles.submit}>Add password</button>
 		</form>
 	);
 };

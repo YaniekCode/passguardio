@@ -5,7 +5,6 @@ import handleGetPasswords from "@/api/password/handleGetPasswords";
 import PasswordSection from "@/components/PasswordsSection";
 import { PasswordData } from "@/lib";
 import styles from "@/app/dashboard/dashboard.module.css";
-import "@/app/globals.css";
 import Link from "next/link";
 
 export default async function Dashboard() {

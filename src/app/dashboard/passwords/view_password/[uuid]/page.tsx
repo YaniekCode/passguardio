@@ -1,8 +1,14 @@
 "use server";
 
+import overallStyles from "@/app/styles/overallStyles.module.css";
+import variousStyles from "@/app/styles/variousStyles.module.css";
+import iconStyles from "@/app/styles/iconStyles.module.css";
 import getPasswordByUUID from "@/api/db/getPasswordByUUID";
 import PasswordField from "@/components/PasswordField";
+
+import { FaArrowLeft } from "react-icons/fa6";
 import { validate as uuidValidate } from "uuid";
+import Link from "next/link";
 
 interface PageProps {
 	params: {
@@ -34,14 +40,22 @@ export default async function ViewPassword({ params }: PageProps) {
 
 
 	return (
-		<main>
-			<h1>Hello to view password</h1>
-			<section>
-				<p>Name: { password.name }</p>	
-				<PasswordField password={password.password}></PasswordField>
-				<p>URL: { password.url }</p>	
-			</section>
-		</main>
+		<div>
+			<header className={overallStyles.topBar}>
+				<Link href="/dashboard"><FaArrowLeft className={iconStyles.leftArrowIcon}/></Link>
+				<h1 className={overallStyles.pageTitle}>View password entry for { password.name }</h1>
+			</header>
+			<main className={overallStyles.page}>
+				<dl className={variousStyles.descriptionList}>
+					<dt>Name: </dt>	
+					<dd>{ password.name }</dd>
+					<dt>Password: </dt>
+					<PasswordField password={password.password}></PasswordField>
+					<dt>URL: </dt>
+					<dd>{ password.url }</dd>
+				</dl>
+			</main>
+		</div>
 	);
 
 };

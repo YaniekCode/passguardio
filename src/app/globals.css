@@ -16,15 +16,6 @@ body {
   overflow-x: hidden;
 }
 
-.pageTitle {
-	color: var(--foreground);
-	font-weight: 600;
-}
-
-.topBar {
-  margin: 20px;
-}
-
 body {
   color: var(--foreground);
   background: var(--background);

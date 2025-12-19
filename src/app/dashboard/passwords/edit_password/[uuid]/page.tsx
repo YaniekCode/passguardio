@@ -3,7 +3,11 @@
 import getPasswordByUUID from "@/api/db/getPasswordByUUID";
 import editPasswordAction from "@/actions/editPasswordAction";
 import formStyles from "@/app/styles/formStyles.module.css";
+import overallStyles from "@/app/styles/overallStyles.module.css";
+import iconStyles from "@/app/styles/iconStyles.module.css";
 import { validate as uuidValidate } from "uuid";
+import Link from "next/link";
+import { FaArrowLeft } from "react-icons/fa6";
 
 interface PageProps {
 	params: {
@@ -35,22 +39,30 @@ export default async function EditPassword({ params } : PageProps ) {
 
 
     	return (
-		<main>
-        	<h1>Password entry for { password.name } </h1>
-			<form action={editPasswordAction} className={formStyles.form}>
-				<label htmlFor="name">Name</label>	
-				<input type="text" name="name"></input>
-				<br />
-				<input type="hidden" name="uuid" value={uuid}></input>
-				<label htmlFor="password">Password</label>	
-				<input type="password" name="password"></input>
-				<br />
-				<label htmlFor="url">URL</label>	
-				<input type="text" name="url"></input>
-				<br />
-				<button>Save</button>
-			</form>
-		</main>
+		<div>
+			<header className={overallStyles.topBar}>
+				<Link href="/dashboard"><FaArrowLeft className={iconStyles.leftArrowIcon}/></Link>
+				<h1 className={overallStyles.pageTitle}>Edit password entry for { password.name }</h1>
+			</header>
+			<main className={overallStyles.page}>
+				<form action={editPasswordAction} className={formStyles.form}>
+					<div className={formStyles.formInputGroup}>
+						<label htmlFor="name">Name</label><br />
+						<input type="text" name="name" defaultValue={password.name}></input>
+					</div>
+					<input type="hidden" name="uuid" value={uuid}></input>
+					<div className={formStyles.formInputGroup}>
+						<label htmlFor="password">Password</label><br />
+						<input type="password" name="password" defaultValue={password.password}></input>
+					</div>
+					<div className={formStyles.formInputGroup}>
+						<label htmlFor="url">URL</label><br />
+						<input type="text" name="url" defaultValue={password.url}></input>
+					</div>
+					<button className={formStyles.submit}>Save</button>
+				</form>
+			</main>
+		</div>
     	)
 
 }

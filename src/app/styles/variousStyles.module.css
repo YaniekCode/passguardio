@@ -1,0 +1,39 @@
+.descriptionList {
+	display: grid;
+  	grid-template-columns: max-content 1fr;
+  	row-gap: 8px;
+  	column-gap: 16px;
+	background-color: oklch(0.2944 0 0);
+	padding: 40px;
+	border-radius: 10px;
+}
+
+.descriptionListPassword {
+	letter-spacing: 2px;
+}
+
+.descriptionList dt {
+	color: oklch(0.700 0 0);
+}
+
+.descriptionList dd {
+	font-size: 1.2rem;
+}
+
+.dialog {
+    position: absolute;
+    margin: auto;
+    background-color: oklch(0.2944 0 0);
+    padding: 40px;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+}
+
+.buttonGroup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}

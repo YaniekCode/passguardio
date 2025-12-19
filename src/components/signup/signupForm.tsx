@@ -1,6 +1,6 @@
 "use client";
 
-import styles from "@/components/form.module.css";
+import formStyles from "@/app/styles/formStyles.module.css";
 import signup from "@/actions/signup/signup";
 import { FormState } from "@/lib";
 import FormMessageBox from "@/components/formMessageBox";
@@ -20,22 +20,22 @@ export default function SignupForm() {
 	};
 
 	return (
-      	<form className={styles.form} onSubmit={handleSubmit}> 
-		<div className={styles.formInputGroup}>
-			<label htmlFor="username" className={styles.textPrimary}>Username<span className={styles.textRequiredFields}>*</span></label><br />
+      	<form className={formStyles.form} onSubmit={handleSubmit}> 
+		<div className={formStyles.formInputGroup}>
+			<label htmlFor="username" className={formStyles.textPrimary}>Username<span className={formStyles.textRequiredFields}>*</span></label><br />
 			<input type="text" name="username" minLength={3} maxLength={50} required></input><br />
 		</div>
-		<div className={styles.formInputGroup}>
-			<label htmlFor="email" className={styles.textPrimary}>Email<span className={styles.textRequiredFields}>*</span></label><br />
+		<div className={formStyles.formInputGroup}>
+			<label htmlFor="email" className={formStyles.textPrimary}>Email<span className={formStyles.textRequiredFields}>*</span></label><br />
 			<input type="email" name="email"></input><br />
 		</div>
-		<div className={styles.formInputGroup}>
-			<label htmlFor="password" className={styles.textPrimary}>Password<span className={styles.textRequiredFields}>*</span></label><br />
+		<div className={formStyles.formInputGroup}>
+			<label htmlFor="password" className={formStyles.textPrimary}>Password<span className={formStyles.textRequiredFields}>*</span></label><br />
 			<input type="password" name="password" minLength={8} required></input><br />
 		</div>
-		<small className={styles.textRequiredFields}>* required fields</small><br />
+		<small className={formStyles.textRequiredFields}>* required fields</small><br />
 		{ state.error ? <FormMessageBox message={state.error}/> : null }
-		<button className={styles.formSubmit} disabled={isPending}>Sign up</button>
+		<button className={formStyles.submit} disabled={isPending}>Sign up</button>
 	</form>
 
 	);
