@@ -1,13 +1,13 @@
 import overallStyles from "@/app/styles/overallStyles.module.css";
-import SignupForm from "@/components/signup/signupForm";
+import LoginForm from "@/components/login/loginForm";
 
-export default function SignupPage() {
+export default function LoginPage() {
 	return (
-		<div className={overallStyles.page}>
-      			<main className={overallStyles.main}>
-      				<h1 className={`${overallStyles.pageTitle}`}>Sign up</h1>
-				<SignupForm />
+    		<div className={overallStyles.page}>
+      			<main>
+      				<h1 className={overallStyles.pageTitle}>Login</h1>
+				<LoginForm/>
       			</main>
     		</div>
 	);
-}
+};

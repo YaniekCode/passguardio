@@ -6,6 +6,7 @@ import { FormState } from "@/lib";
 import FormMessageBox from "@/components/formMessageBox";
 import { useActionState } from "react"; 
 import { startTransition} from "react";
+import Link from "next/link";
 
 export default function SignupForm() {
 
@@ -34,6 +35,9 @@ export default function SignupForm() {
 			<input type="password" name="password" minLength={8} required></input><br />
 		</div>
 		<small className={formStyles.textRequiredFields}>* required fields</small><br />
+		<div className={formStyles.formRedirect}>
+			<Link href="/" className={formStyles.formRedirectLink}>Already have an account? Log in one here.</Link>
+		</div>
 		{ state.error ? <FormMessageBox message={state.error}/> : null }
 		<button className={formStyles.submit} disabled={isPending}>Sign up</button>
 	</form>

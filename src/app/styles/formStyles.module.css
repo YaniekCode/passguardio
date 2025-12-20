@@ -2,6 +2,10 @@
 	--text-required-fields: #ff4236;
 }
 
+.form {
+	width: clamp(250px, 20vw, 300px);
+}
+
 .form input {
 	background-color: #333232;
 	color: var(--text-primary);
@@ -9,8 +13,7 @@
 	border: none;
 	outline: 1px solid #7B7D85;
 	border-radius: 2px;
-	min-width: 250px;
-	max-width: 350px;
+	width: 100%;
 	padding: 10px 5px;
 }
 
@@ -20,6 +23,17 @@
 
 .textRequiredFields {
 	color: var(--text-required-fields);
+}
+
+.formRedirect {
+	margin-top: 8px;
+  	margin-bottom: 16px;
+  	text-align: center;
+}
+
+.formRedirectLink {
+	display: inline-block;
+	color: oklch(0.6614 0.1824 199.06);
 }
 
 .submit {

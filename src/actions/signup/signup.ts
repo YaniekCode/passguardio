@@ -26,7 +26,7 @@ export default async function signup(prevState: FormState, formData: FormData): 
 	if (!signupResult.success) {
 		return signupResult;
 	} else {
-		redirect("/login");
+		redirect("/");
 		return signupResult;
 	};
 	
