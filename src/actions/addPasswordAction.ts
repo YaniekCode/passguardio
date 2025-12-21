@@ -2,6 +2,7 @@
 
 import { PasswordData } from "@/lib";
 import handleAddPassword from "@/api/password/handleAddPassword";
+import { redirect } from "next/navigation";
 
 export default async function addPasswordAction(formData: FormData) {
 	const rawPasswordData: PasswordData = {
@@ -12,5 +13,6 @@ export default async function addPasswordAction(formData: FormData) {
 	};
 
 	const result = await handleAddPassword(rawPasswordData);
+	redirect("/dashboard");
 
 };

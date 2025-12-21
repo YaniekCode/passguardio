@@ -1,6 +1,7 @@
 "use server";
 
 import handleEditPassword from "@/api/password/handleEditPassword";
+import { redirect } from "next/navigation";
 
 export default async function editPasswordAction(formData: FormData){
 	const rawFormData = {
@@ -11,5 +12,5 @@ export default async function editPasswordAction(formData: FormData){
 	};
 
 	const handleEditPasswordResult = await handleEditPassword(rawFormData);
-	return handleEditPasswordResult; 
+	redirect("/dashboard");
 };
