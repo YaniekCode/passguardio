@@ -4,6 +4,7 @@ import { getSession } from "@/utils/session/sessionUtils";
 import handleGetPasswords from "@/api/password/handleGetPasswords";
 import PasswordSection from "@/components/PasswordsSection";
 import { PasswordData } from "@/lib";
+import overallStyles from "@/app/styles/overallStyles.module.css";
 import styles from "@/app/dashboard/dashboard.module.css";
 import Link from "next/link";
 
@@ -24,9 +25,9 @@ export default async function Dashboard() {
 		<div className={styles.page}>
 			<section className={styles.topBar}>
 				<div>
-      					<h1 className={styles.pageTitle}>Dashboard</h1>
+      					<h1 className={overallStyles.pageTitle}>Dashboard</h1>
 				</div>
-				<div className={styles.userIcon}>
+				<div className={styles.userAvatar}>
 				<p>{firstUsernameLetter}</p>
 				</div>
 			</section>

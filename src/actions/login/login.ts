@@ -28,7 +28,7 @@ export default async function login(prevState: FormState, formData: FormData): P
 	} else {
 		const userSessionData = loginResult.data;
 		await setSession(userSessionData);
-		redirect("/dashboard");
+		redirect("/dashboard"); // redirecting to dashboard
 		//return loginResult;
 	};
 };

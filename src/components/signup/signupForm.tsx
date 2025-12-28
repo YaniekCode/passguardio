@@ -22,24 +22,24 @@ export default function SignupForm() {
 
 	return (
       	<form className={formStyles.form} onSubmit={handleSubmit}> 
-		<div className={formStyles.formInputGroup}>
-			<label htmlFor="username" className={formStyles.textPrimary}>Username<span className={formStyles.textRequiredFields}>*</span></label><br />
-			<input type="text" name="username" minLength={3} maxLength={50} required></input><br />
-		</div>
-		<div className={formStyles.formInputGroup}>
-			<label htmlFor="email" className={formStyles.textPrimary}>Email<span className={formStyles.textRequiredFields}>*</span></label><br />
-			<input type="email" name="email"></input><br />
-		</div>
-		<div className={formStyles.formInputGroup}>
-			<label htmlFor="password" className={formStyles.textPrimary}>Password<span className={formStyles.textRequiredFields}>*</span></label><br />
-			<input type="password" name="password" minLength={8} required></input><br />
-		</div>
-		<small className={formStyles.textRequiredFields}>* required fields</small><br />
-		<div className={formStyles.formRedirect}>
-			<Link href="/" className={formStyles.formRedirectLink}>Already have an account? Log in one here.</Link>
-		</div>
-		{ state.error ? <FormMessageBox message={state.error}/> : null }
-		<button className={formStyles.submit} disabled={isPending}>Sign up</button>
+			<div className={formStyles.formInputGroup}>
+				<label htmlFor="username" className={formStyles.textPrimary}>Username<span className={formStyles.textRequiredFields}>*</span></label><br />
+				<input type="text" name="username" minLength={3} maxLength={50} required></input><br />
+			</div>
+			<div className={formStyles.formInputGroup}>
+				<label htmlFor="email" className={formStyles.textPrimary}>Email<span className={formStyles.textRequiredFields}>*</span></label><br />
+				<input type="email" name="email"></input><br />
+			</div>
+			<div className={formStyles.formInputGroup}>
+				<label htmlFor="password" className={formStyles.textPrimary}>Password<span className={formStyles.textRequiredFields}>*</span></label><br />
+				<input type="password" name="password" minLength={8} required></input><br />
+			</div>
+			<small className={formStyles.textRequiredFields}>* required fields</small><br />
+			<div className={formStyles.formRedirect}>
+				<Link href="/" className={formStyles.formRedirectLink}>Already have an account? Log in one here.</Link>
+			</div>
+			{ state.error ? <FormMessageBox message={state.error}/> : null }
+			<button className={formStyles.submit} disabled={isPending}>Sign up</button>
 	</form>
 
 	);

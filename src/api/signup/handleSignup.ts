@@ -17,6 +17,7 @@ export default async function handleSignup(userData: UserInterface): Promise<Res
 	if (dbResult.success) {
 		return { success: true, message: "User created successfully" };
 	} else {
+		console.log(`An error occured when creating a user. Error: ${dbResult.error}`);
 		return { success: false, error: dbResult.error };
 	};
 

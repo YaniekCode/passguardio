@@ -11,7 +11,7 @@ export default async function signup(prevState: FormState, formData: FormData): 
 		username: formData.get('username')?.toString() || "",
 		email: formData.get('email')?.toString() || "",
 		password: formData.get('password')?.toString() || "",
-		role: "admin", // when a user signs up they automatically became an admin
+		role: "admin", // when a user signs up they automatically become an admin
 	};
 
 	const validation = ValidateUserInput(rawFormData);
@@ -26,8 +26,8 @@ export default async function signup(prevState: FormState, formData: FormData): 
 	if (!signupResult.success) {
 		return signupResult;
 	} else {
-		redirect("/");
-		return signupResult;
+		redirect("/"); // reditecting to login page
+		//return signupResult;
 	};
 	
 };

@@ -2,7 +2,7 @@ import { z } from "zod";
 import { fromError } from "zod-validation-error";
 import { UserInterface, LoginUserInterface, ValidationResult } from "@/lib";
 
-export default function ValidateUserInput(UserData: UserInterface | LoginUserInterface) {
+export default function ValidateUserInput(UserData: UserInterface | LoginUserInterface): ValidationResult {
 	const usernameField = z.string()
 			.min(3, "Username must be at least 3 characters long.")
 			.max(50, "Username cannot be longer than 50 characters.")
@@ -10,7 +10,7 @@ export default function ValidateUserInput(UserData: UserInterface | LoginUserInt
 	const emailField = z.email();
 	const passwordField = z.string()
 			.min(8, "Password must be at least 8 characters long.")
-			.max(100, "Username cannot be longer than 100 characters.")
+			.max(100, "Password cannot be longer than 100 characters.")
 			.refine((val) => !/\s/.test(val), "Password cannot contain whitespace characters (e.g., space, tab).");
 	const roleField = z.enum(["user", "admin"]);
 

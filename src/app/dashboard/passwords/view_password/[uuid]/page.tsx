@@ -22,7 +22,7 @@ export default async function ViewPassword({ params }: PageProps) {
 	
 	if (!isValidUUID) {
 		return (
-			<h1>Invalid UUID</h1>	
+			<h1>Invalid password UUID</h1>	
 		)
 	};
 
