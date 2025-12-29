@@ -1,4 +1,7 @@
-"use server";
+import type { Metadata } from "next";
+import { FaArrowLeft } from "react-icons/fa6";
+import { validate as uuidValidate } from "uuid";
+import Link from "next/link";
 
 import overallStyles from "@/app/styles/overallStyles.module.css";
 import variousStyles from "@/app/styles/variousStyles.module.css";
@@ -6,17 +9,19 @@ import iconStyles from "@/app/styles/iconStyles.module.css";
 import getPasswordByUUID from "@/api/db/getPasswordByUUID";
 import PasswordField from "@/components/PasswordField";
 
-import { FaArrowLeft } from "react-icons/fa6";
-import { validate as uuidValidate } from "uuid";
-import Link from "next/link";
-
 interface PageProps {
 	params: {
 		uuid: string;	
 	};
 };
 
+export const metadata: Metadata = {
+	title: 'View password',
+	description: 'View your password entry and securely access your stored credentials.',
+}
+
 export default async function ViewPassword({ params }: PageProps) {
+	"use server";
 	const { uuid } = await params;
 	const isValidUUID = uuidValidate(uuid);
 	

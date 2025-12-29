@@ -1,4 +1,5 @@
-"use server";
+import type { Metadata } from "next";
+import Link from "next/link";
 
 import { getSession } from "@/utils/session/sessionUtils";
 import handleGetPasswords from "@/api/password/handleGetPasswords";
@@ -6,10 +7,15 @@ import PasswordSection from "@/components/PasswordsSection";
 import { PasswordData } from "@/lib";
 import overallStyles from "@/app/styles/overallStyles.module.css";
 import styles from "@/app/dashboard/dashboard.module.css";
-import Link from "next/link";
+
+
+export const metadata: Metadata = {
+	title: "Dashboard",
+	description: "Manage your passwords securely and locally from your Passguardio dashboard.",
+};
 
 export default async function Dashboard() {
-
+	"use server";
 	const session = await getSession();
 	const firstUsernameLetter = session.username[0].toUpperCase();
 

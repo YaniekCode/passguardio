@@ -1,13 +1,13 @@
-"use server";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { FaArrowLeft } from "react-icons/fa6";
+import { validate as uuidValidate } from "uuid";
 
 import getPasswordByUUID from "@/api/db/getPasswordByUUID";
 import editPasswordAction from "@/actions/editPasswordAction";
 import formStyles from "@/app/styles/formStyles.module.css";
 import overallStyles from "@/app/styles/overallStyles.module.css";
 import iconStyles from "@/app/styles/iconStyles.module.css";
-import { validate as uuidValidate } from "uuid";
-import Link from "next/link";
-import { FaArrowLeft } from "react-icons/fa6";
 
 interface PageProps {
 	params: {
@@ -15,7 +15,13 @@ interface PageProps {
 	};
 };
 
+export const metadata: Metadata = {
+	title: 'Edit password',
+	description: 'Update an existing password entry while keeping your credentials secure.',
+}
+
 export default async function EditPassword({ params } : PageProps ) {
+	"use server";
 	const { uuid } = await params;
 	const isValidUUID = uuidValidate(uuid);
 	
