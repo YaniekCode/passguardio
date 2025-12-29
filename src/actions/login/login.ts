@@ -1,7 +1,7 @@
 "use server";
 
 import { LoginUserInterface, FormState } from "@/lib";
-import ValidateUserInput from "@/utils/validateUserInput";
+import { validateLoginInput } from "@/utils/validation/validateUserInput";
 import handleLogin from "@/api/login/handleLogin";
 import { setSession } from "@/utils/session/sessionUtils";
 import { redirect } from "next/navigation";
@@ -13,7 +13,7 @@ export default async function login(prevState: FormState, formData: FormData): P
 		password: formData.get('password')?.toString() || "",
 	};
 
-	const validation = ValidateUserInput(rawFormData);
+	const validation = validateLoginInput(rawFormData);
 
 	if (!validation.success) {
 		return validation;

@@ -7,6 +7,7 @@ export interface UserInterface {
 	role: "user" | "admin";
 };
 
+export type UserDatabaseInsert = Omit<UserData, "id"> & UserEncryptionData;
 export type UserDatabaseRecord = UserData & UserEncryptionData;
 
 export interface UserData {
@@ -54,9 +55,14 @@ export type FormState = {
 };
 
 
-export type ValidationResult =
-	| { success: true, data: UserInterface | LoginUserInterface }
-	| { success: false, error: string }
+export type SignupValidationResult =
+	| { success: true, data: UserInterface}
+	| { success: false, error: string}
+
+export type LoginValidationResult =
+	| { success: true, data: LoginUserInterface}
+	| { success: false, error: string}
+
 
 export type ResultMessage = 
 	| { success: true; message: string }
@@ -80,7 +86,6 @@ export interface SessionData {
 	email: string;
 	role: string;
 	dek: string;
-	lastActivity: number;
 };
 
 

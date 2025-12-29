@@ -1,9 +1,9 @@
 "use server";
 
-import { UserDatabaseRecord, ResultMessage } from "@/lib";
+import { UserDatabaseInsert, ResultMessage } from "@/lib";
 import openDb from "@/api/db/openDb";
 
-export default async function createUser(userData: UserDatabaseRecord): Promise<ResultMessage> {
+export default async function createUser(userData: UserDatabaseInsert): Promise<ResultMessage> {
 	const db = openDb();
 
 	try {

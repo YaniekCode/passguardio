@@ -1,6 +1,6 @@
 "use server";
 
-import { UserInterface, UserDatabaseRecord, ResultMessage } from "@/lib";
+import { UserInterface, UserDatabaseInsert, ResultMessage } from "@/lib";
 import createTables from "@/api/db/createTables";
 import createUser from "@/api/db/createUser";
 import generateHash from "@/utils/generateHash";
@@ -11,7 +11,7 @@ export default async function handleSignup(userData: UserInterface): Promise<Res
 
 	const passwordHash = generateHash(userData.password);
 	const userEncryptionData = generateEncryptionCredentials(userData.password);
-	const user: UserDatabaseRecord = { ...userData, password_hash: passwordHash, ...userEncryptionData};
+	const user: UserDatabaseInsert = { ...userData, password_hash: passwordHash, ...userEncryptionData};
 
 	const dbResult = await createUser(user);
 	if (dbResult.success) {

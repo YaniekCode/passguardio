@@ -1,7 +1,7 @@
 "use server";
 
 import { UserInterface, FormState } from "@/lib";
-import ValidateUserInput from "@/utils/validateUserInput";
+import { validateSignupInput } from "@/utils/validation/validateUserInput";
 import handleSignup from "@/api/signup/handleSignup";
 import { redirect } from "next/navigation";
 
@@ -14,7 +14,7 @@ export default async function signup(prevState: FormState, formData: FormData): 
 		role: "admin", // when a user signs up they automatically become an admin
 	};
 
-	const validation = ValidateUserInput(rawFormData);
+	const validation = validateSignupInput(rawFormData);
 
 	if (!validation.success) {
 		return validation;

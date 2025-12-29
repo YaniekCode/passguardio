@@ -4,11 +4,10 @@ import styles from "@/app/dashboard/dashboard.module.css";
 import variousStyles from "@/app/styles/variousStyles.module.css";
 import overallStyles from "@/app/styles/overallStyles.module.css";
 import deletePasswordAction from "@/actions/deletePasswordAction";
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { FaTrash } from "react-icons/fa6";
 
 export default function DeletePasswordButton({ name, uuid }: { name: string, uuid: string }) {
-	const [dialogVisible, setDialogVisible] = useState<boolean>(false);
 	const dialogRef = useRef<HTMLDialogElement>(null);
 
 
@@ -33,7 +32,7 @@ export default function DeletePasswordButton({ name, uuid }: { name: string, uui
 				<button onClick={hideDialog} className={overallStyles.btnCancel}>Close</button>
 				<form action={deletePasswordAction}>
 					<input type="hidden" name="uuid" value={uuid}></input>
-					<button onClick={hideDialog} className={overallStyles.btnDanger}>Delete</button>
+					<button type="submit" className={overallStyles.btnDanger}>Delete</button>
 				</form>
 				</section>
 			</dialog>
