@@ -4,25 +4,25 @@ import openDb from "@/api/db/openDb";
 import { ResultMessage } from "@/lib";
 
 export default async function deletePassword(user_id: number, uuid: string): Promise<ResultMessage> {
-	const db = openDb();
+	const db = await openDb();
 
 	try {
 
-		const query = db.prepare(
-            		`DELETE FROM passwords WHERE uuid = ? AND user_id = ?`		
+		await db.run(
+            		`DELETE FROM passwords WHERE uuid = ? AND user_id = ?`,
+			uuid,
+			user_id
         	);
-		query.run(uuid, user_id);
 
 		return { success: true, message: "Password deleted successfully" };
 
 	} catch (err: unknown) {
 		console.log(err);
-
 		return { success: false, error: "An error occurred when deleting a password" };
 
 	} finally {
 		try {
-			db.close();
+			await db.close();
 		} catch (closeErr) {
 			console.error("Failed to close DB: ", closeErr);
 		}

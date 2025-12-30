@@ -1,11 +1,13 @@
 "use server";
 
 import { LoginUserInterface, LoginResult, SessionData } from "@/lib";
+import createTables from "@/api/db/createTables";
 import deriveKEK from "@/utils/encryption/deriveKEK";
 import unwrapDEK from "@/utils/encryption/unwrapDEK";
 import loginUser from "@/api/db/loginUser";
 
 export default async function handleLogin(userData: LoginUserInterface): Promise<LoginResult> {
+	await createTables(); // create default tables in sqlite db
 	const dbResult = await loginUser(userData);
 	if (dbResult.success) { // User found and password is correct
 		const user = dbResult.data;

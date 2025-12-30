@@ -1,9 +1,9 @@
 import openDb from "@/api/db/openDb";
 
-export default function createTables() {
-	const db = openDb();
+export default async function createTables() {
+	const db = await openDb();
 
-	const createUsersTable = db.prepare(`
+	await db.run(`
 		CREATE TABLE IF NOT EXISTS users (
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
 			username TEXT NOT NULL,
@@ -15,9 +15,8 @@ export default function createTables() {
 			dek_wrap_iv BLOB,
 			dek_wrap_tag BLOB
 		)`);
-	createUsersTable.run();
 
-	const createPasswordsTable = db.prepare(`
+	await db.run(`
 		CREATE TABLE IF NOT EXISTS passwords (
 			user_id INTEGER REFERENCES users(id),
 			uuid BLOB UNIQUE NOT NULL,
@@ -27,5 +26,4 @@ export default function createTables() {
 			iv BLOB NOT NULL,
 			tag BLOB NOT NULL
 		)`);
-	createPasswordsTable.run();
 };

@@ -5,16 +5,13 @@ import compareHash from "@/utils/compareHash";
 import openDb from "@/api/db/openDb";
 
 export default async function loginUser(userData: LoginUserInterface): Promise<HandleLogin>{
-	const db = openDb();
+	const db = await openDb();
 
 	try {
-		const query = db.prepare(
-      			"SELECT * FROM users WHERE email=?"
-		);
-
-		const user = query.get(
-			userData.email,
-		) as UserDatabaseRecord | undefined;
+		const user = (await db.get(
+			"SELECT * FROM users WHERE email = ?",
+			userData.email
+		)) as UserDatabaseRecord | undefined;
 
 		if (!user) {
 			return { success: false, error: "Invalid email or password" };
@@ -35,7 +32,7 @@ export default async function loginUser(userData: LoginUserInterface): Promise<H
 
 	} finally {
 		try {
-			db.close();
+			await db.close();
 		} catch (closeErr) {
 			console.error("Failed to close DB: ", closeErr);
 		}

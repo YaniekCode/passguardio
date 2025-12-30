@@ -3,15 +3,16 @@
 import openDb from "@/api/db/openDb";
 
 export default async function isPasswordUUIDInDb(userId: number, uuid: string) {
-	const db = openDb();
+	const db = await openDb();
 
 	try {
-		const query = db.prepare(
-			`SELECT uuid FROM passwords WHERE uuid=? AND user_id=?`
-		);
-		const passwordEntry = query.get(uuid, userId) as { uuid: string } | undefined;
+		const passwordEntry = (await db.get(
+			`SELECT uuid FROM passwords WHERE uuid=? AND user_id=?`,
+			uuid,
+			userId
+		)) as { uuid: string } | undefined;
 
-		if (passwordEntry && passwordEntry.uuid) {
+		if (passwordEntry?.uuid) {
 			return { success: true, message: "Password found in DB" };
 		} else {
 			return { success: false, error: "Password not found in DB" };
@@ -19,12 +20,11 @@ export default async function isPasswordUUIDInDb(userId: number, uuid: string) {
 
 	} catch (err: unknown) {
 		console.log(err);
-
 		return { success: false, error: "An error occured when validating the password" };
 	
 	} finally {
 		try {
-			db.close();
+			await db.close();
 		} catch (closeErr) {
 			console.error("Failed to close DB: ", closeErr);
 		};

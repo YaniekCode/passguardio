@@ -6,14 +6,14 @@ import { getSession } from "@/utils/session/sessionUtils";
 import { PasswordDatabaseRecord } from "@/lib";
 
 export default async function getPasswordByUUID(uuid: string) {
-	const db = openDb();
+	const db = await openDb();
 
 	try {
 
-		const query = db.prepare(
-            		`SELECT * FROM passwords WHERE uuid=?`	
-        	);
-		const passwordEntry = query.get(uuid) as PasswordDatabaseRecord;
+		const passwordEntry = (await db.get(
+			`SELECT * FROM passwords WHERE uuid = ?`,
+			uuid
+		)) as PasswordDatabaseRecord | undefined;
 
 		if (!passwordEntry) {
 			return { success: false, error: "Password not found" };
@@ -28,12 +28,10 @@ export default async function getPasswordByUUID(uuid: string) {
 
 	} catch (err: unknown) {
 		console.log(err);
-
 		return { success: false, error: "An error occurred when reading password" };
-
 	} finally {
 		try {
-			db.close();
+			await db.close();
 		} catch (closeErr) {
 			console.error("Failed to close DB: ", closeErr);
 		}

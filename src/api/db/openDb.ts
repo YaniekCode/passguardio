@@ -1,6 +1,14 @@
-import Database from 'better-sqlite3';
+import sqlite3 from 'sqlite3';
+import { open, Database } from 'sqlite';
 
-export default function openDb() {
-	const db = new Database('./src/api/db/mydb.db');
-	return db;
-};
+sqlite3.verbose();
+
+export default async function openDb(): Promise<Database> {
+  const db = await open({
+    filename: './src/api/db/mydb.db',
+    driver: sqlite3.Database,
+  });
+
+  return db;
+}
+

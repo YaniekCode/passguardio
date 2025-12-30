@@ -4,14 +4,11 @@ import { UserDatabaseInsert, ResultMessage } from "@/lib";
 import openDb from "@/api/db/openDb";
 
 export default async function createUser(userData: UserDatabaseInsert): Promise<ResultMessage> {
-	const db = openDb();
+	const db = await openDb();
 
 	try {
-		const query = db.prepare(
-      			"INSERT INTO users (username, email, password_hash, role, encryption_salt, wrapped_dek, dek_wrap_iv, dek_wrap_tag) VALUES (?, ?, ?, ?, ?, ?, ?, ?)"
-		);
-
-		query.run(
+		await db.run(
+      			"INSERT INTO users (username, email, password_hash, role, encryption_salt, wrapped_dek, dek_wrap_iv, dek_wrap_tag) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
 			userData.username,
 			userData.email,
 			userData.password_hash,
@@ -26,15 +23,16 @@ export default async function createUser(userData: UserDatabaseInsert): Promise<
 
 	} catch (err: unknown) {
 
-		if (err instanceof Error && err.message.includes("UNIQUE")) {
+		if (err instanceof Error && err.message.toUpperCase().includes("UNIQUE")) {
 			return { success: false, error: "This user already exists" };
 		}
 
+		console.log(err);
 		return { success: false, error: "An error occurred when creating a user" };
 
 	} finally {
 		try {
-			db.close();
+			await db.close();
 		} catch (closeErr) {
 			console.error("Failed to close DB: ", closeErr);
 		}
