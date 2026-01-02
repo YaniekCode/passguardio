@@ -33,8 +33,8 @@ export default async function Dashboard() {
 				<div>
       					<h1 className={overallStyles.pageTitle}>Dashboard</h1>
 				</div>
-				<div className={styles.userAvatar}>
-				<p>{firstUsernameLetter}</p>
+				<div aria-hidden="false" className={styles.userAvatar}>
+					<p>{firstUsernameLetter}</p>
 				</div>
 			</section>
       			<main className={styles.main}>

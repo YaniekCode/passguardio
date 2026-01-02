@@ -23,12 +23,12 @@ export default function SignupForm() {
 	return (
       	<form className={formStyles.form} onSubmit={handleSubmit}> 
 			<div className={formStyles.formInputGroup}>
-				<label htmlFor="email" className={formStyles.textPrimary}>Email<span className={formStyles.textRequiredFields}>*</span></label><br />
-				<input type="email" name="email"></input><br />
+				<label htmlFor="emailInput" className={formStyles.textPrimary}>Email<span className={formStyles.textRequiredFields}>*</span></label><br />
+				<input id="emailInput" type="email" name="email"></input><br />
 			</div>
 			<div className={formStyles.formInputGroup}>
-				<label htmlFor="password" className={formStyles.textPrimary}>Password<span className={formStyles.textRequiredFields}>*</span></label><br />
-				<input type="password" name="password" minLength={8} required></input>
+				<label htmlFor="passwordInput" className={formStyles.textPrimary}>Password<span className={formStyles.textRequiredFields}>*</span></label><br />
+				<input id="passwordInput" type="password" name="password" minLength={8} required></input>
 			</div>
 			<small className={formStyles.textRequiredFields}>* required fields</small>
 			<div className={formStyles.formRedirect}>

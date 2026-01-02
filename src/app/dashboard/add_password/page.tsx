@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { FaArrowLeft } from "react-icons/fa6";
+import Image from "next/image";
 
 import AddPasswordForm from "@/components/AddPasswordForm";
 import overallStyles from "@/app/styles/overallStyles.module.css";
-import iconStyles from "@/app/styles/iconStyles.module.css";
 
 export const metadata: Metadata = {
 	title: 'Add password',
@@ -16,7 +15,15 @@ export default async function AddPassword() {
 	return ( 
 		<div>
 			<header className={overallStyles.topBar}>
-				<Link href="/dashboard"><FaArrowLeft className={iconStyles.leftArrowIcon}/></Link>
+				<Link href="/dashboard" aria-label="Go back to dashboard">
+					<Image
+						src="/icons/arrow-left-solid-full.svg"
+						alt=""
+						aria-hidden="true"
+						width={25}
+						height={25}
+					/>
+				</Link>
 				<h1 className={overallStyles.pageTitle}>Add a new password</h1>
 			</header>
 			<main className={overallStyles.page}>
