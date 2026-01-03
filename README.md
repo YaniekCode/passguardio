@@ -1,36 +1,152 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🔐 PassGuardio — Simple, Local & Fast Password Manager
 
-## Getting Started
+**PassGuardio** is a *simple, local and fast password manager* focused on privacy, minimalism, and performance. The project is **open source** and designed to work entirely **offline**, without sending any data to external servers.
 
-First, run the development server:
+---
+
+## ✨ Features
+
+* 🗄 **Local-first** – all data is stored locally on your device
+* ⚡ **Fast & lightweight** – no unnecessary dependencies
+* 🔒 **Privacy-focused** – no tracking, no cloud, no telemetry
+* 🧠 **Simple UX** – minimal interface, easy to use
+* 🧩 **Open Source** – transparent codebase, community-friendly
+
+---
+
+## 🎯 Philosophy
+
+This project was created with a clear goal:
+
+> *Your passwords should belong only to you.*
+
+Unlike many modern password managers, this application:
+
+* does **not** sync data to the cloud
+* does **not** collect analytics
+
+Everything runs locally, giving you full control over your data.
+
+PassGuardio is not a cloud password manager and never will be.
+
+---
+
+## 🛠 Tech Stack
+
+
+* **Frontend:** Next.js / React
+* **Backend:** Local-only logic (no external API)
+* **Storage:** Local Sqlite3 database
+* **Language:** TypeScript
+
+---
+
+## 🚀 Installation
+
+PassGuardio can be installed in two ways: **using Docker (recommended)** or **manually**.
+
+---
+
+### 🐳 Option 1: Docker (Recommended)
+
+Docker provides the easiest and fastest way to run PassGuardio without setting up the environment manually.
+
+
+#### 1. Pull and run the Docker container
+
+```bash
+docker run -d -p 9820:9820 --restart=always --name passguardio yaniekcode/passguardio:latest
+```
+
+
+
+The application will be available at:
+
+```
+http://localhost:9820
+```
+
+> All data will remain **local** inside the Docker container.
+
+---
+
+### 🛠 Option 2: Manual Installation
+
+Use this method if you prefer to run PassGuardio directly on your machine.
+
+#### 1. Clone the repository
+
+```bash
+git clone https://github.com/yaniekcode/passguardio.git
+cd passguardio
+```
+
+#### 2. Install dependencies
+
+```bash
+npm install
+```
+
+#### 3. Run the project
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The application will be available at:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+http://localhost:9820
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 🔐 Security Notes
 
-To learn more about Next.js, take a look at the following resources:
+* Passwords are stored **locally**
+* Encryption is always enabled
+* Always use a **strong master password**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+> This project is provided as-is. Review the code before using it for sensitive data.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 🤝 Contributing
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Contributions are welcome!
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+You can:
+
+* open an issue
+* suggest features
+* submit a pull request
+
+Please keep the project **simple**, **local**, and **privacy-respecting**.
+
+---
+
+## 📄 License
+
+This project is licensed under the **GNU GPL v3 License**.
+
+You are free to:
+
+* use
+* modify
+* distribute
+
+as long as the license terms are respected.
+
+> See the `LICENSE` file for full details.
+
+---
+
+## ⭐ Support
+
+If you find this project useful, consider giving it a ⭐ on GitHub.
+
+---
+
+## 🧠 Disclaimer
+
+This software is intended for educational and personal use. The author is not responsible for any data loss or security issues resulting from improper use.

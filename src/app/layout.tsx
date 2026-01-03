@@ -13,7 +13,7 @@ export const metadata: Metadata = {
     		default: "Passguardio",
 		template: "%s | Passguardio",
 	},
-	description: "A fast, secure and local password manager.",
+	description: "A simple, local and fast password manager.",
 	applicationName: "Passguardio",
 	authors: [{ name: "YaniekCode" }],
 	keywords: ["password manager", "security", "local", "Passguardio"],
