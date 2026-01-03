@@ -47,6 +47,7 @@ export interface PasswordData {
 	url: string;
 };
 
+export type EncryptionData = { encryptedPassword: Buffer, iv: Buffer, tag: Buffer };
 
 export type FormState = {
 	success: boolean;
@@ -78,6 +79,10 @@ export type PasswordDatabaseResult =
 
 export type HandleLogin = 
 	| { success: true, data: UserDatabaseRecord }
+	| { success: false, error: string };
+
+export type PasswordByUUIDResult =
+	| { success: true, data: PasswordData }
 	| { success: false, error: string };
 
 export interface SessionData {

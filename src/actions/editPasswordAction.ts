@@ -1,9 +1,9 @@
 "use server";
-
-import handleEditPassword from "@/api/password/handleEditPassword";
 import { redirect } from "next/navigation";
 
-export default async function editPasswordAction(formData: FormData){
+import handleEditPassword from "@/api/password/handleEditPassword";
+
+export default async function editPasswordAction(formData: FormData): Promise<void> {
 	const rawFormData = {
 		name: formData.get("name")?.toString() || "",
 		uuid: formData.get("uuid")?.toString() || "",
@@ -11,6 +11,6 @@ export default async function editPasswordAction(formData: FormData){
 		url: formData.get("url")?.toString() || "",
 	};
 
-	const handleEditPasswordResult = await handleEditPassword(rawFormData);
+	await handleEditPassword(rawFormData);
 	redirect("/dashboard");
 };

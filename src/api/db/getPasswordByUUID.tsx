@@ -3,18 +3,16 @@
 import openDb from "@/api/db/openDb";
 import decryptUserPasswords from "@/utils/decryptUserPasswords";
 import { getSession } from "@/utils/session/sessionUtils";
-import { PasswordDatabaseRecord } from "@/lib";
+import { PasswordDatabaseRecord, PasswordByUUIDResult, PasswordData } from "@/lib";
 
-export default async function getPasswordByUUID(uuid: string) {
+export default async function getPasswordByUUID(uuid: string): Promise<PasswordByUUIDResult>  {
 	const db = await openDb();
 
 	try {
-
 		const passwordEntry = (await db.get(
 			`SELECT * FROM passwords WHERE uuid = ?`,
 			uuid
 		)) as PasswordDatabaseRecord | undefined;
-
 		if (!passwordEntry) {
 			return { success: false, error: "Password not found" };
 		};
@@ -22,10 +20,9 @@ export default async function getPasswordByUUID(uuid: string) {
 		const session = await getSession();
 		const { dek } = session;
 
-		const decryptedPassword = await decryptUserPasswords(passwordEntry, dek);
+		const decryptedPassword = await decryptUserPasswords(passwordEntry, dek) as PasswordData;
 
 		return { success: true, data: decryptedPassword };
-
 	} catch (err: unknown) {
 		console.log(err);
 		return { success: false, error: "An error occurred when reading password" };

@@ -7,7 +7,6 @@ export default async function addPassword(passwordDatabaseInput: PasswordDatabas
 	const db = await openDb();
 
 	try {
-
 		await db.run(
             		`INSERT INTO passwords (user_id, uuid, name, password, url, iv, tag)
              		VALUES (?, ?, ?, ?, ?, ?, ?)`,
@@ -25,7 +24,6 @@ export default async function addPassword(passwordDatabaseInput: PasswordDatabas
 	} catch (err: unknown) {
 		console.log(err);
 		return { success: false, error: "An error occurred when adding a password" };
-
 	} finally {
 		try {
 			await db.close();

@@ -1,15 +1,16 @@
 "use server";
 
-import { SessionData, sessionOptions } from "@/lib";
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
+
+import { SessionData, sessionOptions } from "@/lib";
 
 export async function getSession() {
 	const session = await getIronSession<SessionData>(await cookies(), sessionOptions);
 	return session;
 };
 
-export async function setSession(sessionData: SessionData) {
+export async function setSession(sessionData: SessionData): Promise<void> {
 	const session = await getSession();
 
 	session.id = sessionData.id;
@@ -21,7 +22,7 @@ export async function setSession(sessionData: SessionData) {
 	await session.save();
 };
 
-export async function destroySession() {
+export async function destroySession(): Promise<void> {
 	const session = await getSession();
 	session.destroy();
 };

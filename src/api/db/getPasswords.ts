@@ -7,18 +7,15 @@ export default async function getPasswords(userId: number): Promise<PasswordData
 	const db = await openDb();
 
 	try {
-
 		const passwordList = (await db.all(
             		`SELECT * FROM passwords WHERE user_id=?`,
 			userId
         	)) as PasswordDatabaseRecord[];
 
 		return { success: true, data: passwordList };
-
 	} catch (err: unknown) {
 		console.log(err);
 		return { success: false, error: "An error occurred when reading passwords" };
-
 	} finally {
 		try {
 			await db.close();

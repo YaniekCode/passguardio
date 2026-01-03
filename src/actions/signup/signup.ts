@@ -1,12 +1,11 @@
 "use server";
+import { redirect } from "next/navigation";
 
 import { UserInterface, FormState } from "@/lib";
 import { validateSignupInput } from "@/utils/validation/validateUserInput";
 import handleSignup from "@/api/signup/handleSignup";
-import { redirect } from "next/navigation";
 
 export default async function signup(prevState: FormState, formData: FormData): Promise<FormState> {
-
 	const rawFormData: UserInterface = {
 		username: formData.get('username')?.toString() || "",
 		email: formData.get('email')?.toString() || "",
@@ -15,7 +14,6 @@ export default async function signup(prevState: FormState, formData: FormData): 
 	};
 
 	const validation = validateSignupInput(rawFormData);
-
 	if (!validation.success) {
 		return validation;
 	};

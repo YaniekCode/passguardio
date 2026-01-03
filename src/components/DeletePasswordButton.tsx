@@ -1,16 +1,16 @@
 "use client";
 
+import { useState, useRef } from "react";
+import Image from "next/image";
+
 import styles from "@/app/dashboard/dashboard.module.css";
 import variousStyles from "@/app/styles/variousStyles.module.css";
 import overallStyles from "@/app/styles/overallStyles.module.css";
 import deletePasswordAction from "@/actions/deletePasswordAction";
-import { useState, useRef } from "react";
-import Image from "next/image";
 
 export default function DeletePasswordButton({ name, uuid }: { name: string, uuid: string }) {
 	const dialogRef = useRef<HTMLDialogElement>(null);
 	const [dialogOpen, setDialogOpen] = useState<boolean>(false);
-
 
 	function showDialog() {
 		setDialogOpen(true);
@@ -34,7 +34,7 @@ export default function DeletePasswordButton({ name, uuid }: { name: string, uui
 				/>
 				<span className={styles.actionLabel}>Delete</span>
 			</button>
-			<dialog ref={dialogRef} className={variousStyles.dialog} aria-labelledby="deleteDialogTitle" aria-describedby="deleteDialogDescription" aria-hidden={!dialogOpen}>
+			<dialog ref={dialogRef} className={variousStyles.dialog} aria-labelledby="deleteDialogTitle" aria-describedby="deleteDialogDescription">
 				<h2 id="deleteDialogTitle">Delete password?</h2>
 				<p id="deleteDialogDescription">Are you sure you want to delete password entry for { name }? Doing so will remove it permanently.</p>
 				<section className={variousStyles.buttonGroup}>

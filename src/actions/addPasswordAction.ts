@@ -1,10 +1,10 @@
 "use server";
+import { redirect } from "next/navigation";
 
 import { PasswordData } from "@/lib";
 import handleAddPassword from "@/api/password/handleAddPassword";
-import { redirect } from "next/navigation";
 
-export default async function addPasswordAction(formData: FormData) {
+export default async function addPasswordAction(formData: FormData): Promise<void> {
 	const rawPasswordData: PasswordData = {
 		name: formData.get('name')?.toString() || "",
 		uuid: "",
@@ -12,7 +12,6 @@ export default async function addPasswordAction(formData: FormData) {
 		url: formData.get('url')?.toString() || "",
 	};
 
-	const result = await handleAddPassword(rawPasswordData);
+	await handleAddPassword(rawPasswordData);
 	redirect("/dashboard");
-
 };

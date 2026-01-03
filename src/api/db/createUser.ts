@@ -18,18 +18,13 @@ export default async function createUser(userData: UserDatabaseInsert): Promise<
 			userData.dek_wrap_iv,
 			userData.dek_wrap_tag
 		);
-
 		return { success: true, message: "User created successfully" };
-
 	} catch (err: unknown) {
-
+		console.log(err);
 		if (err instanceof Error && err.message.toUpperCase().includes("UNIQUE")) {
 			return { success: false, error: "This user already exists" };
 		}
-
-		console.log(err);
 		return { success: false, error: "An error occurred when creating a user" };
-
 	} finally {
 		try {
 			await db.close();

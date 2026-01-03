@@ -27,6 +27,4 @@ export default async function handleAddPassword(passwordData: PasswordData): Pro
 	const passwordInputResult = addPassword(passwordDatabaseInput);
 
 	return passwordInputResult;
-
-
 };

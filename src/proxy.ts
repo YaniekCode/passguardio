@@ -7,10 +7,10 @@ export async function proxy(request: NextRequest) {
 	const session = await getSession();
 	// If the user is not logged in, so there is no session they get redirected to the login page
 	if (!session || !session.username) {
- 		 return NextResponse.redirect(new URL('/login', request.url))
+ 		 return NextResponse.redirect(new URL('/', request.url))
 	};
 }
  
 export const config = {
-  matcher: '/dashboard/:path*',
+	matcher: '/dashboard/:path*',
 }

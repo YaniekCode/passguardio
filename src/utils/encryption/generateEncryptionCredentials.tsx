@@ -19,7 +19,6 @@ export default function generateEncryptionCredentials(password: string): UserEnc
 	};
 
 	return userEncryptionData;
-
 };
 
 function wrapDEK(dek: Buffer, kek: Buffer) {
@@ -29,5 +28,4 @@ function wrapDEK(dek: Buffer, kek: Buffer) {
 	const wrapped = Buffer.concat([cipher.update(dek), cipher.final()]);
 	const tag = cipher.getAuthTag();
 	return { wrapped, iv, tag };
-
 };

@@ -1,9 +1,10 @@
 "use client";
 
-import styles from "@/app/dashboard/dashboard.module.css";
-import variousStyles from "@/app/styles/variousStyles.module.css";
 import { useState } from "react";
 import Image from "next/image";
+
+import styles from "@/app/dashboard/dashboard.module.css";
+import variousStyles from "@/app/styles/variousStyles.module.css";
 
 export default function PasswordField({ password }: { password: string }) {
 	const [passwordVisible, setPasswordVisible] = useState<boolean>(false);	
@@ -30,6 +31,5 @@ export default function PasswordField({ password }: { password: string }) {
 				/>
 			</button>
 		</dd>
-
 	);
 };

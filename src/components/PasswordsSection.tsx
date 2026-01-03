@@ -1,11 +1,12 @@
 "use server";
 
+import Link from "next/link";
+import Image from "next/image";
+
 import { PasswordData } from "@/lib";
 import styles from "@/app/dashboard/dashboard.module.css";
 import variousStyles from "@/app/styles/variousStyles.module.css";
 import DeletePasswordButton from "@/components/DeletePasswordButton";
-import Link from "next/link";
-import Image from "next/image";
 
 export default async function PasswordSection({ userPasswords } : { userPasswords: PasswordData[] }) {
 	return (

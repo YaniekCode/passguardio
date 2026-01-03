@@ -1,6 +1,8 @@
+"use server";
+
 import openDb from "@/api/db/openDb";
 
-export default async function createTables() {
+export default async function createTables(): Promise<void> {
 	const db = await openDb();
 
 	await db.run(`
@@ -14,7 +16,7 @@ export default async function createTables() {
 			wrapped_dek BLOB,
 			dek_wrap_iv BLOB,
 			dek_wrap_tag BLOB
-		)`);
+	)`);
 
 	await db.run(`
 		CREATE TABLE IF NOT EXISTS passwords (
@@ -25,5 +27,5 @@ export default async function createTables() {
 			url TEXT,
 			iv BLOB NOT NULL,
 			tag BLOB NOT NULL
-		)`);
+	)`);
 };

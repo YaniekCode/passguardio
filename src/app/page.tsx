@@ -8,7 +8,6 @@ export const metadata: Metadata = {
 	description: 'Log in to Passguardio to access your secure, local password manager.',
 };
 
-
 export default function LoginPage() {
 	return (
     		<div className={overallStyles.page}>

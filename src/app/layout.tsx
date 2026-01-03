@@ -9,28 +9,27 @@ const poppinsSans = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: {
-    default: "Passguardio",
-    template: "%s | Passguardio",
-  },
-  description: "A fast, secure and local password manager.",
-  applicationName: "Passguardio",
-  authors: [{ name: "YaniekCode" }],
-  keywords: ["password manager", "security", "local", "Passguardio"],
+	title: {
+    		default: "Passguardio",
+		template: "%s | Passguardio",
+	},
+	description: "A fast, secure and local password manager.",
+	applicationName: "Passguardio",
+	authors: [{ name: "YaniekCode" }],
+	keywords: ["password manager", "security", "local", "Passguardio"],
 };
 
-
 export default function RootLayout({
-  children,
+	children,
 }: Readonly<{
-  children: React.ReactNode;
+	children: React.ReactNode;
 }>) {
-  return (
-    <html lang="en">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-      <body className={`${poppinsSans.variable}`}>
-        {children}
-      </body>
-    </html>
-  );
+	return (
+		<html lang="en">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+			<body className={`${poppinsSans.variable}`}>
+				{children}
+			</body>
+		</html>
+	);
 }

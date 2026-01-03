@@ -36,12 +36,10 @@ export default async function ViewPassword({ params }: PageProps) {
 	};
 
 	const data = passwordEntry.data;
-
 	const password = Array.isArray(data) ? data[0] : data;
 	if (!password) {
 		return <h1>Password not found</h1>
 	};
-
 
 	return (
 		<div>

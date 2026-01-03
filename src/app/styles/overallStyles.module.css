@@ -1,5 +1,5 @@
 .page {
-  	--background: #1c1c1c;
+	--background: #1c1c1c;
   	--foreground: #1c1c1c;
 
   	--text-primary: #FFFFFF;
@@ -7,7 +7,7 @@
 
   	--text-required-fields: #ff4236;
 
-  	--input-background: #333232;
+	--input-background: #333232;
 
   	--button-primary-hover: #383838;
   	--button-secondary-hover: #f2f2f2;

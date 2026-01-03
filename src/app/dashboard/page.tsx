@@ -26,14 +26,13 @@ export default async function Dashboard() {
 		userPasswords = getPasswordsResult.data;
 	}
 
-
 	return (
 		<div className={styles.page}>
 			<section className={styles.topBar}>
 				<div>
       					<h1 className={overallStyles.pageTitle}>Dashboard</h1>
 				</div>
-				<div aria-hidden="false" className={styles.userAvatar}>
+				<div aria-hidden="true" className={styles.userAvatar}>
 					<p>{firstUsernameLetter}</p>
 				</div>
 			</section>
