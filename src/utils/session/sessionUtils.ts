@@ -3,7 +3,8 @@
 import { getIronSession } from "iron-session";
 import { cookies } from "next/headers";
 
-import { SessionData, sessionOptions } from "@/lib";
+import { SessionData } from "@/lib";
+import { sessionOptions } from "@/utils/session/readSessionPassword";
 
 export async function getSession() {
 	const session = await getIronSession<SessionData>(await cookies(), sessionOptions);

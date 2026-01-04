@@ -1,5 +1,3 @@
-import { SessionOptions } from "iron-session";
-
 export interface UserInterface {
 	username: string;
 	email: string;
@@ -91,15 +89,4 @@ export interface SessionData {
 	email: string;
 	role: string;
 	dek: string;
-};
-
-
-export const sessionOptions: SessionOptions = {
-	password: process.env.SESSION_PASSWORD!,	
-	cookieName: "session",
-	cookieOptions: {
-		secure: true,
-		httpOnly: true,
-		maxAge: undefined,
-	},
 };
