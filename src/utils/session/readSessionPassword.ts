@@ -1,7 +1,9 @@
 import { SessionOptions } from "iron-session";
+import path from "node:path";
 import fs from "fs";
 import crypto from "crypto";
-const SECRET_FILE = ".session-secret";
+
+const SECRET_FILE = path.resolve('data/mydb.db');
 
 function getSessionPassword() {
 	if (process.env.SESSION_PASSWORD) {
