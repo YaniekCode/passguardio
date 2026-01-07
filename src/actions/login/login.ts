@@ -1,10 +1,31 @@
+/*
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *
+ * Copyright (C) 2025 YaniekCode
+ *
+ * This file is part of PassGuardio.
+ *
+ * PassGuardio is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PassGuardio is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 "use server";
 import { redirect } from "next/navigation";
 
 import { LoginUserInterface, FormState } from "@/lib";
 import { validateLoginInput } from "@/utils/validation/validateUserInput";
 import handleLogin from "@/api/login/handleLogin";
-import { setSession } from "@/utils/session/sessionUtils";
+import { createSession } from "@/utils/session/sessionUtils";
 
 export default async function login(prevState: FormState, formData: FormData): Promise<FormState> {
 	const rawFormData: LoginUserInterface = {
@@ -12,20 +33,20 @@ export default async function login(prevState: FormState, formData: FormData): P
 		password: formData.get('password')?.toString() || "",
 	};
 
-	const validation = validateLoginInput(rawFormData);
-	if (!validation.success) {
-		return validation;
+	const inputValidationResult = validateLoginInput(rawFormData);
+	if (!inputValidationResult.success) {
+		return inputValidationResult;
 	};
 
-	const userData = validation.data;
-	const loginResult = await handleLogin(userData); // function responsible for checking the user in db
+	const validatedFormData = inputValidationResult.data;
+	const userLoginResult = await handleLogin(validatedFormData); // function responsible for checking the user in db
 
-	if (!loginResult.success) {
-		return loginResult;
-	} else {
-		const userSessionData = loginResult.data;
-		await setSession(userSessionData);
-		redirect("/dashboard"); // redirecting to dashboard
-		//return loginResult;
-	};
+	if (!userLoginResult.success) {
+		return userLoginResult;
+	}
+
+	const userSessionData = userLoginResult.data;
+	await createSession(userSessionData);
+	redirect("/dashboard"); // redirecting to dashboard
+	//return userLoginResult;
 };
