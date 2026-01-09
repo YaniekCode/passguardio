@@ -19,28 +19,21 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-"use server";
-import { validate as uuidValidate } from "uuid";
-import { getSession } from "@/utils/session/sessionUtils";
-import { revalidatePath } from "next/cache";
+import path from "node:path";
+import fs from "node:fs";
 
-import deletePassword from "@/api/db/deletePassword";
-
-export default async function deletePasswordAction(formData: FormData): Promise<void> {
-	const rawFormData = {
-		uuid: formData.get('uuid')?.toString() || "",
+// Outputs the DB dirname based on the running environment
+export default function getDataDir(): string {
+	// If dirname is specified in .env
+	if (process.env.PASSGUARDIO_DB_PATH) {
+		return path.dirname(process.env.PASSGUARDIO_DB_PATH);
+	};
+	
+	// If running in a docker container
+	if (fs.existsSync("/.dockerenv")) {
+		return "/data";
 	};
 
-	const isValidUUID = uuidValidate(rawFormData.uuid);
-	if (!isValidUUID) {
-		throw new Error("Invalid UUID");
-	};
-
-	const session = await getSession();
-	if (session) {
-		const { id } = session;
-		await deletePassword(id, rawFormData.uuid);
-	};
-
-	revalidatePath("/dashboard");
+	// If running in dev mode
+	return path.resolve("./data");
 };

@@ -52,7 +52,7 @@ export default async function ViewPassword({ params }: PageProps) {
 	};
 
 	const passwordEntry = await getPasswordByUUID(uuid);
-	if (!passwordEntry.success) {
+	if (!passwordEntry?.success) {
 		return <h1>Failed while reading the password entry</h1>
 	};
 

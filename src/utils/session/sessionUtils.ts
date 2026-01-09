@@ -24,24 +24,24 @@ import { cookies } from 'next/headers';
 import { SignJWT, jwtVerify } from 'jose';
 import { SessionPayload } from "@/lib";
 
-const secretKey = process.env.SESSION_SECRET;
-if (!secretKey) {
-	throw new Error('SESSION_SECRET is not set');
-};
+import getSessionKey from "@/utils/session/getSessionKey";
 
-const encodedKey = new TextEncoder().encode(secretKey);
+const secretKey = getSessionKey();
+if (!secretKey) {
+	throw new Error('Session key does not exist');
+};
 
 export async function encrypt(payload: SessionPayload) {
 	return new SignJWT(payload)
 		.setProtectedHeader({ alg: 'HS256' })
 		.setIssuedAt()
 		.setExpirationTime('7d')
-		.sign(encodedKey)
+		.sign(secretKey)
 };
 
-export async function decrypt(session: string | undefined = '') {
+export async function decrypt(session: string | undefined = ''): Promise<SessionPayload | undefined >{
 	try {
-		const { payload } = await jwtVerify(session, encodedKey, {
+		const { payload } = await jwtVerify<SessionPayload>(session, secretKey, {
 			algorithms: ['HS256'],
 		});
 		return payload;

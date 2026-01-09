@@ -6,8 +6,11 @@ import encryptPassword from "@/utils/encryption/encryptPassword";
 import { getSession } from "@/utils/session/sessionUtils";
 import addPassword from "@/api/db/addPassword";
 
-export default async function handleAddPassword(passwordData: PasswordData): Promise<ResultMessage> {
+export default async function handleAddPassword(passwordData: PasswordData): Promise<ResultMessage | undefined> {
 	const session = await getSession();
+	if (!session) {
+		return;
+	};
 
 	const dek = Buffer.from(session.dek, "hex"); // convert dek from string to Buffer type
 

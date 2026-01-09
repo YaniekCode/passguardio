@@ -38,12 +38,12 @@ export const metadata: Metadata = {
 export default async function Dashboard() {
 	"use server";
 	const session = await getSession();
-	const firstUsernameLetter = session.username[0].toUpperCase();
+	const firstUsernameLetter = session?.username[0].toUpperCase();
 
 	const getPasswordsResult = await handleGetPasswords();
 
 	let userPasswords: PasswordData[] = [];
-	if (getPasswordsResult.success) {
+	if (getPasswordsResult?.success) {
 		userPasswords = getPasswordsResult.data;
 	}
 
@@ -62,7 +62,7 @@ export default async function Dashboard() {
 					<h2 className={styles.pageSubtitle}>My passwords: </h2>
 					<Link href="/dashboard/add_password"><button className={styles.addPasswordButton}>Add a new password</button></Link>
 				</section>
-				{ getPasswordsResult.success && (
+				{ getPasswordsResult?.success && (
 					<PasswordSection userPasswords={userPasswords}></PasswordSection>
 				)}
       			</main>

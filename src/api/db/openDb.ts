@@ -24,10 +24,13 @@ import path from 'node:path';
 import sqlite3 from 'sqlite3';
 import { open, Database } from 'sqlite';
 
+import getDataDir from '@/utils/getDataDir';
+
 sqlite3.verbose();
 
 export default async function openDb(): Promise<Database> {
-	const dbPath = path.resolve('data/mydb.db');
+	const dataDir = getDataDir();
+	const dbPath = path.join(dataDir, "passguardio.db");
 
   	const db = await open({
     		filename: dbPath,

@@ -26,7 +26,7 @@ import decryptUserPasswords from "@/utils/decryptUserPasswords";
 import { getSession } from "@/utils/session/sessionUtils";
 import { PasswordDatabaseRecord, PasswordByUUIDResult, PasswordData } from "@/lib";
 
-export default async function getPasswordByUUID(uuid: string): Promise<PasswordByUUIDResult>  {
+export default async function getPasswordByUUID(uuid: string): Promise<PasswordByUUIDResult | undefined>  {
 	const db = await openDb();
 
 	try {
@@ -39,6 +39,10 @@ export default async function getPasswordByUUID(uuid: string): Promise<PasswordB
 		};
 
 		const session = await getSession();
+		if (!session) {
+			return;
+		};
+		
 		const { dek } = session;
 
 		const decryptedPassword = await decryptUserPasswords(passwordEntry, dek) as PasswordData;

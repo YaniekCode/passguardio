@@ -19,28 +19,27 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-"use server";
-import { validate as uuidValidate } from "uuid";
-import { getSession } from "@/utils/session/sessionUtils";
-import { revalidatePath } from "next/cache";
+import fs from "node:fs";
+import path from "node:path";
+import { randomBytes } from "node:crypto";
+import getDataDir from "@/utils/getDataDir";
 
-import deletePassword from "@/api/db/deletePassword";
+const SESSION_KEY_FILE = "session.key";
+const SESSION_KEY_SIZE = 32;
 
-export default async function deletePasswordAction(formData: FormData): Promise<void> {
-	const rawFormData = {
-		uuid: formData.get('uuid')?.toString() || "",
+// Function reads the session key, if it exists in the data/session.key file. If it does not it generates it.
+export default function getSessionKey(): Uint8Array {
+	const dataDir = getDataDir();
+	const keyPath = path.join(dataDir, SESSION_KEY_FILE);
+
+	if (!fs.existsSync(keyPath)) {
+		fs.mkdirSync(dataDir, { recursive: true });
+
+		const key = randomBytes(SESSION_KEY_SIZE);
+		fs.writeFileSync(keyPath, key, { mode: 0o600 });
+
+		return key;
 	};
 
-	const isValidUUID = uuidValidate(rawFormData.uuid);
-	if (!isValidUUID) {
-		throw new Error("Invalid UUID");
-	};
-
-	const session = await getSession();
-	if (session) {
-		const { id } = session;
-		await deletePassword(id, rawFormData.uuid);
-	};
-
-	revalidatePath("/dashboard");
+	return fs.readFileSync(keyPath);
 };

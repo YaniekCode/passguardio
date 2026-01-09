@@ -1,6 +1,6 @@
 Dockerfile
 .dockerignore
-/data/.session-secret
+data/*
 node_modules
 npm-debug.log
 README.md
