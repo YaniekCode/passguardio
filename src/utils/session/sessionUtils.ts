@@ -1,29 +1,71 @@
-"use server";
+/*
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *
+ * Copyright (C) 2025 YaniekCode
+ *
+ * This file is part of PassGuardio.
+ *
+ * PassGuardio is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PassGuardio is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
+*/
 
-import { getIronSession } from "iron-session";
-import { cookies } from "next/headers";
+import 'server-only';
+import { cookies } from 'next/headers';
+import { SignJWT, jwtVerify } from 'jose';
+import { SessionPayload } from "@/lib";
 
-import { SessionData } from "@/lib";
-import { sessionOptions } from "@/utils/session/readSessionPassword";
+import getSessionKey from "@/utils/session/getSessionKey";
+
+const secretKey = getSessionKey();
+if (!secretKey) {
+	throw new Error('Session key does not exist');
+};
+
+export async function encrypt(payload: SessionPayload) {
+	return new SignJWT(payload)
+		.setProtectedHeader({ alg: 'HS256' })
+		.setIssuedAt()
+		.setExpirationTime('7d')
+		.sign(secretKey)
+};
+
+export async function decrypt(session: string | undefined = ''): Promise<SessionPayload | undefined >{
+	try {
+		const { payload } = await jwtVerify<SessionPayload>(session, secretKey, {
+			algorithms: ['HS256'],
+		});
+		return payload;
+	} catch (error) {
+		console.log(`Failed to verify session. Error: ${error}`);
+	};
+};
+
+export async function createSession(payload: SessionPayload) {
+	const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+	const session = await encrypt({ ...payload, expiresAt });
+	const cookieStore = await cookies();
+
+	cookieStore.set('session', session, {
+		httpOnly: true,
+		secure: true,
+		expires: expiresAt,
+		sameSite: 'lax',
+		path: '/',
+	});
+};
 
 export async function getSession() {
-	const session = await getIronSession<SessionData>(await cookies(), sessionOptions);
-	return session;
-};
-
-export async function setSession(sessionData: SessionData): Promise<void> {
-	const session = await getSession();
-
-	session.id = sessionData.id;
-	session.username = sessionData.username;
-	session.email = sessionData.email;
-	session.role = sessionData.role;
-	session.dek = sessionData.dek;
-
-	await session.save();
-};
-
-export async function destroySession(): Promise<void> {
-	const session = await getSession();
-	session.destroy();
+	const session = (await cookies()).get('session')?.value;
+	if (!session) return null;
+	return await decrypt(session);
 };

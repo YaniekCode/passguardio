@@ -19,9 +19,27 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import bcrypt from 'bcryptjs'; 
+import fs from "node:fs";
+import path from "node:path";
+import { randomBytes } from "node:crypto";
+import getDataDir from "@/utils/getDataDir";
 
-export default function compareHash(password: string, hash: string): boolean {
-	const isEqual = bcrypt.compareSync(password, hash);
-	return isEqual;
-};	
+const SESSION_KEY_FILE = "session.key";
+const SESSION_KEY_SIZE = 32;
+
+// Function reads the session key, if it exists in the data/session.key file. If it does not it generates it.
+export default function getSessionKey(): Uint8Array {
+	const dataDir = getDataDir();
+	const keyPath = path.join(dataDir, SESSION_KEY_FILE);
+
+	if (!fs.existsSync(keyPath)) {
+		fs.mkdirSync(dataDir, { recursive: true });
+
+		const key = randomBytes(SESSION_KEY_SIZE);
+		fs.writeFileSync(keyPath, key, { mode: 0o600 });
+
+		return key;
+	};
+
+	return fs.readFileSync(keyPath);
+};

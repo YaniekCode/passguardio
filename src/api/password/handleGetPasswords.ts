@@ -6,7 +6,10 @@ import decryptUserPasswords from "@/utils/decryptUserPasswords";
 
 export default async function handleGetPasswords() {
 	const session = await getSession();
-	const dek = session.dek;
+	if (!session) {
+		return;
+	};
+	const { dek } = session;
 	const getPasswordResult = await getPasswords(session.id);
 
 	if (!getPasswordResult.success) {

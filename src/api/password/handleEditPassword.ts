@@ -8,6 +8,9 @@ import updatePassword from "@/api/db/updatePassword";
 
 export default async function handleEditPassword(passwordData: PasswordData) {
 	const session = await getSession();
+	if (!session) {
+		return;
+	};
 	const { id, dek }  = session;
 
 	const isPasswordInDb = await isPasswordUUIDInDb(id, passwordData.uuid); // checking if the password to edit exists and that the user is the owner of it 

@@ -19,9 +19,21 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import bcrypt from 'bcryptjs'; 
+import path from "node:path";
+import fs from "node:fs";
 
-export default function compareHash(password: string, hash: string): boolean {
-	const isEqual = bcrypt.compareSync(password, hash);
-	return isEqual;
-};	
+// Outputs the DB dirname based on the running environment
+export default function getDataDir(): string {
+	// If dirname is specified in .env
+	if (process.env.PASSGUARDIO_DB_PATH) {
+		return path.dirname(process.env.PASSGUARDIO_DB_PATH);
+	};
+	
+	// If running in a docker container
+	if (fs.existsSync("/.dockerenv")) {
+		return "/data";
+	};
+
+	// If running in dev mode
+	return path.resolve("./data");
+};
