@@ -22,6 +22,7 @@
 "use server";
 
 import addPasswordAction from "@/actions/addPasswordAction";
+import AddPasswordInput from "@/components/AddPasswordInput";
 import formStyles from "@/app/styles/formStyles.module.css";
 
 export default async function AddPasswordForm() {
@@ -32,14 +33,13 @@ export default async function AddPasswordForm() {
 				<input id="passwordNameInput" type="text" name="name"></input>	
 			</div>
 			<div className={formStyles.formInputGroup}>
-				<label htmlFor="passwordInput">Password</label><br />
-				<input id="passwordInput" type="password" name="password"></input>	
+				<AddPasswordInput></AddPasswordInput>
 			</div>
 			<div className={formStyles.formInputGroup}>
 				<label htmlFor="passwordUrlInput">URL</label><br />
 				<input id="passwordUrlInput" type="text" name="url"></input>	
 			</div>
-			<button className={formStyles.submit}>Add password</button>
+			<button type="submit" className={formStyles.submit}>Add password</button>
 		</form>
 	);
 };

@@ -2,7 +2,7 @@
 
 import { getSession } from "@/utils/session/sessionUtils";
 import getPasswords from "@/api/db/getPasswords";
-import decryptUserPasswords from "@/utils/decryptUserPasswords";
+import decryptUserPasswords from "@/utils/encryption/decryptUserPasswords";
 
 export default async function handleGetPasswords() {
 	const session = await getSession();

@@ -22,7 +22,7 @@
 "use server";
 
 import openDb from "@/api/db/openDb";
-import decryptUserPasswords from "@/utils/decryptUserPasswords";
+import decryptUserPasswords from "@/utils/encryption/decryptUserPasswords";
 import { getSession } from "@/utils/session/sessionUtils";
 import { PasswordDatabaseRecord, PasswordByUUIDResult, PasswordData } from "@/lib";
 

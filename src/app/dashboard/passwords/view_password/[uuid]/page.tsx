@@ -27,7 +27,7 @@ import Image from "next/image";
 import overallStyles from "@/app/styles/overallStyles.module.css";
 import variousStyles from "@/app/styles/variousStyles.module.css";
 import getPasswordByUUID from "@/api/db/getPasswordByUUID";
-import PasswordField from "@/components/PasswordField";
+import ViewPasswordField from "@/components/ViewPasswordField";
 
 interface PageProps {
 	params: {
@@ -81,7 +81,7 @@ export default async function ViewPassword({ params }: PageProps) {
 					<dt>Name: </dt>	
 					<dd>{ password.name }</dd>
 					<dt>Password: </dt>
-					<PasswordField password={password.password}></PasswordField>
+					<ViewPasswordField password={password.password}></ViewPasswordField>
 					<dt>URL: </dt>
 					<dd>{ password.url }</dd>
 				</dl>
