@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2025 YaniekCode
+ * Copyright (C) 2026 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -19,23 +19,12 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import type { Metadata } from "next";
+export default function generateRandomPassword(length: number): string {
+	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" +
+        	"!@#$%^&*()-_=+[]{};:,.<>?/|~";
 
-import overallStyles from "@/app/styles/overallStyles.module.css";
-import SignupForm from "@/components/signup/signupForm";
+	const randomValues = crypto.getRandomValues(new Uint32Array(length));
+	const randomPassword = Array.from(randomValues, x => charset[x % charset.length]).join("");
 
-export const metadata: Metadata = {
-	title: 'Sign up',
-	description: 'Get started with Passguardio and set up your secure, local password manager.',
+	return randomPassword;
 };
-
-export default function SignupPage() {
-	return (
-		<div className={overallStyles.page}>
-      			<main className={overallStyles.main}>
-      				<h1 className={`${overallStyles.pageTitle}`}>Sign up</h1>
-				<SignupForm />
-      			</main>
-    		</div>
-	);
-}

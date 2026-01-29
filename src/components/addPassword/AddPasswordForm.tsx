@@ -22,7 +22,7 @@
 "use server";
 
 import addPasswordAction from "@/actions/addPasswordAction";
-import AddPasswordInput from "@/components/AddPasswordInput";
+import AddPasswordInput from "@/components/addPassword/AddPasswordInput";
 import formStyles from "@/app/styles/formStyles.module.css";
 
 export default async function AddPasswordForm() {

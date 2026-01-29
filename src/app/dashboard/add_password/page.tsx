@@ -23,7 +23,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 
-import AddPasswordForm from "@/components/AddPasswordForm";
+import AddPasswordForm from "@/components/addPassword/AddPasswordForm";
 import overallStyles from "@/app/styles/overallStyles.module.css";
 
 export const metadata: Metadata = {

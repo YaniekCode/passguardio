@@ -23,15 +23,39 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 import { getSession } from "@/utils/session/sessionUtils";
+import { isFirstUser } from "@/api/db/isFirstUser";
  
 export async function proxy(request: NextRequest) {
-	const session = await getSession();
-	// If the user is not logged in, so there is no session they get redirected to the login page
-	if (!session || !session.username) {
- 		 return NextResponse.redirect(new URL('/', request.url))
+	const { pathname } = request.nextUrl;
+
+	const isFirst = await isFirstUser();
+
+	// If the user is first, they get redirected to the sign up page
+	if (isFirst.success && isFirst.data) {
+		if (pathname !== "/") {
+			return NextResponse.redirect(new URL("/", request.url));
+		};
+		return NextResponse.next();
+	} else {
+		if (pathname == "/") {
+			return NextResponse.redirect(new URL("/login", request.url));
+		};
 	};
+
+	// If the user is not first we check if the session exists
+	if (pathname.startsWith("/dashboard")) {
+		const session = await getSession();
+
+		if (!session || !session.username) {
+ 			return NextResponse.redirect(new URL('/login', request.url))
+		};
+	};
+
+	return NextResponse.next();
 }
  
 export const config = {
-	matcher: '/dashboard/:path*',
-}
+	matcher: [
+		"/((?!_next/static|_next/image|favicon.ico|api).*)",
+	],
+};

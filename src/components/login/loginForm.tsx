@@ -52,7 +52,7 @@ export default function SignupForm() {
 			</div>
 			<small className={formStyles.textRequiredFields}>* required fields</small>
 			<div className={formStyles.formRedirect}>
-				<Link href="/signup" className={formStyles.formRedirectLink}>Don't have an account yet? Create one here.</Link>
+				<Link href="/" className={formStyles.formRedirectLink}>Don't have an account yet? Create one here.</Link>
 			</div>
 			{ state.error && <FormMessageBox message={state.error}/> }
 			<button className={formStyles.submit} disabled={isPending}>Login</button>

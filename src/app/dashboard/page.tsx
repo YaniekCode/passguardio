@@ -20,14 +20,14 @@
 */
 
 import type { Metadata } from "next";
-import Link from "next/link";
+import { Shield, Search } from "lucide-react";
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 
-import { getSession } from "@/utils/session/sessionUtils";
 import handleGetPasswords from "@/api/password/handleGetPasswords";
-import PasswordSection from "@/components/PasswordsSection";
+import { PasswordsTable } from "@/components/PasswordsTable";
 import { PasswordData } from "@/lib";
-import overallStyles from "@/app/styles/overallStyles.module.css";
-import styles from "@/app/dashboard/dashboard.module.css";
+import { PasswordStatCard } from "@/components/PasswordStatCard";
+import { AddPasswordDialog } from "@/components/AddPasswordDialog";
 
 
 export const metadata: Metadata = {
@@ -37,9 +37,6 @@ export const metadata: Metadata = {
 
 export default async function Dashboard() {
 	"use server";
-	const session = await getSession();
-	const firstUsernameLetter = session?.username[0].toUpperCase();
-
 	const getPasswordsResult = await handleGetPasswords();
 
 	let userPasswords: PasswordData[] = [];
@@ -48,24 +45,36 @@ export default async function Dashboard() {
 	}
 
 	return (
-		<div className={styles.page}>
-			<section className={styles.topBar}>
-				<div>
-      					<h1 className={overallStyles.pageTitle}>Dashboard</h1>
+		<main>
+			<header className="flex items-center justify-between">
+				<div className="flex items-center gap-5">
+					<Shield size="30"/>
+					<div>
+						<h1 className="text-3xl font-semibold">Password Vault</h1>
+						<h2 className="text-muted-foreground">Manage your passwords securely</h2>
+					</div>
 				</div>
-				<div aria-hidden="true" className={styles.userAvatar}>
-					<p>{firstUsernameLetter}</p>
-				</div>
+				<AddPasswordDialog />
+			</header>
+			<InputGroup className="bg-zinc-800 border-none py-5">
+				<InputGroupInput className="placeholder:text-neutral-200" placeholder="Search passwords, websites, or usernames"/>
+				<InputGroupAddon>
+					<Search />	
+				</InputGroupAddon>
+			</InputGroup>
+			<section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+				<PasswordStatCard title="Total Password" counter={8} icon="key"/>
+				<PasswordStatCard title="Strong Passwords" counter={4} icon="shield"/>
+				<PasswordStatCard title="Weak Passwords" counter={4} icon="danger"/>
+				<PasswordStatCard title="Recently Added" counter={4} icon="trend"/>
 			</section>
-      			<main className={styles.main}>
-				<section className={styles.mainBar}>
-					<h2 className={styles.pageSubtitle}>My passwords: </h2>
-					<Link href="/dashboard/add_password"><button className={styles.addPasswordButton}>Add a new password</button></Link>
-				</section>
-				{ getPasswordsResult?.success && (
+			<section>
+			<h2 className="text-xl font-[500]">All Passwords</h2>
+				{ /*getPasswordsResult?.success && (
 					<PasswordSection userPasswords={userPasswords}></PasswordSection>
-				)}
-      			</main>
-    		</div>
+				)*/}
+				<PasswordsTable passwords={userPasswords}></PasswordsTable>
+			</section>
+		</main>
 	);
 };

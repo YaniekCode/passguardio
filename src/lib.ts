@@ -106,6 +106,10 @@ export type PasswordByUUIDResult =
 	| { success: true, data: PasswordData }
 	| { success: false, error: string };
 
+export type FirstUserResult =
+	| { success: true, data: boolean }
+	| { success: false, error: string };
+
 export interface SessionPayload extends JWTPayload {
 	id: number;
 	username: string;

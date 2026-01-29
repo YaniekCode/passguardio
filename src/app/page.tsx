@@ -22,20 +22,20 @@
 import type { Metadata } from "next";
 
 import overallStyles from "@/app/styles/overallStyles.module.css";
-import LoginForm from "@/components/login/loginForm";
+import SignupForm from "@/components/signup/signupForm";
 
 export const metadata: Metadata = {
-	title: 'Log in | Passguardio',
-	description: 'Log in to Passguardio to access your secure, local password manager.',
+	title: 'Sign up',
+	description: 'Get started with Passguardio and set up your secure, local password manager.',
 };
 
-export default function LoginPage() {
+export default function SignupPage() {
 	return (
-    		<div className={overallStyles.page}>
-      			<main>
-      				<h1 className={overallStyles.pageTitle}>Log in</h1>
-				<LoginForm/>
+		<div className={overallStyles.page}>
+      			<main className={overallStyles.main}>
+      				<h1 className={`${overallStyles.pageTitle}`}>Sign up</h1>
+				<SignupForm />
       			</main>
     		</div>
 	);
-};
+}

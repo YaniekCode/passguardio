@@ -44,7 +44,7 @@ export default function SignupForm() {
 	return (
 		<form className={formStyles.form} onSubmit={handleSubmit}> 
 			<div className={formStyles.formInputGroup}>
-				<label htmlFor="usernameInput" className={formStyles.textPrimary}>Username<span aria-hidden="true" className={formStyles.textRequiredFields}>*</span></label><br />
+				<label htmlFor="usernameInput" className={formStyles.textPrimary}>Full Name<span aria-hidden="true" className={formStyles.textRequiredFields}>*</span></label><br />
 				<input id="usernameInput" type="text" name="username" minLength={3} maxLength={50} required></input><br />
 			</div>
 			<div className={formStyles.formInputGroup}>
@@ -57,7 +57,7 @@ export default function SignupForm() {
 			</div>
 			<small className={formStyles.textRequiredFields}>* required fields</small><br />
 			<div className={formStyles.formRedirect}>
-				<Link href="/" className={formStyles.formRedirectLink}>Already have an account? Log in here.</Link>
+				<Link href="/login" className={formStyles.formRedirectLink}>Already have an account? Log in here.</Link>
 			</div>
 			{ state.error && <FormMessageBox message={state.error}/> }
 			<button className={formStyles.submit} disabled={isPending}>Sign up</button>

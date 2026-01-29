@@ -19,23 +19,23 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import path from 'node:path';
-import sqlite3 from 'sqlite3';
-import { open, Database } from 'sqlite';
+import type { Metadata } from "next";
 
-import getDataDir from '@/utils/getDataDir';
+import overallStyles from "@/app/styles/overallStyles.module.css";
+import LoginForm from "@/components/login/loginForm";
 
-sqlite3.verbose();
-
-export default async function openDb(): Promise<Database> {
-	const dataDir = getDataDir();
-	const dbPath = path.join(dataDir, "passguardio.db");
-
-  	const db = await open({
-    		filename: dbPath,
-    		driver: sqlite3.Database,
-  	});
-
-  	return db;
+export const metadata: Metadata = {
+	title: 'Log in | Passguardio',
+	description: 'Log in to Passguardio to access your secure, local password manager.',
 };
 
+export default function LoginPage() {
+	return (
+    		<div className={overallStyles.page}>
+      			<main>
+      				<h1 className={overallStyles.pageTitle}>Log in</h1>
+				<LoginForm/>
+      			</main>
+    		</div>
+	);
+};
