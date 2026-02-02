@@ -18,21 +18,22 @@
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
+'use server';
 
-"use server";
-import { redirect } from "next/navigation";
+import { redirect } from 'next/navigation';
 
-import { PasswordData } from "@/lib";
-import handleAddPassword from "@/api/password/handleAddPassword";
+import { PasswordData } from '@/lib';
+import handleAddPassword from '@/api/password/handleAddPassword';
 
-export default async function addPasswordAction(formData: FormData): Promise<void> {
+export async function addPasswordAction(formData: FormData): Promise<void> {
 	const rawPasswordData: PasswordData = {
-		name: formData.get('name')?.toString() || "",
-		uuid: "",
-		password: formData.get('password')?.toString() || "",
-		url: formData.get('url')?.toString() || "",
+		websiteName: formData.get("websiteName")?.toString() || "",
+		websiteUrl: formData.get("websiteUrl")?.toString() || "",
+		usernameOrEmail: formData.get("usernameOrEmail")?.toString() || "",
+		password: formData.get("password")?.toString() || "",
+		category: formData.get("category")?.toString() || "",
 	};
 
 	await handleAddPassword(rawPasswordData);
-	redirect("/dashboard");
+	//redirect("/dashboard");
 };

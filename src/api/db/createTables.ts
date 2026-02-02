@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2025 YaniekCode
+ * Copyright (C) 2026 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -43,9 +43,13 @@ export default async function createTables(): Promise<void> {
 		CREATE TABLE IF NOT EXISTS passwords (
 			user_id INTEGER REFERENCES users(id),
 			uuid BLOB UNIQUE NOT NULL,
-			name TEXT,
+			website_name TEXT,
+			website_url TEXT,
 			password TEXT,
-			url TEXT,
+			category TEXT,
+			strength INTEGER,
+			last_modified TEXT,
+			crack_time TEXT,
 			iv BLOB NOT NULL,
 			tag BLOB NOT NULL
 	)`);

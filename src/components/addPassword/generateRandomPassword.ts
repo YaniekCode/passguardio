@@ -19,7 +19,7 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-export default function generateRandomPassword(length: number): string {
+export function generateRandomPassword(length: number): string {
 	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" +
         	"!@#$%^&*()-_=+[]{};:,.<>?/|~";
 

@@ -27,7 +27,7 @@ import handleGetPasswords from "@/api/password/handleGetPasswords";
 import { PasswordsTable } from "@/components/PasswordsTable";
 import { PasswordData } from "@/lib";
 import { PasswordStatCard } from "@/components/PasswordStatCard";
-import { AddPasswordDialog } from "@/components/AddPasswordDialog";
+import { AddPasswordDialog } from "@/components/addPassword/AddPasswordDialog";
 
 
 export const metadata: Metadata = {

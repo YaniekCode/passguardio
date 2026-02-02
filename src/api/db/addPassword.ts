@@ -24,20 +24,24 @@
 import openDb from "@/api/db/openDb";
 import { PasswordDatabaseRecord, ResultMessage } from "@/lib";
 
-export default async function addPassword(passwordDatabaseInput: PasswordDatabaseRecord): Promise<ResultMessage> {
+export default async function addPassword(passwordDatabaseInputRecord: PasswordDatabaseRecord): Promise<ResultMessage> {
 	const db = await openDb();
 
 	try {
 		await db.run(
-            		`INSERT INTO passwords (user_id, uuid, name, password, url, iv, tag)
-             		VALUES (?, ?, ?, ?, ?, ?, ?)`,
-			passwordDatabaseInput.user_id,
-			passwordDatabaseInput.uuid,
-			passwordDatabaseInput.name,
-			passwordDatabaseInput.password,
-			passwordDatabaseInput.url,
-			passwordDatabaseInput.iv,
-			passwordDatabaseInput.tag,
+            		`INSERT INTO passwords (user_id, uuid, website_name, website_url, password, category, strength, last_modified, crack_time, iv, tag)
+             		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+			passwordDatabaseInputRecord.user_id,
+			passwordDatabaseInputRecord.uuid,
+			passwordDatabaseInputRecord.website_name,
+			passwordDatabaseInputRecord.website_url,
+			passwordDatabaseInputRecord.password,
+			passwordDatabaseInputRecord.category,
+			passwordDatabaseInputRecord.strength,
+			passwordDatabaseInputRecord.last_modified,
+			passwordDatabaseInputRecord.crack_time,
+			passwordDatabaseInputRecord.iv,
+			passwordDatabaseInputRecord.tag,
         	);
 
 		return { success: true, message: "Password added successfully" };

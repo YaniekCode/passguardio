@@ -49,9 +49,13 @@ export interface UserEncryptionData {
 export interface PasswordDatabaseRecord {
 	user_id: number;
 	uuid: string;
-	name: string;
+	website_name: string;
+	website_url: string;
 	password: Buffer;
-	url: string;
+	category: string;
+	strength: number;
+	last_modified: Date;
+	crack_time: string;
 	iv: Buffer;
 	tag: Buffer;
 };
@@ -62,10 +66,11 @@ export interface LoginUserInterface {
 };
 
 export interface PasswordData {
-	name: string;
-	uuid: string;
+	websiteName: string;
+	websiteUrl: string;
+	usernameOrEmail: string;
 	password: string;
-	url: string;
+	category: string;
 };
 
 export type EncryptionData = { encryptedPassword: Buffer, iv: Buffer, tag: Buffer };

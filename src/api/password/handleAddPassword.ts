@@ -1,10 +1,10 @@
-"use server";
+import crypto from 'node:crypto';
 
-import crypto from "node:crypto";
-import { PasswordData, PasswordDatabaseRecord, ResultMessage } from "@/lib";
-import encryptPassword from "@/utils/encryption/encryptPassword";
-import { getSession } from "@/utils/session/sessionUtils";
-import addPassword from "@/api/db/addPassword";
+import { PasswordData, PasswordDatabaseRecord, ResultMessage } from '@/lib';
+import encryptPassword from '@/utils/encryption/encryptPassword';
+import { getPasswordStrengthAndCrackTime } from '@/utils/getPasswordStrengthAndCrackTime';
+import { getSession } from '@/utils/session/sessionUtils';
+import addPassword from '@/api/db/addPassword';
 
 export default async function handleAddPassword(passwordData: PasswordData): Promise<ResultMessage | undefined> {
 	const session = await getSession();
@@ -12,22 +12,31 @@ export default async function handleAddPassword(passwordData: PasswordData): Pro
 		return;
 	};
 
+	// Encrypt the password and generate a random UUID
 	const dek = Buffer.from(session.dek, "hex"); // convert dek from string to Buffer type
 
 	const { encryptedPassword, iv, tag } = encryptPassword(passwordData.password, dek);
 	const passwordUUID = crypto.randomUUID();
 
-	const passwordDatabaseInput: PasswordDatabaseRecord = {
+
+	// Get password strength and crack time
+	const { strength, crack_time } = getPasswordStrengthAndCrackTime(passwordData.password);
+
+	const passwordDatabaseInputRecord: PasswordDatabaseRecord = {
 		user_id: session.id,
 		uuid: passwordUUID,
-		name: passwordData.name,
+		website_name: passwordData.websiteName,
+		website_url: passwordData.websiteUrl,
+		category: passwordData.category,
 		password: encryptedPassword,
-		url: passwordData.url,
+		strength: strength,
+		last_modified: new Date(),
+		crack_time: crack_time,
 		iv: iv,
 		tag: tag,
 	};
 
-	const passwordInputResult = addPassword(passwordDatabaseInput);
+	const passwordInputResult = addPassword(passwordDatabaseInputRecord);
 
 	return passwordInputResult;
 };
