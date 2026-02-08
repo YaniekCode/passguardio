@@ -45,6 +45,7 @@ export default async function createTables(): Promise<void> {
 			uuid BLOB UNIQUE NOT NULL,
 			website_name TEXT,
 			website_url TEXT,
+			username_or_email TEXT,
 			password TEXT,
 			category TEXT,
 			strength INTEGER,

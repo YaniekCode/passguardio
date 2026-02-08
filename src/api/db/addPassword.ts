@@ -29,12 +29,13 @@ export default async function addPassword(passwordDatabaseInputRecord: PasswordD
 
 	try {
 		await db.run(
-            		`INSERT INTO passwords (user_id, uuid, website_name, website_url, password, category, strength, last_modified, crack_time, iv, tag)
-             		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            		`INSERT INTO passwords (user_id, uuid, website_name, website_url, username_or_email, password, category, strength, last_modified, crack_time, iv, tag)
+             		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
 			passwordDatabaseInputRecord.user_id,
 			passwordDatabaseInputRecord.uuid,
 			passwordDatabaseInputRecord.website_name,
 			passwordDatabaseInputRecord.website_url,
+			passwordDatabaseInputRecord.username_or_email,
 			passwordDatabaseInputRecord.password,
 			passwordDatabaseInputRecord.category,
 			passwordDatabaseInputRecord.strength,

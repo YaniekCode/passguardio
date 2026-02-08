@@ -24,21 +24,25 @@
 import { PasswordDatabaseRecord, PasswordData } from "@/lib";
 import decryptPassword from "@/utils/encryption/decryptPassword"; 
 
-export default async function decryptUserPasswords<Type extends PasswordDatabaseRecord | PasswordDatabaseRecord[]>(passwords: Type, dek: string): Promise<PasswordData | PasswordData[]> {
+export default async function decryptUserPasswords(passwords: PasswordDatabaseRecord[], dek: string): Promise<PasswordData[]> {
 	const formattedDek = Buffer.from(dek, "hex");
 	const userPasswords: PasswordData[] = [];
 
-	if (Array.isArray(passwords)) { // if we pass multiple passwords, we decrypt all of them, but it we pass only one we decrypt only one
-		passwords.map((userPasswordData) => {
-			const decryptedPassword = decryptPassword(userPasswordData.password, formattedDek, userPasswordData.iv, userPasswordData.tag);    
-			const passwordObject = { name: userPasswordData.name, uuid: userPasswordData.uuid, password: decryptedPassword, url: userPasswordData.url }
-			userPasswords.push(passwordObject);
-		});
-	} else {
-		const decryptedPassword = decryptPassword(passwords.password, formattedDek, passwords.iv, passwords.tag);	
-		const passwordObject = { name: passwords.name, uuid: passwords.uuid, password: decryptedPassword, url: passwords.url };
-		return passwordObject;
-	};
-
+	passwords.map((userPasswordData) => {
+		const decryptedPassword = decryptPassword(userPasswordData.password, formattedDek, userPasswordData.iv, userPasswordData.tag);    
+		const passwordObject = {
+			uuid: userPasswordData.uuid,
+			websiteName: userPasswordData.website_name,
+			websiteUrl: userPasswordData.website_url,
+			usernameOrEmail: userPasswordData.username_or_email,
+			password: decryptedPassword,
+			category: userPasswordData.category,
+			strength: userPasswordData.strength,
+			last_modified: userPasswordData.last_modified,
+			crack_time: userPasswordData.crack_time,
+		}
+		userPasswords.push(passwordObject);
+	});
+	
 	return userPasswords;
 }

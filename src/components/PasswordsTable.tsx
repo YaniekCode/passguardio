@@ -19,18 +19,19 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
-import { PasswordData } from "@/lib";
-export function PasswordsTable({ passwords} : { passwords: PasswordData[] }) {
+import { PasswordData } from '@/lib';
+import { PasswordField } from '@/components/PasswordField';
+export function PasswordsTable({ passwords } : { passwords: PasswordData[] }) {
 	return (
-		<section>
+		<section className="overflow-hidden rounded-md border">
 			<Table>
 				<TableCaption>A list of your passwords.</TableCaption>
 				<TableHeader>
 					<TableRow>
 						<TableHead>Website</TableHead>	
-						<TableHead>Username</TableHead>	
+						<TableHead>Username or Email</TableHead>	
 						<TableHead>Password</TableHead>	
 						<TableHead>Category</TableHead>	
 						<TableHead>Last Modified</TableHead>	
@@ -38,9 +39,16 @@ export function PasswordsTable({ passwords} : { passwords: PasswordData[] }) {
 					</TableRow>
 				</TableHeader>
 				<TableBody>	
-					{passwords.map((password) => (
-						<TableRow key={password.uuid}>
-						
+					{passwords.map((passwordEntry, index) => (
+						<TableRow key={index}>
+							<TableCell>{passwordEntry.websiteName}</TableCell>
+							<TableCell>{passwordEntry.usernameOrEmail}</TableCell>
+							<TableCell>
+								<PasswordField password={passwordEntry.password}/>	
+							</TableCell>
+							<TableCell>{passwordEntry.category}</TableCell>
+							<TableCell>{passwordEntry.last_modified}</TableCell>
+							<TableCell>actions</TableCell>
 						</TableRow>
 					))}
 				</TableBody>

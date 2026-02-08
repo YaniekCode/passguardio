@@ -19,9 +19,11 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Poppins } from 'next/font/google';
+
+import './globals.css';
+import { Toaster } from '@/components/ui/sonner';
 
 const poppinsSans = Poppins({
 	subsets: ["latin"],
@@ -49,7 +51,8 @@ export default function RootLayout({
 		<html lang="en">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 			<body className={`${poppinsSans.variable}`}>
-				{children}
+				<main>{children}</main>
+				<Toaster />
 			</body>
 		</html>
 	);

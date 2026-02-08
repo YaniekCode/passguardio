@@ -27,6 +27,7 @@ export default async function handleAddPassword(passwordData: PasswordData): Pro
 		uuid: passwordUUID,
 		website_name: passwordData.websiteName,
 		website_url: passwordData.websiteUrl,
+		username_or_email: passwordData.usernameOrEmail,
 		category: passwordData.category,
 		password: encryptedPassword,
 		strength: strength,
