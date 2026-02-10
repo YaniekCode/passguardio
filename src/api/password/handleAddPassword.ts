@@ -31,7 +31,7 @@ export default async function handleAddPassword(passwordData: PasswordData): Pro
 		category: passwordData.category,
 		password: encryptedPassword,
 		strength: strength,
-		last_modified: new Date(),
+		last_modified: new Date().getTime(),
 		crack_time: crack_time,
 		iv: iv,
 		tag: tag,

@@ -19,9 +19,11 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 import { PasswordData } from '@/lib';
+import { formatTimeDifference } from '@/utils/timeDifference/formatTimeDifference';
+import { PasswordCategoryBadge } from '@/components/PasswordCategoryBadge';
 import { PasswordField } from '@/components/PasswordField';
 export function PasswordsTable({ passwords } : { passwords: PasswordData[] }) {
 	return (
@@ -46,8 +48,10 @@ export function PasswordsTable({ passwords } : { passwords: PasswordData[] }) {
 							<TableCell>
 								<PasswordField password={passwordEntry.password}/>	
 							</TableCell>
-							<TableCell>{passwordEntry.category}</TableCell>
-							<TableCell>{passwordEntry.last_modified}</TableCell>
+							<TableCell>
+								<PasswordCategoryBadge category={passwordEntry.category}/>	
+							</TableCell>
+							<TableCell>{formatTimeDifference(passwordEntry.last_modified, new Date().getTime())}</TableCell>
 							<TableCell>actions</TableCell>
 						</TableRow>
 					))}

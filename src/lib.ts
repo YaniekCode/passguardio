@@ -39,6 +39,14 @@ export interface UserData {
 	role: "user" | "admin";
 };
 
+export interface TimeDifferenceType {
+	years: number;
+	days: number;
+	hours: number;
+	minutes: number;
+	seconds: number;
+};
+
 export interface UserEncryptionData {
 	encryption_salt: Buffer;
 	wrapped_dek: Buffer;
@@ -53,9 +61,9 @@ export interface PasswordDatabaseRecord {
 	website_url: string;
 	username_or_email: string;
 	password: Buffer;
-	category: string;
+	category: PasswordCategoryType;
 	strength: number;
-	last_modified: Date;
+	last_modified: number;
 	crack_time: string;
 	iv: Buffer;
 	tag: Buffer;
@@ -72,10 +80,25 @@ export interface PasswordData {
 	websiteUrl: string;
 	usernameOrEmail: string;
 	password: string;
-	category: string;
+	category: PasswordCategoryType;
 	strength: number;
-	last_modified: Date;
+	last_modified: number;
 	crack_time: string;
+};
+
+export type PasswordCategoryType =
+	| "social"
+	| "work"
+	| "finance"
+	| "entertainment"
+	| "shopping"
+	| "other";
+
+export type PasswordStatsType = { 
+	totalPasswordCount: number,
+	strongPasswordCount: number,
+	weakPasswordCount: number,
+	recentlyAddedPasswordCount: number
 };
 
 export type EncryptionData = { encryptedPassword: Buffer, iv: Buffer, tag: Buffer };
@@ -86,10 +109,13 @@ export type FormState = {
 	error?: string;
 };
 
+export type FetchPasswordStatsType =
+	| { success: true, data: PasswordStatsType }
+	| { success: false, error: string };
 
 export type SignupValidationResult =
-	| { success: true, data: UserInterface}
-	| { success: false, error: string}
+	| { success: true, data: UserInterface }
+	| { success: false, error: string };
 
 export type LoginValidationResult =
 	| { success: true, data: LoginUserInterface}

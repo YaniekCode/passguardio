@@ -35,5 +35,4 @@ export async function addPasswordAction(formData: FormData): Promise<void> {
 	};
 
 	await handleAddPassword(rawPasswordData);
-	//redirect("/dashboard");
 };
