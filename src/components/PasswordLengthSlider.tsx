@@ -3,7 +3,7 @@ import { Slider } from "@/components/ui/slider";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 
-import { generateRandomPassword } from "@/components/addPassword/generateRandomPassword";
+import { generateRandomPassword } from "@/components/generateRandomPassword";
 
 type Props = {
 	setPassword: (password: string) => void;

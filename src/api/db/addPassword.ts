@@ -22,15 +22,15 @@
 "use server";
 
 import openDb from "@/api/db/openDb";
-import { PasswordDatabaseRecord, ResultMessage } from "@/lib";
+import { PasswordDatabaseRecordType, MessageResultType } from "@/lib";
 
-export default async function addPassword(passwordDatabaseInputRecord: PasswordDatabaseRecord): Promise<ResultMessage> {
+export default async function addPassword(passwordDatabaseInputRecord: PasswordDatabaseRecordType): Promise<MessageResultType> {
 	const db = await openDb();
 
 	try {
 		await db.run(
-            		`INSERT INTO passwords (user_id, uuid, website_name, website_url, username_or_email, password, category, strength, last_modified, crack_time, iv, tag)
-             		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            		`INSERT INTO passwords (user_id, uuid, website_name, website_url, username_or_email, password, category, strength, last_modified, created_at, crack_time, iv, tag)
+             		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
 			passwordDatabaseInputRecord.user_id,
 			passwordDatabaseInputRecord.uuid,
 			passwordDatabaseInputRecord.website_name,
@@ -40,6 +40,7 @@ export default async function addPassword(passwordDatabaseInputRecord: PasswordD
 			passwordDatabaseInputRecord.category,
 			passwordDatabaseInputRecord.strength,
 			passwordDatabaseInputRecord.last_modified,
+			passwordDatabaseInputRecord.created_at,
 			passwordDatabaseInputRecord.crack_time,
 			passwordDatabaseInputRecord.iv,
 			passwordDatabaseInputRecord.tag,

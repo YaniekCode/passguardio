@@ -6,9 +6,9 @@ export async function fetchPasswordStats(userId: number) {
 
 	try {
 		const passwordStatList = (await db.all(
-            		`SELECT strength, last_modified FROM passwords WHERE user_id=?`,
+            		`SELECT strength, last_modified, created_at FROM passwords WHERE user_id=?`,
 			userId
-        	)) as Pick<PasswordData, 'strength' | 'last_modified'>[];
+        	)) as Pick<PasswordData, 'strength' | 'last_modified' | 'created_at'>[];
 
 		return { success: true, data: passwordStatList };
 	} catch (err: unknown) {

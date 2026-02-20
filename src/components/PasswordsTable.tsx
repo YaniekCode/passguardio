@@ -21,10 +21,12 @@
 
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
+import { EditPasswordDialog } from '@/components/editPassword/EditPasswordDialog';
 import { PasswordData } from '@/lib';
 import { formatTimeDifference } from '@/utils/timeDifference/formatTimeDifference';
 import { PasswordCategoryBadge } from '@/components/PasswordCategoryBadge';
 import { PasswordField } from '@/components/PasswordField';
+
 export function PasswordsTable({ passwords } : { passwords: PasswordData[] }) {
 	return (
 		<section className="overflow-hidden rounded-md border">
@@ -49,10 +51,18 @@ export function PasswordsTable({ passwords } : { passwords: PasswordData[] }) {
 								<PasswordField password={passwordEntry.password}/>	
 							</TableCell>
 							<TableCell>
-								<PasswordCategoryBadge category={passwordEntry.category}/>	
+								<PasswordCategoryBadge category={passwordEntry.category} />
 							</TableCell>
 							<TableCell>{formatTimeDifference(passwordEntry.last_modified, new Date().getTime())}</TableCell>
-							<TableCell>actions</TableCell>
+							<TableCell>
+								<EditPasswordDialog
+									websiteName={passwordEntry.websiteName}
+									websiteUrl={passwordEntry.websiteUrl}
+									usernameOrEmail={passwordEntry.usernameOrEmail}
+									password={passwordEntry.password}
+									category={passwordEntry.category}
+								/>
+							</TableCell>
 						</TableRow>
 					))}
 				</TableBody>

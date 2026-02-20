@@ -21,7 +21,7 @@
 
 import type { JWTPayload } from 'jose';
 
-export interface UserInterface {
+export interface UserType {
 	username: string;
 	email: string;
 	password: string;
@@ -39,14 +39,6 @@ export interface UserData {
 	role: "user" | "admin";
 };
 
-export interface TimeDifferenceType {
-	years: number;
-	days: number;
-	hours: number;
-	minutes: number;
-	seconds: number;
-};
-
 export interface UserEncryptionData {
 	encryption_salt: Buffer;
 	wrapped_dek: Buffer;
@@ -54,7 +46,7 @@ export interface UserEncryptionData {
 	dek_wrap_tag: Buffer;
 };
 
-export interface PasswordDatabaseRecord {
+export interface PasswordDatabaseRecordType {
 	user_id: number;
 	uuid: string;
 	website_name: string;
@@ -64,6 +56,7 @@ export interface PasswordDatabaseRecord {
 	category: PasswordCategoryType;
 	strength: number;
 	last_modified: number;
+	created_at: number;
 	crack_time: string;
 	iv: Buffer;
 	tag: Buffer;
@@ -83,6 +76,7 @@ export interface PasswordData {
 	category: PasswordCategoryType;
 	strength: number;
 	last_modified: number;
+	created_at: number;
 	crack_time: string;
 };
 
@@ -109,42 +103,30 @@ export type FormState = {
 	error?: string;
 };
 
-export type FetchPasswordStatsType =
-	| { success: true, data: PasswordStatsType }
-	| { success: false, error: string };
+export type Result<Type> =
+    | { success: true, data: Type }
+    | { success: false, error: string }
 
-export type SignupValidationResult =
-	| { success: true, data: UserInterface }
-	| { success: false, error: string };
+export type MessageResultType =
+	| { success: true, message: string }
+	| { success: false, error: string }
 
-export type LoginValidationResult =
-	| { success: true, data: LoginUserInterface}
-	| { success: false, error: string}
+export type FetchPasswordStatsResultType = Result<PasswordStatsType>;
 
+export type SignupValidationResultType = Result<UserType>;
 
-export type ResultMessage = 
-	| { success: true; message: string }
-	| { success: false; error: string };
+export type LoginValidationResultType = Result<LoginUserInterface>;
 
-export type LoginResult = 
-	| { success: true, data: SessionPayload }
-	| { success: false, error: string };
+export type LoginResultType = Result<SessionPayload>;
 
-export type PasswordDatabaseResult =
-	| { success: true, data: PasswordDatabaseRecord[] }
-	| { success: false, error: string };
+export type PasswordDatabaseResultType = Result<PasswordDatabaseRecordType[]>;
 
-export type HandleLogin = 
-	| { success: true, data: UserDatabaseRecord }
-	| { success: false, error: string };
+export type HandleLoginResultType = Result<UserDatabaseRecord>;
 
-export type PasswordByUUIDResult =
-	| { success: true, data: PasswordData }
-	| { success: false, error: string };
+export type PasswordByUUIDResultType = Result<PasswordData>;
 
-export type FirstUserResult =
-	| { success: true, data: boolean }
-	| { success: false, error: string };
+export type FirstUserResultType = Result<boolean>;
+
 
 export interface SessionPayload extends JWTPayload {
 	id: number;

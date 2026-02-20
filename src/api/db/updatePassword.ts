@@ -22,17 +22,22 @@
 "use server";
 
 import openDb from "@/api/db/openDb";
-import { PasswordDatabaseRecord, ResultMessage } from "@/lib";
+import { PasswordDatabaseRecordType, MessageResultType } from "@/lib";
 
-export default async function updatePassword(passwordData: PasswordDatabaseRecord): Promise<ResultMessage>{
+export default async function updatePassword(passwordData: PasswordDatabaseRecordType): Promise<MessageResultType>{
 	const db = await openDb();
 
 	try {
 		await db.run(
-            		`UPDATE passwords SET name=?, password=?, url=?, iv=?, tag=? WHERE uuid=?`,
-			passwordData.name,
+            		`UPDATE passwords SET website_name=?, website_url=?, username_or_email=?, password=?, category=?, strength=?, last_modified=?, crack_time=?, iv=?, tag=? WHERE uuid=?`,
+			passwordData.website_name,
+			passwordData.website_url,
+			passwordData.username_or_email,
 		       	passwordData.password,
-			passwordData.url,
+			passwordData.category,
+			passwordData.strength,
+			passwordData.last_modified,
+			passwordData.crack_time,
 			passwordData.iv,
 			passwordData.tag,
 			passwordData.uuid

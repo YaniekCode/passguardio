@@ -1,12 +1,12 @@
 import crypto from 'node:crypto';
 
-import { PasswordData, PasswordDatabaseRecord, ResultMessage } from '@/lib';
+import { PasswordData, PasswordDatabaseRecordType, MessageResultType } from '@/lib';
 import encryptPassword from '@/utils/encryption/encryptPassword';
 import { getPasswordStrengthAndCrackTime } from '@/utils/getPasswordStrengthAndCrackTime';
 import { getSession } from '@/utils/session/sessionUtils';
 import addPassword from '@/api/db/addPassword';
 
-export default async function handleAddPassword(passwordData: PasswordData): Promise<ResultMessage | undefined> {
+export default async function handleAddPassword(passwordData: PasswordData): Promise<MessageResultType | undefined> {
 	const session = await getSession();
 	if (!session) {
 		return;
@@ -22,7 +22,7 @@ export default async function handleAddPassword(passwordData: PasswordData): Pro
 	// Get password strength and crack time
 	const { strength, crack_time } = getPasswordStrengthAndCrackTime(passwordData.password);
 
-	const passwordDatabaseInputRecord: PasswordDatabaseRecord = {
+	const passwordDatabaseInputRecord: PasswordDatabaseRecordType = {
 		user_id: session.id,
 		uuid: passwordUUID,
 		website_name: passwordData.websiteName,
@@ -32,6 +32,7 @@ export default async function handleAddPassword(passwordData: PasswordData): Pro
 		password: encryptedPassword,
 		strength: strength,
 		last_modified: new Date().getTime(),
+		created_at: new Date().getTime(),
 		crack_time: crack_time,
 		iv: iv,
 		tag: tag,

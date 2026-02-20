@@ -1,14 +1,20 @@
+'use client';
+
+import { useState } from 'react';
 import { Label } from '@/components/ui/label';
 import {
 	NativeSelect,
 	NativeSelectOption
 } from '@/components/ui/native-select';
 
-export function CategorySelect() {
+import { PasswordCategoryType } from '@/lib';
+
+export function CategorySelect({ defaultCategory }: { defaultCategory: PasswordCategoryType }) {
+	const [category, setCategory] = useState<string>(defaultCategory);
 	return (
 		<>
 			<Label htmlFor="category">Category</Label>
-			<NativeSelect id="category" name="category">
+			<NativeSelect id="category" value={category} onChange={(e) => setCategory(e.target.value)} name="category">
 				<NativeSelectOption value="social">Social</NativeSelectOption>	
 				<NativeSelectOption value="work">Work</NativeSelectOption>	
 				<NativeSelectOption value="finance">Finance</NativeSelectOption>	

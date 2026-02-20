@@ -22,16 +22,18 @@
 "use server";
 import { redirect } from "next/navigation";
 
+import { PasswordData } from '@/lib';
 import handleEditPassword from "@/api/password/handleEditPassword";
 
 export default async function editPasswordAction(formData: FormData): Promise<void> {
-	const rawFormData = {
-		name: formData.get("name")?.toString() || "",
-		uuid: formData.get("uuid")?.toString() || "",
+	const rawPasswordData: PasswordData = {
+		websiteName: formData.get("websiteName")?.toString() || "",
+		websiteUrl: formData.get("websiteUrl")?.toString() || "",
+		usernameOrEmail: formData.get("usernameOrEmail")?.toString() || "",
 		password: formData.get("password")?.toString() || "",
-		url: formData.get("url")?.toString() || "",
+		category: formData.get("category")?.toString() || "",
 	};
 
-	await handleEditPassword(rawFormData);
+	await handleEditPassword(rawPasswordData);
 	redirect("/dashboard");
 };

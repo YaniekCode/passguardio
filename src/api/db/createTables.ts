@@ -50,6 +50,7 @@ export default async function createTables(): Promise<void> {
 			category TEXT,
 			strength INTEGER,
 			last_modified TEXT,
+			created_at TEXT,
 			crack_time TEXT,
 			iv BLOB NOT NULL,
 			tag BLOB NOT NULL
