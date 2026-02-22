@@ -1,3 +1,5 @@
+'use client';
+import { useState } from 'react';
 import { PenSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -16,22 +18,28 @@ import { Input } from '@/components/ui/input';
 import { PasswordCategoryType } from '@/lib';
 import { GeneratePasswordField } from '@/components/GeneratePasswordField';
 import { CategorySelect } from '@/components/CategorySelect';
-import { addPasswordAction } from '@/actions/addPasswordAction';
+import { editPasswordAction } from '@/actions/editPasswordAction';
 
-export function EditPasswordDialog({ websiteName, websiteUrl, usernameOrEmail, password, category} : { websiteName: string, websiteUrl: string, usernameOrEmail: string, password: string, category: PasswordCategoryType }) {
+export function EditPasswordDialog({ uuid, websiteName, websiteUrl, usernameOrEmail, password, category} : { uuid: string, websiteName: string, websiteUrl: string, usernameOrEmail: string, password: string, category: PasswordCategoryType }) {
+	const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 	return (
-		<Dialog>
+		<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
 			<DialogTrigger asChild>
-				<Button variant="ghost" size="icon"><PenSquare /></Button>	
+				<Button title="Edit password" variant="ghost" size="icon" aria-label="Edit password" onClick={() => setIsDialogOpen(true)}><PenSquare /></Button>	
 			</DialogTrigger>
 			<DialogContent>
-				<form action={addPasswordAction} className="flex flex-col gap-4">
+				<form 
+					action={(formData) => {
+						editPasswordAction(formData);
+						setIsDialogOpen(false)
+					}} className="flex flex-col gap-4">
 					<DialogHeader>
 						<DialogTitle>Edit password</DialogTitle>	
 						<DialogDescription>
 							Edit an existing password entry in your vault. All fields marked with * are required.	
 						</DialogDescription>
 					</DialogHeader>	
+					<input type="hidden" name="uuid" value={uuid}></input>
 					<Label htmlFor="website-name">Website Name *</Label>
 					<Input type="text" id="website-name" name="websiteName" defaultValue={websiteName} placeholder="e.g., Google" required></Input>
 					<Label htmlFor="website-url">Website URL</Label>

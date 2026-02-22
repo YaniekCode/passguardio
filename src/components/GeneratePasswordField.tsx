@@ -15,7 +15,7 @@ export function GeneratePasswordField({ defaultPassword }: { defaultPassword: st
 		<>
 			<Label htmlFor="password">Password *</Label>
 			<div className="flex gap-2">
-				<Input id="password" name="password" value={inputPassword} onChange={(e) => setInputPassword(e.target.value)} placeholder="Enter or generate a password"></Input>
+				<Input id="password" name="password" value={inputPassword} onChange={(e) => setInputPassword(e.target.value)} placeholder="Enter or generate a password" required></Input>
 				<Popover open={isOpen} onOpenChange={setIsOpen}>
 					<PopoverTrigger asChild>
 						<Button variant="outline" size="icon" title="Generate" onClick={() => setIsOpen(!isOpen)}><RefreshCw /></Button>

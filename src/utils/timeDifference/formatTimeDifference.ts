@@ -36,8 +36,7 @@ export function formatTimeDifference(startTime: number, endTime: number): string
 	const timeDiff = Math.max(0, endTime - startTime);
 
 	if (timeDiff < msPerMinute) {
-		const value = Math.round(timeDiff / 1000);
-		return `${value} ${pluralize(value, "second", "seconds")} ago`;
+		return "less than a minute ago";
 	};
 
 	if (timeDiff < msPerHour) {

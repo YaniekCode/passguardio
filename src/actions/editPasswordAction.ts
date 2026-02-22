@@ -20,13 +20,14 @@
 */
 
 "use server";
-import { redirect } from "next/navigation";
+import { revalidatePath } from 'next/cache';
 
 import { PasswordData } from '@/lib';
 import handleEditPassword from "@/api/password/handleEditPassword";
 
-export default async function editPasswordAction(formData: FormData): Promise<void> {
+export async function editPasswordAction(formData: FormData): Promise<void> {
 	const rawPasswordData: PasswordData = {
+		uuid: formData.get("uuid")?.toString() || "",
 		websiteName: formData.get("websiteName")?.toString() || "",
 		websiteUrl: formData.get("websiteUrl")?.toString() || "",
 		usernameOrEmail: formData.get("usernameOrEmail")?.toString() || "",
@@ -35,5 +36,5 @@ export default async function editPasswordAction(formData: FormData): Promise<vo
 	};
 
 	await handleEditPassword(rawPasswordData);
-	redirect("/dashboard");
+	revalidatePath("/dashboard");
 };

@@ -13,7 +13,7 @@ export function PasswordCategoryBadge({ category }: { category: PasswordCategory
 	} as const;
 	return (
 		<>
-			<Badge className={`${badgeTextColorMap[category]} rounded-md bg-gray-600`}>
+			<Badge className={`${badgeTextColorMap[category]} rounded-md`} variant="outline">
 				{category}
 			</Badge>
 		</>

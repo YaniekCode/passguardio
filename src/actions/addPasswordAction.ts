@@ -20,7 +20,7 @@
 */
 'use server';
 
-import { redirect } from 'next/navigation';
+import { revalidatePath } from 'next/cache';
 
 import { PasswordData } from '@/lib';
 import handleAddPassword from '@/api/password/handleAddPassword';
@@ -35,4 +35,5 @@ export async function addPasswordAction(formData: FormData): Promise<void> {
 	};
 
 	await handleAddPassword(rawPasswordData);
+	revalidatePath("/dashboard");
 };

@@ -1,3 +1,5 @@
+'use client';
+import { useState } from 'react';
 import { Plus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -18,13 +20,18 @@ import { CategorySelect } from '@/components/CategorySelect';
 import { addPasswordAction } from '@/actions/addPasswordAction';
 
 export function AddPasswordDialog() {
+	const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 	return (
-		<Dialog>
+		<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
 			<DialogTrigger asChild>
-				<Button><Plus />Add Password</Button>	
+				<Button onClick={() => setIsDialogOpen(true)} ><Plus />Add Password</Button>	
 			</DialogTrigger>
 			<DialogContent>
-				<form action={addPasswordAction} className="flex flex-col gap-4">
+				<form
+					action={(formData) => {
+						addPasswordAction(formData);
+						setIsDialogOpen(false)
+					}} className="flex flex-col gap-4">
 					<DialogHeader>
 						<DialogTitle>Add New Password</DialogTitle>	
 						<DialogDescription>
@@ -37,8 +44,8 @@ export function AddPasswordDialog() {
 					<Input type="text" id="website-url" name="websiteUrl" placeholder="https://www.google.com"></Input>
 					<Label htmlFor="username-email">Username/Email *</Label>
 					<Input type="text" id="username-email" name="usernameOrEmail" placeholder="your@email.com" required></Input>
-					<GeneratePasswordField password=""/>
-					<CategorySelect />
+					<GeneratePasswordField defaultPassword=""/>
+					<CategorySelect defaultCategory="social"/>
 					<DialogFooter>
 						<DialogClose asChild>
 							<Button variant="outline">Cancel</Button>	

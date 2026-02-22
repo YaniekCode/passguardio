@@ -22,6 +22,7 @@
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
 import { EditPasswordDialog } from '@/components/editPassword/EditPasswordDialog';
+import { DeletePasswordDialog } from '@/components/deletePassword/DeletePasswordDialog';
 import { PasswordData } from '@/lib';
 import { formatTimeDifference } from '@/utils/timeDifference/formatTimeDifference';
 import { PasswordCategoryBadge } from '@/components/PasswordCategoryBadge';
@@ -56,11 +57,16 @@ export function PasswordsTable({ passwords } : { passwords: PasswordData[] }) {
 							<TableCell>{formatTimeDifference(passwordEntry.last_modified, new Date().getTime())}</TableCell>
 							<TableCell>
 								<EditPasswordDialog
+									uuid={passwordEntry.uuid}
 									websiteName={passwordEntry.websiteName}
 									websiteUrl={passwordEntry.websiteUrl}
 									usernameOrEmail={passwordEntry.usernameOrEmail}
 									password={passwordEntry.password}
 									category={passwordEntry.category}
+								/>
+								<DeletePasswordDialog
+									uuid={passwordEntry.uuid}
+									websiteName={passwordEntry.websiteName}
 								/>
 							</TableCell>
 						</TableRow>

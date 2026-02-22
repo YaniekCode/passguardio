@@ -5,7 +5,6 @@ export function getPasswordStrengthAndCrackTime(password: string) {
 
 	const strength = result.score;
 	const crack_time = (result.crack_times_display.offline_slow_hashing_1e4_per_second).toString();
-	console.log(crack_time);
 
 	return { strength, crack_time };
 };

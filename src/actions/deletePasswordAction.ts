@@ -26,12 +26,8 @@ import { revalidatePath } from "next/cache";
 
 import deletePassword from "@/api/db/deletePassword";
 
-export default async function deletePasswordAction(formData: FormData): Promise<void> {
-	const rawFormData = {
-		uuid: formData.get('uuid')?.toString() || "",
-	};
-
-	const isValidUUID = uuidValidate(rawFormData.uuid);
+export async function deletePasswordAction(passwordUUID: string): Promise<void> {
+	const isValidUUID = uuidValidate(passwordUUID);
 	if (!isValidUUID) {
 		throw new Error("Invalid UUID");
 	};
@@ -39,7 +35,7 @@ export default async function deletePasswordAction(formData: FormData): Promise<
 	const session = await getSession();
 	if (session) {
 		const { id } = session;
-		await deletePassword(id, rawFormData.uuid);
+		await deletePassword(id, passwordUUID);
 	};
 
 	revalidatePath("/dashboard");
