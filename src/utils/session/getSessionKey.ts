@@ -19,19 +19,21 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import fs from "node:fs";
-import path from "node:path";
-import { randomBytes } from "node:crypto";
-import getDataDir from "@/utils/getDataDir";
+import fs from 'node:fs';
+import path from 'node:path';
+import { randomBytes } from 'node:crypto';
+
+import  { getDataDirectory } from '@/utils/getDataDirectory';
 
 const SESSION_KEY_FILE = "session.key";
 const SESSION_KEY_SIZE = 32;
 
-// Function reads the session key, if it exists in the data/session.key file. If it does not it generates it.
-export default function getSessionKey(): Uint8Array {
-	const dataDir = getDataDir();
+// Function reads the session key, if it exists in the data/session.key file. If it does not, it generates it.
+export function getSessionKey(): Uint8Array {
+	const dataDir = getDataDirectory();
 	const keyPath = path.join(dataDir, SESSION_KEY_FILE);
 
+	// If the session key does not exists it gets generated
 	if (!fs.existsSync(keyPath)) {
 		fs.mkdirSync(dataDir, { recursive: true });
 

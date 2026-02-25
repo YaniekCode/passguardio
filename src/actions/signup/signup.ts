@@ -19,15 +19,15 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-"use server";
-import { redirect } from "next/navigation";
+'use server';
+import { redirect } from 'next/navigation';
 
-import { UserInterface, FormState } from "@/lib";
-import { validateSignupInput } from "@/utils/validation/validateUserInput";
-import handleSignup from "@/api/signup/handleSignup";
+import { UserType, FormState } from '@/lib';
+import { validateSignupInput } from '@/utils/validation/signupValidation/validateSignupInput';
+import handleSignup from '@/api/signup/handleSignup';
 
 export default async function signup(prevState: FormState, formData: FormData): Promise<FormState> {
-	const rawFormData: UserInterface = {
+	const rawFormData: UserType = {
 		username: formData.get('username')?.toString() || "",
 		email: formData.get('email')?.toString() || "",
 		password: formData.get('password')?.toString() || "",

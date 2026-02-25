@@ -19,38 +19,33 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-"use server";
+'use server';
 
-import { UserDatabaseRecord, LoginUserInterface, HandleLogin } from "@/lib";
-import compareHash from "@/utils/compareHash";
-import openDb from "@/api/db/openDb";
+import openDb from '@/backend/db/openDb';
+import { MessageResultType } from '@/types';
 
-export default async function loginUser(userData: LoginUserInterface): Promise<HandleLogin>{
+export default async function isPasswordUUIDInDb(userId: number, uuid: string): Promise<MessageResultType> {
 	const db = await openDb();
 
 	try {
-		const user = (await db.get(
-			"SELECT * FROM users WHERE email = ?",
-			userData.email
-		)) as UserDatabaseRecord | undefined;
-		if (!user) {
-			return { success: false, error: "Invalid email or password" };
-		};
-
-		const isEqual = compareHash(userData.password, user.password_hash);
-		if (isEqual) {
-			return { success: true, data: user };
+		const passwordEntry = (await db.get(
+			`SELECT uuid FROM passwords WHERE uuid=? AND user_id=?`,
+			uuid,
+			userId
+		)) as { uuid: string } | undefined;
+		if (passwordEntry?.uuid) {
+			return { success: true, message: "Password found in DB" };
 		} else {
-			return { success: false, error: "Invalid email or password "};
+			return { success: false, error: "Password not found in DB" };
 		};
 	} catch (err: unknown) {
 		console.log(err);
-		return { success: false, error: "An error occurred when logging in" };
+		return { success: false, error: "An error occured when validating the password" };
 	} finally {
 		try {
 			await db.close();
 		} catch (closeErr) {
 			console.error("Failed to close DB: ", closeErr);
-		}
-	}
-}
+		};
+	};
+};

@@ -1,7 +1,7 @@
-import openDb from "@/api/db/openDb";
-import { FirstUserResult } from "@/lib";
+import openDb from '@/backend/db/openDb';
+import { FirstUserResultType } from '@/types';
 
-export async function isFirstUser(): Promise<FirstUserResult> {
+export async function isFirstUser(): Promise<FirstUserResultType> {
 	const db = await openDb();
 
 	try {

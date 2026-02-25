@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2026 YaniekCode
+ * Copyright (C) 2025 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -19,21 +19,29 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import path from "node:path";
-import fs from "node:fs";
+"use server";
 
-// Outputs the DB dirname based on the running environment
-export default function getDataDir(): string {
-	// If dirname is specified in .env
-	if (process.env.PASSGUARDIO_DB_PATH) {
-		return path.dirname(process.env.PASSGUARDIO_DB_PATH);
-	};
-	
-	// If running in a docker container
-	if (fs.existsSync("/.dockerenv")) {
-		return "/data";
-	};
+import openDb from "@/backend/db/openDb";
+import { MessageResultType } from "@/types";
 
-	// If running in dev mode
-	return path.resolve("./data");
-};
+export default async function deletePassword(user_id: number, uuid: string): Promise<MessageResultType> {
+	const db = await openDb();
+
+	try {
+		await db.run(
+            		`DELETE FROM passwords WHERE uuid = ? AND user_id = ?`,
+			uuid,
+			user_id
+        	);
+		return { success: true, message: "Password deleted successfully" };
+	} catch (err: unknown) {
+		console.log(err);
+		return { success: false, error: "An error occurred when deleting a password" };
+	} finally {
+		try {
+			await db.close();
+		} catch (closeErr) {
+			console.error("Failed to close DB: ", closeErr);
+		}
+	}
+}

@@ -1,8 +1,8 @@
 import { getSession } from '@/utils/session/sessionUtils';
-import { FetchPasswordStatsType } from '@/lib';
-import { fetchPasswordStats } from '@/api/db/fetchPasswordStats';
+import { FetchPasswordStatsResultType } from '@/types';
+import { fetchPasswordStats } from '@/backend/db/fetchPasswordStats';
 
-export async function handleFetchPasswordStats(): Promise<FetchPasswordStatsType> {
+export async function handleFetchPasswordStats(): Promise<FetchPasswordStatsResultType> {
 	const session = await getSession();
 	if (!session) {
 		return { success: false, error: "Not authenticated user" };

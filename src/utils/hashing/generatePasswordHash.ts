@@ -19,23 +19,14 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import path from 'node:path';
-import sqlite3 from 'sqlite3';
-import { open, Database } from 'sqlite';
+import bcrypt from 'bcryptjs';
 
-import getDataDir from '@/utils/getDataDir';
 
-sqlite3.verbose();
+// Function generates a password hash using bcrypt. The number of salt rounds can be changed
+// in .env file - by default it's set to 13 rounds
+export function generatePasswordHash(password: string): string {
+	const saltRounds = process.env.BCRYPT_SALT_ROUNDS ? Number(process.env.BCRYPT_SALT_ROUNDS) : 13;
 
-export default async function openDb(): Promise<Database> {
-	const dataDir = getDataDir();
-	const dbPath = path.join(dataDir, "passguardio.db");
-
-  	const db = await open({
-    		filename: dbPath,
-    		driver: sqlite3.Database,
-  	});
-
-  	return db;
+	const hash = bcrypt.hashSync(password, saltRounds);
+	return hash;
 };
-

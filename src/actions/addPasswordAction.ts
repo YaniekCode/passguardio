@@ -22,11 +22,11 @@
 
 import { revalidatePath } from 'next/cache';
 
-import { PasswordData } from '@/lib';
-import handleAddPassword from '@/api/password/handleAddPassword';
+import { PasswordData } from '@/types';
+import handleAddPassword from '@/backend/password/handleAddPassword';
 
 export async function addPasswordAction(formData: FormData): Promise<void> {
-	const rawPasswordData: PasswordData = {
+	const rawFormData: PasswordData = {
 		websiteName: formData.get("websiteName")?.toString() || "",
 		websiteUrl: formData.get("websiteUrl")?.toString() || "",
 		usernameOrEmail: formData.get("usernameOrEmail")?.toString() || "",
@@ -34,6 +34,6 @@ export async function addPasswordAction(formData: FormData): Promise<void> {
 		category: formData.get("category")?.toString() || "",
 	};
 
-	await handleAddPassword(rawPasswordData);
+	await handleAddPassword(rawFormData);
 	revalidatePath("/dashboard");
 };

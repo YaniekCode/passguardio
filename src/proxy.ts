@@ -23,7 +23,7 @@ import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
 import { getSession } from "@/utils/session/sessionUtils";
-import { isFirstUser } from "@/api/db/isFirstUser";
+import { isFirstUser } from "@/backend/db/isFirstUser";
  
 export async function proxy(request: NextRequest) {
 	const { pathname } = request.nextUrl;

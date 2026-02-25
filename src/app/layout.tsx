@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     		default: "Passguardio",
 		template: "%s | Passguardio",
 	},
-	description: "A simple, local and fast password manager.",
+	description: "A simple, local and fast password manager with a web interface.",
 	applicationName: "Passguardio",
 	authors: [{ name: "YaniekCode" }],
 	keywords: ["password manager", "security", "local", "Passguardio"],
@@ -50,7 +50,7 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-			<body className={`${poppinsSans.variable}`}>
+			<body className={`${poppinsSans.variable} antialiased`}>
 				<main>{children}</main>
 				<Toaster />
 			</body>

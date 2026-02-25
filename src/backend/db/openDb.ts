@@ -19,29 +19,23 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-"use server";
+import path from 'node:path';
+import sqlite3 from 'sqlite3';
+import { open, Database } from 'sqlite';
 
-import openDb from "@/api/db/openDb";
-import { ResultMessage } from "@/lib";
+import { getDataDirectory } from '@/utils/getDataDirectory';
 
-export default async function deletePassword(user_id: number, uuid: string): Promise<ResultMessage> {
-	const db = await openDb();
+sqlite3.verbose();
 
-	try {
-		await db.run(
-            		`DELETE FROM passwords WHERE uuid = ? AND user_id = ?`,
-			uuid,
-			user_id
-        	);
-		return { success: true, message: "Password deleted successfully" };
-	} catch (err: unknown) {
-		console.log(err);
-		return { success: false, error: "An error occurred when deleting a password" };
-	} finally {
-		try {
-			await db.close();
-		} catch (closeErr) {
-			console.error("Failed to close DB: ", closeErr);
-		}
-	}
-}
+export default async function openDb(): Promise<Database> {
+	const dataDir = getDataDirectory();
+	const dbPath = path.join(dataDir, "passguardio.db");
+
+  	const db = await open({
+    		filename: dbPath,
+    		driver: sqlite3.Database,
+  	});
+
+  	return db;
+};
+

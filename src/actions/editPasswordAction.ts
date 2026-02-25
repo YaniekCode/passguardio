@@ -19,14 +19,14 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-"use server";
+'use server';
 import { revalidatePath } from 'next/cache';
 
-import { PasswordData } from '@/lib';
-import handleEditPassword from "@/api/password/handleEditPassword";
+import { PasswordData } from '@/types';
+import handleEditPassword from '@/backend/password/handleEditPassword';
 
 export async function editPasswordAction(formData: FormData): Promise<void> {
-	const rawPasswordData: PasswordData = {
+	const rawFormData: PasswordData = {
 		uuid: formData.get("uuid")?.toString() || "",
 		websiteName: formData.get("websiteName")?.toString() || "",
 		websiteUrl: formData.get("websiteUrl")?.toString() || "",
@@ -35,6 +35,6 @@ export async function editPasswordAction(formData: FormData): Promise<void> {
 		category: formData.get("category")?.toString() || "",
 	};
 
-	await handleEditPassword(rawPasswordData);
+	await handleEditPassword(rawFormData);
 	revalidatePath("/dashboard");
 };

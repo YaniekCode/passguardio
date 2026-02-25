@@ -1,10 +1,10 @@
 import crypto from 'node:crypto';
 
-import { PasswordData, PasswordDatabaseRecordType, MessageResultType } from '@/lib';
+import { PasswordData, PasswordDatabaseRecordType, MessageResultType } from '@/types';
 import encryptPassword from '@/utils/encryption/encryptPassword';
 import { getPasswordStrengthAndCrackTime } from '@/utils/getPasswordStrengthAndCrackTime';
 import { getSession } from '@/utils/session/sessionUtils';
-import addPassword from '@/api/db/addPassword';
+import addPassword from '@/backend/db/addPassword';
 
 export default async function handleAddPassword(passwordData: PasswordData): Promise<MessageResultType | undefined> {
 	const session = await getSession();

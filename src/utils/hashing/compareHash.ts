@@ -21,7 +21,9 @@
 
 import bcrypt from 'bcryptjs'; 
 
-export default function compareHash(password: string, hash: string): boolean {
+
+// Function compares a plain-text password with a hashed password using bcrypt
+export function compareHash(password: string, hash: string): boolean {
 	const isEqual = bcrypt.compareSync(password, hash);
 	return isEqual;
 };	

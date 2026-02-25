@@ -1,7 +1,5 @@
-"use server";
-
 import { getSession } from "@/utils/session/sessionUtils";
-import getPasswords from "@/api/db/getPasswords";
+import getPasswords from "@/backend/db/getPasswords";
 import decryptUserPasswords from "@/utils/encryption/decryptUserPasswords";
 
 export default async function handleGetPasswords() {

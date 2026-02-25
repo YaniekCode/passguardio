@@ -19,33 +19,22 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-"use server";
+import openDb from "@/backend/db/openDb";
+import { PasswordDatabaseRecordType, PasswordDatabaseResultType } from "@/types";
 
-import openDb from "@/api/db/openDb";
-import { PasswordDatabaseRecordType, MessageResultType } from "@/lib";
-
-export default async function updatePassword(passwordData: PasswordDatabaseRecordType): Promise<MessageResultType>{
+export default async function getPasswords(userId: number): Promise<PasswordDatabaseResultType> {
 	const db = await openDb();
 
 	try {
-		await db.run(
-            		`UPDATE passwords SET website_name=?, website_url=?, username_or_email=?, password=?, category=?, strength=?, last_modified=?, crack_time=?, iv=?, tag=? WHERE uuid=?`,
-			passwordData.website_name,
-			passwordData.website_url,
-			passwordData.username_or_email,
-		       	passwordData.password,
-			passwordData.category,
-			passwordData.strength,
-			passwordData.last_modified,
-			passwordData.crack_time,
-			passwordData.iv,
-			passwordData.tag,
-			passwordData.uuid
-        	);
-		return { success: true, message: "Password updated successfully" };
+		const passwordList = (await db.all(
+            		`SELECT * FROM passwords WHERE user_id=?`,
+			userId
+        	)) as PasswordDatabaseRecordType[];
+
+		return { success: true, data: passwordList };
 	} catch (err: unknown) {
 		console.log(err);
-		return { success: false, error: "An error occurred when updating a password" };
+		return { success: false, error: "An error occurred when reading passwords" };
 	} finally {
 		try {
 			await db.close();
@@ -53,4 +42,4 @@ export default async function updatePassword(passwordData: PasswordDatabaseRecor
 			console.error("Failed to close DB: ", closeErr);
 		}
 	}
-}
+};

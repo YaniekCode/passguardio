@@ -1,5 +1,5 @@
-import openDb from '@/api/db/openDb';
-import { PasswordData } from '@/lib';
+import openDb from '@/backend/db/openDb';
+import { PasswordData } from '@/types';
 
 export async function fetchPasswordStats(userId: number) {
 	const db = await openDb();

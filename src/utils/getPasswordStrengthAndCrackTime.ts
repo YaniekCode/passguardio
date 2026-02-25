@@ -1,6 +1,7 @@
 import zxcvbn from 'zxcvbn';
 
-export function getPasswordStrengthAndCrackTime(password: string) {
+// Function calculates the password strength and crack time using zxcvbn
+export function getPasswordStrengthAndCrackTime(password: string): { strength: number, crack_time: string} {
 	const result = zxcvbn(password);
 
 	const strength = result.score;

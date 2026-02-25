@@ -19,12 +19,12 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-"use server";
-import { validate as uuidValidate } from "uuid";
-import { getSession } from "@/utils/session/sessionUtils";
-import { revalidatePath } from "next/cache";
+'use server';
+import { validate as uuidValidate } from 'uuid';
+import { getSession } from '@/utils/session/sessionUtils';
+import { revalidatePath } from 'next/cache';
 
-import deletePassword from "@/api/db/deletePassword";
+import deletePassword from '@/backend/db/deletePassword';
 
 export async function deletePasswordAction(passwordUUID: string): Promise<void> {
 	const isValidUUID = uuidValidate(passwordUUID);

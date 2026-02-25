@@ -23,10 +23,10 @@ import type { Metadata } from 'next';
 import { Shield, Search } from 'lucide-react';
 import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group';
 
-import handleGetPasswords from '@/api/password/handleGetPasswords';
-import { handleFetchPasswordStats } from '@/api/password/handleFetchPasswordStats';
+import handleGetPasswords from '@/backend/password/handleGetPasswords';
+import { handleFetchPasswordStats } from '@/backend/password/handleFetchPasswordStats';
 import { PasswordsTable } from '@/components/PasswordsTable';
-import { PasswordData } from '@/lib';
+import { PasswordData } from '@/types';
 import { PasswordStatCard } from '@/components/PasswordStatCard';
 import { AddPasswordDialog } from '@/components/addPassword/AddPasswordDialog';
 

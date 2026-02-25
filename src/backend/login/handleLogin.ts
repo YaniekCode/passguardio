@@ -1,12 +1,12 @@
-"use server";
+'use server';
 
-import { LoginUserInterface, LoginResult, SessionPayload } from "@/lib";
-import createTables from "@/api/db/createTables";
-import deriveKEK from "@/utils/encryption/deriveKEK";
-import unwrapDEK from "@/utils/encryption/unwrapDEK";
-import loginUser from "@/api/db/loginUser";
+import { LoginUserInterface, LoginResultType, SessionPayload } from '@/types';
+import createTables from '@/backend/db/createTables';
+import deriveKEK from '@/utils/encryption/deriveKEK';
+import unwrapDEK from '@/utils/encryption/unwrapDEK';
+import loginUser from '@/backend/db/loginUser';
 
-export default async function handleLogin(userData: LoginUserInterface): Promise<LoginResult> {
+export default async function handleLogin(userData: LoginUserInterface): Promise<LoginResultType> {
 	await createTables(); // create default tables in sqlite db
 	const dbLoginUserResult= await loginUser(userData);
 	if (dbLoginUserResult.success) { // User found and password is correct

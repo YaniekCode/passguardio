@@ -24,14 +24,15 @@ import { cookies } from 'next/headers';
 import { SignJWT, jwtVerify } from 'jose';
 import { SessionPayload } from "@/lib";
 
-import getSessionKey from "@/utils/session/getSessionKey";
+import { getSessionKey } from "@/utils/session/getSessionKey";
 
 const secretKey = getSessionKey();
 if (!secretKey) {
 	throw new Error('Session key does not exist');
 };
 
-export async function encrypt(payload: SessionPayload) {
+// Function encrypts the session payload
+export async function encryptSession(payload: SessionPayload) {
 	return new SignJWT(payload)
 		.setProtectedHeader({ alg: 'HS256' })
 		.setIssuedAt()
@@ -39,7 +40,8 @@ export async function encrypt(payload: SessionPayload) {
 		.sign(secretKey)
 };
 
-export async function decrypt(session: string | undefined = ''): Promise<SessionPayload | undefined >{
+// Function decrypts the session payload
+export async function decryptSession(session: string | undefined = ''): Promise<SessionPayload | undefined >{
 	try {
 		const { payload } = await jwtVerify<SessionPayload>(session, secretKey, {
 			algorithms: ['HS256'],
@@ -50,9 +52,10 @@ export async function decrypt(session: string | undefined = ''): Promise<Session
 	};
 };
 
+// Function creates the session which expires after 7 days
 export async function createSession(payload: SessionPayload) {
-	const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-	const session = await encrypt({ ...payload, expiresAt });
+	const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
+	const session = await encryptSession({ ...payload, expiresAt });
 	const cookieStore = await cookies();
 
 	cookieStore.set('session', session, {
@@ -64,8 +67,9 @@ export async function createSession(payload: SessionPayload) {
 	});
 };
 
+// Function reads the session, decrypts it and returns
 export async function getSession() {
 	const session = (await cookies()).get('session')?.value;
 	if (!session) return null;
-	return await decrypt(session);
+	return await decryptSession(session);
 };

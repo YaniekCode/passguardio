@@ -1,9 +1,8 @@
-import { PasswordDatabaseRecordType } from '@/lib';
+import { PasswordData, PasswordDatabaseRecordType } from '@/types';
 import { getSession } from "@/utils/session/sessionUtils";
-import { PasswordData } from "@/lib";
-import isPasswordUUIDInDb from "@/api/db/isPasswordUUIDInDb";
+import isPasswordUUIDInDb from "@/backend/db/isPasswordUUIDInDb";
 import encryptPassword from "@/utils/encryption/encryptPassword"; 
-import updatePassword from "@/api/db/updatePassword";
+import updatePassword from "@/backend/db/updatePassword";
 import { getPasswordStrengthAndCrackTime } from '@/utils/getPasswordStrengthAndCrackTime';
 
 export default async function handleEditPassword(passwordData: PasswordData) {

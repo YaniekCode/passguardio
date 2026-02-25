@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2025 YaniekCode
+ * Copyright (C) 2026 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -19,11 +19,21 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import bcrypt from 'bcryptjs';
+import path from "node:path";
+import fs from "node:fs";
 
-export default function generateHash(password: string): string {
-	const saltRounds = process.env.BCRYPT_SALT_ROUNDS ? Number(process.env.BCRYPT_SALT_ROUNDS) : 13;
+// Function outputs the DB dirname based on the running environment
+export function getDataDirectory(): string {
+	// If dirname is specified in .env
+	if (process.env.PASSGUARDIO_DB_PATH) {
+		return path.dirname(process.env.PASSGUARDIO_DB_PATH);
+	};
+	
+	// If running in a docker container the path is '/data'
+	if (fs.existsSync("/.dockerenv")) {
+		return "/data";
+	};
 
-	const hash = bcrypt.hashSync(password, saltRounds);
-	return hash;
+	// If running in developer mode the path is './data'
+	return path.resolve("./data");
 };

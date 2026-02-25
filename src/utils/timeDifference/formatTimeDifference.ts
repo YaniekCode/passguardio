@@ -19,8 +19,8 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-// Function responsible for returning strings in a grammatically correct form, so "1 minute ago" instead of "1 minutes ago" etc.
-function pluralize(value: number, singular: string, plural: string) {
+// Function returns strings in a grammatically correct form, so "1 hour ago" instead of "1 hours ago" etc.
+function pluralize(value: number, singular: string, plural: string): string {
   return value === 1 ? singular : plural;
 }
 
