@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+
 import { Trash } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -13,15 +13,17 @@ import {
 	DialogFooter
 } from '@/components/ui/dialog';
 
-import { deletePasswordAction } from '@/actions/deletePasswordAction'; 
+import { useDeletePassword } from '@/hooks/useDeletePassword';
 
-export function DeletePasswordDialog({ uuid, websiteName } : { uuid: string, websiteName: string }) {
-	const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
-	function deletePassword(uuid: string) {
-		deletePasswordAction(uuid);
-		setIsDialogOpen(false);
-	};
+export function DeletePasswordDialog({
+	uuid,
+	websiteName
+} : {
+	uuid: string,
+	websiteName: string
+}) {
+	const { isDialogOpen, setIsDialogOpen, formAction, pending } = useDeletePassword(uuid);
 
 	return (
 		<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -31,18 +33,20 @@ export function DeletePasswordDialog({ uuid, websiteName } : { uuid: string, web
 				</Button>	
 			</DialogTrigger>
 			<DialogContent>
+				<form action={formAction}>
 				<DialogHeader>
 						<DialogTitle>Are you absolutely sure you want to delete the password?</DialogTitle>	
 						<DialogDescription>
-							This will permanently delete the password for <b>{ websiteName }</b>. This action cannot be undone.
+							This will permanently delete the password for <b>{websiteName}</b>. This action cannot be undone.
 						</DialogDescription>
 				</DialogHeader>	
 				<DialogFooter>
 					<DialogClose asChild>
 						<Button variant="outline">Cancel</Button>	
 					</DialogClose>
-					<Button onClick={() => deletePassword(uuid) } type="submit" variant="destructive">Delete Password</Button>
+					<Button type="submit" variant="destructive" disabled={pending} aria-disabled={pending}>Delete Password</Button>
 				</DialogFooter>
+				</form>
 			</DialogContent>
 		</Dialog>
 	);

@@ -21,30 +21,41 @@
 
 import type { JWTPayload } from 'jose';
 
-export interface UserType {
+export interface User {
 	username: string;
 	email: string;
 	password: string;
 	role: "user" | "admin";
 };
 
-export type UserDatabaseInsert = Omit<UserData, "id"> & UserEncryptionData;
-export type UserDatabaseRecord = UserData & UserEncryptionData;
 
-export interface UserData {
+/*export interface UserData {
 	id: number;
 	username: string;
 	email: string;
 	password_hash: string;
 	role: "user" | "admin";
 };
+*/
 
-export interface UserEncryptionData {
+export interface EncryptionDataType {
 	encryption_salt: Buffer;
 	wrapped_dek: Buffer;
 	dek_wrap_iv: Buffer;
 	dek_wrap_tag: Buffer;
 };
+
+export interface UserDatabaseRecordType {
+	id: number;
+	username: string;
+	email: string;
+	password_hash: string;
+	role: "user" | "admin";
+	encryption_salt: Buffer;
+	wrapped_dek: Buffer;
+	dek_wrap_iv: Buffer;
+	dek_wrap_tag: Buffer;
+}
 
 export interface PasswordDatabaseRecordType {
 	user_id: number;
@@ -62,10 +73,14 @@ export interface PasswordDatabaseRecordType {
 	tag: Buffer;
 };
 
-export interface LoginUserInterface {
-	email: string;
+
+export interface PasswordInfo {
+	websiteName: string;
+	websiteUrl: string;
+	usernameOrEmail: string;
 	password: string;
-};
+	category: PasswordCategoryType;
+}
 
 export interface PasswordData {
 	uuid: string;
@@ -95,13 +110,12 @@ export type PasswordStatsType = {
 	recentlyAddedPasswordCount: number
 };
 
-export type EncryptionData = { encryptedPassword: Buffer, iv: Buffer, tag: Buffer };
-
-export type FormState = {
-	success: boolean;
-	message?: string;
-	error?: string;
-};
+export type FormState =
+	| { success: true, message: string }
+	| { success: false,
+		formErrors?: { password?: string[]; category?: string[] }
+		error?: string;
+	};
 
 export type Result<Type> =
     | { success: true, data: Type }

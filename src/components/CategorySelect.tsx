@@ -7,14 +7,14 @@ import {
 	NativeSelectOption
 } from '@/components/ui/native-select';
 
-import { PasswordCategoryType } from '@/lib';
+import { PasswordCategoryType } from '@/types';
 
-export function CategorySelect({ defaultCategory }: { defaultCategory: PasswordCategoryType }) {
+export function CategorySelect({ defaultCategory, ariaDescribedBy }: { defaultCategory: PasswordCategoryType, ariaDescribedBy?: string }) {
 	const [category, setCategory] = useState<string>(defaultCategory);
 	return (
 		<>
 			<Label htmlFor="category">Category</Label>
-			<NativeSelect id="category" value={category} onChange={(e) => setCategory(e.target.value)} name="category">
+			<NativeSelect id="category" value={category} onChange={(e) => setCategory(e.target.value)} name="category" aria-describedby={ariaDescribedBy}>
 				<NativeSelectOption value="social">Social</NativeSelectOption>	
 				<NativeSelectOption value="work">Work</NativeSelectOption>	
 				<NativeSelectOption value="finance">Finance</NativeSelectOption>	

@@ -22,19 +22,46 @@
 'use server';
 import { revalidatePath } from 'next/cache';
 
-import { PasswordData } from '@/types';
+import { type FormState } from '@/types';
 import handleEditPassword from '@/backend/password/handleEditPassword';
+import { validateAddPasswordInput } from '@/utils/validation/validateAddPasswordInput';
 
-export async function editPasswordAction(formData: FormData): Promise<void> {
-	const rawFormData: PasswordData = {
-		uuid: formData.get("uuid")?.toString() || "",
-		websiteName: formData.get("websiteName")?.toString() || "",
-		websiteUrl: formData.get("websiteUrl")?.toString() || "",
-		usernameOrEmail: formData.get("usernameOrEmail")?.toString() || "",
-		password: formData.get("password")?.toString() || "",
-		category: formData.get("category")?.toString() || "",
+
+export async function editPasswordAction(uuid: string, prevState: FormState, formData: FormData): Promise<FormState> {
+	const validatedFormData = validateAddPasswordInput(formData);
+
+	const websiteName = formData.get("websiteName")?.toString() || "";
+	const websiteUrl = formData.get("websiteUrl")?.toString() || "";
+	const usernameOrEmail = formData.get("usernameOrEmail")?.toString() || "";
+
+	// If we don't succeed we return the error
+	if (!validatedFormData.success) {
+		return { 
+			success: false,
+			formErrors: validatedFormData.errors
+		};
 	};
 
-	await handleEditPassword(rawFormData);
+	// If we succeed in validating the form data we proceed
+	const { password, category } = validatedFormData.data;
+
+	const validatedPasswordData = { uuid, websiteName, websiteUrl, usernameOrEmail, password, category };
+
+	// Adding the password data to the DB
+	const passwordInputResult = await handleEditPassword(validatedPasswordData);
+
 	revalidatePath("/dashboard");
+
+	// Return the error if it occured
+	if (!passwordInputResult.success) {
+		return {
+			success: false,
+			error: "An error occured when updating the password",
+		};
+	}
+
+	return {
+		success: true,
+		message: "Password updated successfully",
+	};
 };

@@ -1,14 +1,18 @@
-import { PasswordData, PasswordDatabaseRecordType } from '@/types';
+import { PasswordInfo, PasswordDatabaseRecordType, MessageResultType } from '@/types';
 import { getSession } from "@/utils/session/sessionUtils";
 import isPasswordUUIDInDb from "@/backend/db/isPasswordUUIDInDb";
 import encryptPassword from "@/utils/encryption/encryptPassword"; 
 import updatePassword from "@/backend/db/updatePassword";
 import { getPasswordStrengthAndCrackTime } from '@/utils/getPasswordStrengthAndCrackTime';
 
-export default async function handleEditPassword(passwordData: PasswordData) {
+interface PasswordInfoWithUUID extends PasswordInfo {
+	uuid: string;
+}
+
+export default async function handleEditPassword(passwordData: PasswordInfoWithUUID): Promise<MessageResultType> {
 	const session = await getSession();
 	if (!session) {
-		return;
+		return { success: false, error: "User not authenticated"};
 	};
 	const { id, dek } = session;
 

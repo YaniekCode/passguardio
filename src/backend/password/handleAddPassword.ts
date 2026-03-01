@@ -1,15 +1,15 @@
 import crypto from 'node:crypto';
 
-import { PasswordData, PasswordDatabaseRecordType, MessageResultType } from '@/types';
+import { PasswordInfo, PasswordDatabaseRecordType, MessageResultType } from '@/types';
 import encryptPassword from '@/utils/encryption/encryptPassword';
 import { getPasswordStrengthAndCrackTime } from '@/utils/getPasswordStrengthAndCrackTime';
 import { getSession } from '@/utils/session/sessionUtils';
 import addPassword from '@/backend/db/addPassword';
 
-export default async function handleAddPassword(passwordData: PasswordData): Promise<MessageResultType | undefined> {
+export default async function handleAddPassword(passwordData: PasswordInfo): Promise<MessageResultType> {
 	const session = await getSession();
 	if (!session) {
-		return;
+		return { success: false, error: "User not authenticated"};
 	};
 
 	// Encrypt the password and generate a random UUID
@@ -38,7 +38,7 @@ export default async function handleAddPassword(passwordData: PasswordData): Pro
 		tag: tag,
 	};
 
-	const passwordInputResult = addPassword(passwordDatabaseInputRecord);
+	const passwordInputResult = await addPassword(passwordDatabaseInputRecord);
 
 	return passwordInputResult;
 };

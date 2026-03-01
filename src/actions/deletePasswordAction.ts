@@ -20,23 +20,26 @@
 */
 
 'use server';
-import { validate as uuidValidate } from 'uuid';
 import { getSession } from '@/utils/session/sessionUtils';
-import { revalidatePath } from 'next/cache';
 
+import { type MessageResultType } from '@/types';
 import deletePassword from '@/backend/db/deletePassword';
 
-export async function deletePasswordAction(passwordUUID: string): Promise<void> {
-	const isValidUUID = uuidValidate(passwordUUID);
-	if (!isValidUUID) {
-		throw new Error("Invalid UUID");
-	};
-
+export async function deletePasswordAction(
+	passwordUUID: string,
+	prevState: MessageResultType,
+): Promise<MessageResultType> {
 	const session = await getSession();
-	if (session) {
-		const { id } = session;
-		await deletePassword(id, passwordUUID);
-	};
+	if (!session) {
+		return { success: false, error: "User not authenticated"};
+	}
 
-	revalidatePath("/dashboard");
+	const { id } = session;
+	const deletePasswordResult = await deletePassword(id, passwordUUID);
+
+	if (!deletePasswordResult.success) {
+		return deletePasswordResult;
+	}
+
+	return deletePasswordResult;
 };

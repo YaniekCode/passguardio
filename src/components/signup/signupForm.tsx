@@ -26,7 +26,7 @@ import { startTransition} from "react";
 import Link from "next/link";
 
 import signup from "@/actions/signup/signup";
-import { FormState } from "@/lib";
+import { FormState } from "@/types";
 import FormMessageBox from "@/components/FormMessageBox";
 
 export default function SignupForm() {
