@@ -20,13 +20,13 @@
 */
 
 import type { Metadata } from 'next';
-import { Shield, Search } from 'lucide-react';
-import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group';
+import { Shield } from 'lucide-react';
+import { Suspense } from 'react';
+import Skeleton from 'react-loading-skeleton';
 
-import handleGetPasswords from '@/backend/password/handleGetPasswords';
 import { handleFetchPasswordStats } from '@/backend/password/handleFetchPasswordStats';
+import { PasswordSearch } from '@/components/PasswordSearch';
 import { PasswordsTable } from '@/components/PasswordsTable';
-import { PasswordData } from '@/types';
 import { PasswordStatCard } from '@/components/PasswordStatCard';
 import { AddPasswordDialog } from '@/components/addPassword/AddPasswordDialog';
 
@@ -36,14 +36,16 @@ export const metadata: Metadata = {
 	description: "Manage your passwords securely and locally from your Passguardio dashboard.",
 };
 
-export default async function Dashboard() {
-	"use server";
-	const getPasswordsResult = await handleGetPasswords();
-
-	let userPasswords: PasswordData[] = [];
-	if (getPasswordsResult?.success) {
-		userPasswords = getPasswordsResult.data;
-	}
+export default async function Dashboard(props: {
+		searchParams?: Promise<{
+			query?: string;
+			page?: string;			
+		}>;
+	}) {
+	const searchParams = await props.searchParams;
+	const query = searchParams?.query || '';
+	const currentPage = Number(searchParams?.page) || 1;
+	
 
 	const fetchPasswordStatsResult = await handleFetchPasswordStats();
 	if (!fetchPasswordStatsResult?.success) {
@@ -65,12 +67,7 @@ export default async function Dashboard() {
 				</div>
 				<AddPasswordDialog />
 			</header>
-			<InputGroup className="bg-zinc-800 border-none py-5">
-				<InputGroupInput className="placeholder:text-neutral-200" placeholder="Search passwords, websites, or usernames"/>
-				<InputGroupAddon>
-					<Search />	
-				</InputGroupAddon>
-			</InputGroup>
+			<PasswordSearch placeholder="Search passwords..."/>
 			<section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 				<PasswordStatCard title="Total Password" counter={totalPasswordCount} icon="key"/>
 				<PasswordStatCard title="Strong Passwords" counter={strongPasswordCount} icon="shield"/>
@@ -79,10 +76,9 @@ export default async function Dashboard() {
 			</section>
 			<section>
 			<h2 className="text-xl font-[500]">All Passwords</h2>
-				{ /*getPasswordsResult?.success && (
-					<PasswordSection userPasswords={userPasswords}></PasswordSection>
-				)*/}
-				<PasswordsTable passwords={userPasswords}></PasswordsTable>
+				<Suspense key={query + currentPage} fallback={<Skeleton count={10} />}>
+					<PasswordsTable query={query} currentPage={currentPage} />
+				</Suspense>
 			</section>
 		</main>
 	);

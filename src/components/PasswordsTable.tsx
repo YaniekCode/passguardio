@@ -21,14 +21,21 @@
 
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
+import handleGetPasswords from '@/backend/password/handleGetPasswords';
+import { PasswordData } from '@/types';
 import { EditPasswordDialog } from '@/components/editPassword/EditPasswordDialog';
 import { DeletePasswordDialog } from '@/components/deletePassword/DeletePasswordDialog';
-import { PasswordData } from '@/lib';
 import { formatTimeDifference } from '@/utils/timeDifference/formatTimeDifference';
 import { PasswordCategoryBadge } from '@/components/PasswordCategoryBadge';
 import { PasswordField } from '@/components/PasswordField';
 
-export function PasswordsTable({ passwords } : { passwords: PasswordData[] }) {
+export async function PasswordsTable({ query, currentPage } : { query: string, currentPage: number }) {
+	const getPasswordsResult = await handleGetPasswords(query, currentPage);
+
+	let passwords: PasswordData[] = [];
+	if (getPasswordsResult?.success) {
+		passwords = getPasswordsResult.data;
+	}
 	return (
 		<section className="overflow-hidden rounded-md border">
 			<Table>

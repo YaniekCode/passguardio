@@ -2,13 +2,13 @@ import { getSession } from "@/utils/session/sessionUtils";
 import getPasswords from "@/backend/db/getPasswords";
 import decryptUserPasswords from "@/utils/encryption/decryptUserPasswords";
 
-export default async function handleGetPasswords() {
+export default async function handleGetPasswords(query: string, currentPage: number) {
 	const session = await getSession();
 	if (!session) {
 		return;
 	};
 	const { dek } = session;
-	const getPasswordResult = await getPasswords(session.id);
+	const getPasswordResult = await getPasswords(session.id, query, currentPage);
 
 	if (!getPasswordResult.success) {
 		return getPasswordResult;

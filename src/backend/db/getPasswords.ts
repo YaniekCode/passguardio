@@ -22,13 +22,38 @@
 import openDb from "@/backend/db/openDb";
 import { PasswordDatabaseRecordType, PasswordDatabaseResultType } from "@/types";
 
-export default async function getPasswords(userId: number): Promise<PasswordDatabaseResultType> {
+export default async function getPasswords(
+	userId: number,
+	query: string,
+	currentPage: number
+): Promise<PasswordDatabaseResultType> {
+	const ITEMS_PER_PAGE = 10;
+	const offset = (currentPage - 1) * ITEMS_PER_PAGE;
+
 	const db = await openDb();
 
 	try {
 		const passwordList = (await db.all(
-            		`SELECT * FROM passwords WHERE user_id=?`,
-			userId
+            		`
+			SELECT
+			*
+			FROM passwords
+			WHERE user_id=?
+			AND (
+				website_name LIKE ?	
+				OR website_url LIKE ?
+				OR username_or_email LIKE ?
+				OR category LIKE ?
+			)
+			LIMIT ? OFFSET ?
+			`,
+			userId,
+			`%${query}%`,
+			`%${query}%`,
+			`%${query}%`,
+			`%${query}%`,
+			ITEMS_PER_PAGE,
+			offset
         	)) as PasswordDatabaseRecordType[];
 
 		return { success: true, data: passwordList };

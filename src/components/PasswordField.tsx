@@ -15,16 +15,26 @@ export function PasswordField({ password }: { password: string }) {
 	return (
 		<div className="flex gap-2 align-center">
 			{ /* If the password should be visible we display it, otherwise we display a fallback */ }
-			{ isPasswordVisible ? <p className="text-xs">{password}</p> : <p className="tracking-[2.5]">{"•".repeat(8)}</p>}
+			{ isPasswordVisible
+				? <p className="text-xs">{password}</p>
+				: <p className="tracking-[2.5]">{"•".repeat(8)}</p>
+			}
 
-			<button onClick={() => setIsPasswordVisible((prev) => !prev)}>
-				{ isPasswordVisible ?
-					<EyeOff size="14" className="text-muted-foreground"/>
+			<button
+				onClick={() => setIsPasswordVisible((prev) => !prev)}
+				aria-label={isPasswordVisible ? "Hide password" : "Show password"}		
+				aria-pressed={isPasswordVisible}
+			>
+				{ isPasswordVisible
+					? <EyeOff size="14" className="text-muted-foreground"/>
 					: <Eye size="14" className="text-muted-foreground"/>
 				}
 			</button>
 
-			<button onClick={() => copyText()}>
+			<button
+				onClick={() => copyText()}
+				aria-label="Copy password to clipboard"
+			>
 				<Copy size="14" className="text-muted-foreground"/>
 			</button>
 		</div>
