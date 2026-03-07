@@ -1,15 +1,15 @@
 "use server";
 
 import { UserInterface, UserDatabaseInsert, ResultMessage } from "@/lib";
-import createTables from "@/api/db/createTables";
-import createUser from "@/api/db/createUser";
-import generateHash from "@/utils/generateHash";
+import createTables from "@/backend/db/createTables";
+import createUser from "@/backend/db/createUser";
+import { generatePasswordHash } from "@/utils/hashing/generatePasswordHash";
 import generateEncryptionCredentials from "@/utils/encryption/generateEncryptionCredentials";
 
 export default async function handleSignup(userData: UserInterface): Promise<ResultMessage> {
 	await createTables(); // create default tables in sqlite db
 
-	const passwordHash = generateHash(userData.password);
+	const passwordHash = generatePasswordHash(userData.password);
 	const userEncryptionData = generateEncryptionCredentials(userData.password);
 	const user: UserDatabaseInsert = { ...userData, password_hash: passwordHash, ...userEncryptionData};
 

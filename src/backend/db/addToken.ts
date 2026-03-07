@@ -19,33 +19,36 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-"use server";
+import openDb from '@/backend/db/openDb';
+import { MessageResultType } from '@/types';
 
-import { UserDatabaseInsertType, MessageResultType } from "@/types";
-import openDb from "@/backend/db/openDb";
+export async function addToken({
+	email,
+	role
+}: {
+	email: string,
+	role: "user" | "admin" },
+	token: string,
+	expiresAt: number)
+	: Promise<MessageResultType> {
 
-export default async function createUser(userData: UserDatabaseInsert): Promise<MessageResultType> {
 	const db = await openDb();
 
 	try {
 		await db.run(
-      			"INSERT INTO users (username, email, password_hash, role, encryption_salt, wrapped_dek, dek_wrap_iv, dek_wrap_tag) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-			userData.username,
-			userData.email,
-			userData.password_hash,
-			userData.role,
-			userData.encryption_salt,
-			userData.wrapped_dek,
-			userData.dek_wrap_iv,
-			userData.dek_wrap_tag
-		);
-		return { success: true, message: "User created successfully" };
+            		`INSERT INTO tokens (email, role, token, expires_at)
+             		VALUES (?, ?, ?, ?)`,
+			email,
+			role,
+			token,
+			expiresAt
+        	);
+
+		return { success: true, message: "Token added successfully" };
+
 	} catch (err: unknown) {
 		console.log(err);
-		if (err instanceof Error && err.message.toUpperCase().includes("UNIQUE")) {
-			return { success: false, error: "This user already exists" };
-		}
-		return { success: false, error: "An error occurred when creating a user" };
+		return { success: false, error: "An error occurred when adding a token" };
 	} finally {
 		try {
 			await db.close();
@@ -54,4 +57,3 @@ export default async function createUser(userData: UserDatabaseInsert): Promise<
 		}
 	}
 }
-

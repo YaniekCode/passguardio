@@ -55,4 +55,12 @@ export default async function createTables(): Promise<void> {
 			iv BLOB NOT NULL,
 			tag BLOB NOT NULL
 	)`);
+
+	await db.run(`
+		CREATE TABLE IF NOT EXISTS tokens (
+			email TEXT REFERENCES users(email),
+			role TEXT,
+			token TEXT,
+			expires_at INTEGER
+	)`);
 };

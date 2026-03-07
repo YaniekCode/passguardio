@@ -22,12 +22,12 @@
 'use server';
 import { redirect } from 'next/navigation';
 
-import { UserType, FormState } from '@/lib';
+import { User, FormState } from '@/types';
 import { validateSignupInput } from '@/utils/validation/signupValidation/validateSignupInput';
-import handleSignup from '@/api/signup/handleSignup';
+import handleSignup from '@/backend/signup/handleSignup';
 
 export default async function signup(prevState: FormState, formData: FormData): Promise<FormState> {
-	const rawFormData: UserType = {
+	const rawFormData: User = {
 		username: formData.get('username')?.toString() || "",
 		email: formData.get('email')?.toString() || "",
 		password: formData.get('password')?.toString() || "",

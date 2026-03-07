@@ -20,35 +20,29 @@
 */
 
 import type { Metadata } from 'next';
+import { User } from 'lucide-react';
 
-import './globals.css';
-import { poppinsSans } from '@/app/fonts';
-import { Toaster } from '@/components/ui/sonner';
+import { AddUserDialog } from '@/components/addUser/AddUserDialog';
 
 
 export const metadata: Metadata = {
-	title: {
-    		default: "Passguardio",
-		template: "%s | Passguardio",
-	},
-	description: "A simple, local and fast password manager with a web interface.",
-	applicationName: "Passguardio",
-	authors: [{ name: "YaniekCode" }],
-	keywords: ["password manager", "security", "local", "Passguardio"],
+	title: "Users",
+	description: "Manage users of your PassGuardio instance from the users panel.",
 };
 
-export default function RootLayout({
-	children,
-}: Readonly<{
-	children: React.ReactNode;
-}>) {
+export default async function Dashboard() {
 	return (
-		<html lang="en">
-			<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-			<body className={`${poppinsSans.variable} antialiased`}>
-				<main>{children}</main>
-				<Toaster />
-			</body>
-		</html>
+		<main>
+			<header className="flex items-center justify-between">
+				<div className="flex items-center gap-5">
+					<User size="30"/>
+					<div>
+						<h1 className="text-3xl font-semibold">Users Panel</h1>
+						<h2 className="text-muted-foreground">Manage users of your PassGuardio instance</h2>
+					</div>
+				</div>
+				<AddUserDialog />
+			</header>
+		</main>
 	);
-}
+};

@@ -19,33 +19,32 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-"use server";
-
-import { UserDatabaseInsertType, MessageResultType } from "@/types";
 import openDb from "@/backend/db/openDb";
+import { type State } from '@/actions/authenticateUserAction';
 
-export default async function createUser(userData: UserDatabaseInsert): Promise<MessageResultType> {
+
+export async function getDataByToken(token: string): Promise<State> {
 	const db = await openDb();
 
 	try {
-		await db.run(
-      			"INSERT INTO users (username, email, password_hash, role, encryption_salt, wrapped_dek, dek_wrap_iv, dek_wrap_tag) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-			userData.username,
-			userData.email,
-			userData.password_hash,
-			userData.role,
-			userData.encryption_salt,
-			userData.wrapped_dek,
-			userData.dek_wrap_iv,
-			userData.dek_wrap_tag
+        const row = await db.get(
+			`SELECT email, role, token, expires_at
+            FROM tokens
+            WHERE token = ? 
+            `,
+            token
 		);
-		return { success: true, message: "User created successfully" };
+
+
+		if (row) {
+			return { success: true, data: row };
+		} else {
+			return { success: true, data: undefined };
+		}
+
 	} catch (err: unknown) {
 		console.log(err);
-		if (err instanceof Error && err.message.toUpperCase().includes("UNIQUE")) {
-			return { success: false, error: "This user already exists" };
-		}
-		return { success: false, error: "An error occurred when creating a user" };
+		return { success: false, error: "An error occurred when reading passwords" };
 	} finally {
 		try {
 			await db.close();
@@ -53,5 +52,4 @@ export default async function createUser(userData: UserDatabaseInsert): Promise<
 			console.error("Failed to close DB: ", closeErr);
 		}
 	}
-}
-
+};

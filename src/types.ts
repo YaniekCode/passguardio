@@ -73,6 +73,13 @@ export interface PasswordDatabaseRecordType {
 	tag: Buffer;
 };
 
+export interface TokenDatabaseRecordType {
+	email: string;
+	role: string;
+	token: string;
+	expires_at: number;
+}
+
 
 export interface PasswordInfo {
 	websiteName: string;
@@ -113,7 +120,7 @@ export type PasswordStatsType = {
 export type FormState =
 	| { success: true, message: string }
 	| { success: false,
-		formErrors?: { password?: string[]; category?: string[] }
+		formErrors?: Record<string, string[]>;
 		error?: string;
 	};
 

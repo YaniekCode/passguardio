@@ -22,9 +22,9 @@ export function PasswordSearch({ placeholder }: { placeholder: string }) {
 	}, 300);
 
 	return (
-		<InputGroup className="bg-zinc-800 border-none py-5">
+		<InputGroup className="bg-stone-200 border-none py-5">
 			<InputGroupInput
-				className="placeholder:text-neutral-200"
+				className="placeholder:text-neutral-700"
 				placeholder={placeholder}
 				onChange={(e) => {
 					handleSearch(e.target.value);	
@@ -32,7 +32,7 @@ export function PasswordSearch({ placeholder }: { placeholder: string }) {
 				defaultValue={searchParams.get('query')?.toString()}
 				/>
 			<InputGroupAddon>
-				<Search />	
+				<Search className="text-neutral-700"/>	
 			</InputGroupAddon>
 		</InputGroup>
 	)
