@@ -50,9 +50,7 @@ export async function addUserAction(prevState: State, formData: FormData): Promi
 	};
 
 	// If we succeed in validating the form data we proceed
-	const { email, role } = validatedFormData.data;
-
-	const validatedUserData = { email, role };
+	const { role } = validatedFormData.data;
 
 	const token = generateToken();
 	const tokenExpiryDate = new Date();
@@ -60,7 +58,7 @@ export async function addUserAction(prevState: State, formData: FormData): Promi
 
 
 	// Adding the password data to the DB
-	const tokenInputResult = await addToken(validatedUserData, token, tokenExpiryDate.getTime());
+	const tokenInputResult = await addToken(role, token, tokenExpiryDate.getTime());
 
 	revalidatePath("/dashboard/users");
 

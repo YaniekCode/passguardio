@@ -74,8 +74,7 @@ export interface PasswordDatabaseRecordType {
 };
 
 export interface TokenDatabaseRecordType {
-	email: string;
-	role: string;
+	role: "user" | "admin";
 	token: string;
 	expires_at: number;
 }
@@ -134,7 +133,7 @@ export type MessageResultType =
 
 export type FetchPasswordStatsResultType = Result<PasswordStatsType>;
 
-export type SignupValidationResultType = Result<UserType>;
+export type SignupValidationResultType = Result<User>;
 
 export type LoginValidationResultType = Result<LoginUserInterface>;
 

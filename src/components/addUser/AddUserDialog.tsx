@@ -17,7 +17,6 @@ import {
 	NativeSelectOption,
 } from "@/components/ui/native-select"
 import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
 
 import { firaCode } from '@/app/fonts';
 import { useAddUser } from '@/hooks/useAddUser';
@@ -52,15 +51,6 @@ export function AddUserDialog() {
 							Add a new user to your vault. All fields marked with * are required.	
 						</DialogDescription>
 					</DialogHeader>	
-					<Label htmlFor="user-email">User Email *</Label>
-					<Input type="text" id="user-email" name="userEmail" placeholder="user@email.com" required></Input>
-					<div id="email-error" aria-live="polite" aria-atomic="true">
-						{!state.success && "formErrors" in state && state.formErrors?.email && (
-  							<p className="text-sm text-red-500">
-    								{state.formErrors.email[0]}
-  							</p>
-						)}
-					</div>
 					<Label htmlFor="role">Role *</Label>
 					<NativeSelect id="role" name="role">
 						<NativeSelectOption value="user">User</NativeSelectOption>	

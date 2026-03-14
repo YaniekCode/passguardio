@@ -11,18 +11,17 @@ import {
 } from "@/components/ui/input-otp";
 
 import { ActivationUserInputForm } from './ActivationUserInputForm';
-import { authenticateUserAction } from '@/actions/authenticateUserAction';
-import { type State } from '@/actions/authenticateUserAction';
+import { activateTokenAction, type State } from '@/actions/activateTokenAction';
 
-const initialState: State = { success: false };
+const initialState: State = { success: false, not_found: false };
 
 export function ActivationTokenInputForm() {
-    const [state, formAction, pending] = useActionState(authenticateUserAction, initialState);
+    const [state, formAction, pending] = useActionState(activateTokenAction, initialState);
 
     return (
         <>
         { state.success ? (
-            <ActivationUserInputForm />
+            <ActivationUserInputForm role={state.data.role}/>
         ) :  (
 			<form action={formAction} className="border-1 border-solid rounded-lg p-10 mt-10 flex flex-col gap-5">
                 <div>
@@ -48,7 +47,7 @@ export function ActivationTokenInputForm() {
 						    )}
 				    </div>
                 </div>
-				<Button type="submit" className="w-full mt-5" aria-disabled={pending} disabled={pending}>Activate Account</Button>
+				<Button type="submit" className="w-full mt-5" aria-disabled={pending} disabled={pending}>Next</Button>
 			</form>
         )}
         </>

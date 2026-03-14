@@ -20,7 +20,7 @@
 */
 
 import openDb from "@/backend/db/openDb";
-import { type State } from '@/actions/authenticateUserAction';
+import { type State } from '@/actions/activateTokenAction';
 
 
 export async function getDataByToken(token: string): Promise<State> {
@@ -28,7 +28,7 @@ export async function getDataByToken(token: string): Promise<State> {
 
 	try {
         const row = await db.get(
-			`SELECT email, role, token, expires_at
+			`SELECT role, token, expires_at
             FROM tokens
             WHERE token = ? 
             `,
@@ -39,12 +39,12 @@ export async function getDataByToken(token: string): Promise<State> {
 		if (row) {
 			return { success: true, data: row };
 		} else {
-			return { success: true, data: undefined };
+			return { success: false, not_found: true, error: "Token not found" };
 		}
 
 	} catch (err: unknown) {
 		console.log(err);
-		return { success: false, error: "An error occurred when reading passwords" };
+		return { success: false, not_found: false, error: "An error occurred when reading token data" };
 	} finally {
 		try {
 			await db.close();

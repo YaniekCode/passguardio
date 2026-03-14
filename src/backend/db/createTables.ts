@@ -58,7 +58,6 @@ export default async function createTables(): Promise<void> {
 
 	await db.run(`
 		CREATE TABLE IF NOT EXISTS tokens (
-			email TEXT REFERENCES users(email),
 			role TEXT,
 			token TEXT,
 			expires_at INTEGER

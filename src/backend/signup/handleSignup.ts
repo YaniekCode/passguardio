@@ -1,5 +1,3 @@
-"use server";
-
 import { UserInterface, UserDatabaseInsert, ResultMessage } from "@/lib";
 import createTables from "@/backend/db/createTables";
 import createUser from "@/backend/db/createUser";

@@ -47,3 +47,9 @@ export const LoginSchema = z.object({
 	email: emailField,
 	password: passwordField,
 });
+
+export const NewUserSchema = z.object({
+	username: usernameField,
+	email: emailField,
+	password: passwordField,
+});

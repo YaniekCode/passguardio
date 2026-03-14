@@ -4,10 +4,10 @@ import { getDataByToken } from '@/backend/db/getDataByToken';
 import { type TokenDatabaseRecordType } from '@/types';
 
 export type State = 
-    | { success: true, data: TokenDatabaseRecordType | undefined }
-    | { success: false, formError?: string, error?: string }
+    | { success: true, data: TokenDatabaseRecordType }
+    | { success: false, not_found: boolean, formError?: string, error?: string }
 
-export async function authenticateUserAction(
+export async function activateTokenAction(
     prevState: State,
     formData: FormData
 ): Promise<State> {
@@ -18,30 +18,26 @@ export async function authenticateUserAction(
     if (!tokenRegex.test(token)) {
         return {
             success: false,
+            not_found: false,
             formError: "Not an activation token"
         };
     }
 
     const tokenData = await getDataByToken(token);
 
-    if (!tokenData.success) {
-        return { success: false, error: "An error occurred when reading the token" };
-    }
-
-    if (!tokenData.data) {
-        return { success: false, formError: "Invalid activation token" };
+    if (!tokenData.success || !tokenData.data) {
+        return { success: false, not_found: true, formError: "Token not found" };
     }
 
     const tokenExpiryDate = tokenData.data.expires_at;
     const currentTime = Date.now();
 
     if (currentTime > tokenExpiryDate) {
-        return { success: false, formError: "Token has expired" };
+        return { success: false, not_found: false, formError: "Token has expired" };
     }
 
     return {
         success: true,
         data: tokenData.data,
     };
-
 }

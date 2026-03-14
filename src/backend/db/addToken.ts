@@ -22,23 +22,17 @@
 import openDb from '@/backend/db/openDb';
 import { MessageResultType } from '@/types';
 
-export async function addToken({
-	email,
-	role
-}: {
-	email: string,
-	role: "user" | "admin" },
+export async function addToken(role: "user" | "admin",
 	token: string,
-	expiresAt: number)
-	: Promise<MessageResultType> {
+	expiresAt: number
+): Promise<MessageResultType> {
 
 	const db = await openDb();
 
 	try {
 		await db.run(
-            		`INSERT INTO tokens (email, role, token, expires_at)
-             		VALUES (?, ?, ?, ?)`,
-			email,
+            		`INSERT INTO tokens (role, token, expires_at)
+             		VALUES (?, ?, ?)`,
 			role,
 			token,
 			expiresAt

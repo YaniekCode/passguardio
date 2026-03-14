@@ -1,6 +1,6 @@
 import { fromError } from "zod-validation-error";
 
-import {  LoginUserInterface,  LoginValidationResultType} from "@/lib";
+import {  LoginUserInterface,  LoginValidationResultType} from "@/types";
 import {  LoginSchema } from "@/utils/validation/userSchemas";
 
 export function validateLoginInput(userData: LoginUserInterface): LoginValidationResultType {
