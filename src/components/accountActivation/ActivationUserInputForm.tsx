@@ -1,20 +1,26 @@
 'use client';
 
-import { useActionState } from 'react';
+import { useEffect, useActionState } from 'react';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import { toast } from 'sonner';
 
 import { ActivateUserState } from '@/types/activate';
-import { activateUserAction } from '@/actions/activateUserAction';
+import { activateUserAction } from '@/actions/accountActivation/activateUserAction';
 
 const initialState: ActivateUserState = { success: false };
 
-export function ActivationUserInputForm({ role }: { role: "user" | "admin" }) {
-    const activateUserWithRoleAction = activateUserAction.bind(null, role);
+export function ActivationUserInputForm({ token, role }: { token: string, role: "user" | "admin" }) {
+    const activateUserWithRoleAndTokenAction = activateUserAction.bind(null, token, role);
 
-    const [state, formAction, pending] = useActionState(activateUserWithRoleAction, initialState);
-    console.log(state);
+    const [state, formAction, pending] = useActionState(activateUserWithRoleAndTokenAction, initialState);
+
+	useEffect(() => {
+		if (state.success) {
+			toast.success("Account activated successfully", { position: "bottom-right"} );
+		}
+	}, [state.success])
 
     return (
         <form action={formAction} className="border-1 border-solid w-100 rounded-lg p-10 mt-10 flex flex-col gap-5">
@@ -51,6 +57,13 @@ export function ActivationUserInputForm({ role }: { role: "user" | "admin" }) {
 						)}
 				    </div>
                 </div>
+				<div id="error" aria-live="polite" aria-atomic="true">
+						{!state.success && state.error && (
+  							<p className="text-sm text-red-500">
+    								{state.error}
+  							</p>
+						)}
+				</div>
 				<Button type="submit" className="w-full mt-5" disabled={pending} aria-disabled={pending}>Activate Account</Button>
 			</form>
 

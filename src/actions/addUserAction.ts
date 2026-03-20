@@ -33,6 +33,7 @@ export type State =
 		error?: string;
 	};
 
+// Function which generates a 6 digit token
 function generateToken(): string {
 	return crypto.randomInt(100000, 999999).toString();
 };

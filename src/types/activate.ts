@@ -1,8 +1,22 @@
+import { TokenDatabaseRecordType } from "@/types";
+
 export type ActivateUserFieldErrors = {
     username?: string;
     email?: string;
     password?: string;
 }
+
+export type ActivateTokenState = 
+    | {
+        success: true;
+        data: TokenDatabaseRecordType
+    } | {
+        success: false,
+        not_found: boolean,
+        formError?: string,
+        error?: string
+    }
+
 
 export type ActivateUserState = 
     | {

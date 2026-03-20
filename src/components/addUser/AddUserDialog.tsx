@@ -77,7 +77,7 @@ export function AddUserDialog() {
 							Share this token with the person you would like to add to PassGuardio.<br />
 							This token expires in 24 hours.	
 						</DialogDescription>
-						<p className={`${firaCode.className} text-center text-4xl my-5`}>
+						<p className={`${firaCode.className} font-[600] text-center text-4xl my-5`}>
 							<data value={generatedToken} onCopy={handleCopy}>{formattedToken}</data>	
 						</p>
 					</DialogHeader>

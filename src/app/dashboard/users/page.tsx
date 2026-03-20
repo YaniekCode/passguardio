@@ -21,8 +21,21 @@
 
 import type { Metadata } from 'next';
 import { User } from 'lucide-react';
+import {
+	Table,
+	TableBody,
+	TableCaption,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow
+} from '@/components/ui/table';
 
+import { firaCode } from '@/app/fonts';
+import { fetchTokens } from '@/backend/db/fetchTokens';
+import { UserRoleBadge } from '@/components/UserRoleBadge';
 import { AddUserDialog } from '@/components/addUser/AddUserDialog';
+import { DeleteTokenDialog } from '@/components/DeleteTokenDialog';
 
 
 export const metadata: Metadata = {
@@ -30,7 +43,25 @@ export const metadata: Metadata = {
 	description: "Manage users of your PassGuardio instance from the users panel.",
 };
 
+function formatDate(ms: number) {
+	const date = new Date(ms);
+
+	const weekday = date.toLocaleDateString('en-US', { weekday: 'short' });
+	const day = date.getDate();
+	const month = date.toLocaleDateString('en-US', { month: 'long' });
+	const year = date.getFullYear();
+
+	const time = date.toLocaleTimeString('en-US', {
+		hour: '2-digit',
+		minute: '2-digit',
+		hour12: true,
+	});
+
+  return `${weekday} ${day} ${month} ${year} | ${time}`;
+}
+
 export default async function Dashboard() {
+	const tokens = await fetchTokens();
 	return (
 		<main>
 			<header className="flex items-center justify-between">
@@ -43,6 +74,40 @@ export default async function Dashboard() {
 				</div>
 				<AddUserDialog />
 			</header>
+			{tokens.success ? (
+				tokens.data.length === 0 ? (
+					<p>No tokens found</p>
+				) : (
+			<Table>
+				<TableCaption>A list of tokens</TableCaption>
+				<TableHeader>
+					<TableRow>
+						<TableHead>Token</TableHead>
+						<TableHead>Role</TableHead>
+						<TableHead>Expires at</TableHead>
+						<TableHead>Actions</TableHead>
+					</TableRow>
+				</TableHeader>
+				<TableBody>
+					{tokens.data.map((token) => {
+						const formattedToken = token.token && token.token.replace(/(\d{3})(\d{3})/, "$1-$2");
+						return (
+							<TableRow key={token.token}>
+								<TableCell className={`${firaCode.className} font-[500]`}>{formattedToken}</TableCell>
+								<TableCell>
+									<UserRoleBadge role={token.role}/>
+								</TableCell>
+								<TableCell>{formatDate(token.expires_at)}</TableCell>
+								<TableCell>
+									<DeleteTokenDialog token={token.token}/>
+								</TableCell>
+							</TableRow>
+						)
+
+					})}
+				</TableBody>
+			</Table>
+			)) : <p>Something went wrong</p>}
 		</main>
 	);
 };

@@ -5,7 +5,7 @@ import { generatePasswordHash } from "@/utils/hashing/generatePasswordHash";
 import generateEncryptionCredentials from "@/utils/encryption/generateEncryptionCredentials";
 
 export default async function handleSignup(userData: UserInterface): Promise<ResultMessage> {
-	await createTables(); // create default tables in sqlite db
+	await createTables(); // create default tables in the DB
 
 	const passwordHash = generatePasswordHash(userData.password);
 	const userEncryptionData = generateEncryptionCredentials(userData.password);

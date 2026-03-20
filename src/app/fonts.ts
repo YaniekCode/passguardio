@@ -8,5 +8,5 @@ export const poppinsSans = Poppins({
 
 export const firaCode = Fira_Code({
 	subsets: ["latin"],
-	weight: ["600"],
+	weight: ["500", "600"],
 });

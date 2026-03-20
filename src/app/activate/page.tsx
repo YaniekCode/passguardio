@@ -1,8 +1,7 @@
-'use client';
 import { Shield } from 'lucide-react';
 import Link from 'next/link';
 
-import { ActivationTokenInputForm } from '@/components/ActivationTokenInputForm';
+import { ActivationTokenInputForm } from '@/components/accountActivation/ActivationTokenInputForm';
 
 export default function Page() {
 
@@ -15,7 +14,10 @@ export default function Page() {
 				</div>
 			</div>
 			<ActivationTokenInputForm />
-			<p className="mt-4"><span className="text-muted-foreground">Already activated?</span> <Link href="/login">Back to login</Link></p>
+			<p className="mt-4">
+				<span className="text-muted-foreground">Already activated? </span>
+				<Link href="/login">Back to login</Link>
+			</p>
 		</main>
 	);
 };

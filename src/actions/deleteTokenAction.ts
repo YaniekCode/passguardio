@@ -19,35 +19,20 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import openDb from '@/backend/db/openDb';
-import { MessageResultType } from '@/types';
+'use server';
 
-export async function addToken(role: "user" | "admin",
+import { type MessageResultType } from '@/types';
+import { deleteToken } from '@/backend/db/deleteToken';
+
+export async function deleteTokenAction(
 	token: string,
-	expiresAt: number
+	prevState: MessageResultType,
 ): Promise<MessageResultType> {
+	const deletePasswordResult = await deleteToken(token);
 
-	const db = await openDb();
-
-	try {
-		await db.run(
-            		`INSERT INTO tokens (role, token, expires_at)
-             		VALUES (?, ?, ?)`,
-			role,
-			token,
-			expiresAt
-        	);
-
-		return { success: true, message: "Token added successfully" };
-
-	} catch (err: unknown) {
-		console.log(err);
-		return { success: false, error: "An error occurred when adding the token" };
-	} finally {
-		try {
-			await db.close();
-		} catch (closeErr) {
-			console.error("Failed to close DB: ", closeErr);
-		}
+	if (!deletePasswordResult.success) {
+		return deletePasswordResult;
 	}
-}
+
+	return deletePasswordResult;
+};

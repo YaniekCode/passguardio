@@ -25,8 +25,10 @@ export interface User {
 	username: string;
 	email: string;
 	password: string;
-	role: "user" | "admin";
+	role: UserRoleType;
 };
+
+export type UserRoleType = "user" | "admin";
 
 
 /*export interface UserData {
@@ -50,7 +52,7 @@ export interface UserDatabaseRecordType {
 	username: string;
 	email: string;
 	password_hash: string;
-	role: "user" | "admin";
+	role: UserRoleType;
 	encryption_salt: Buffer;
 	wrapped_dek: Buffer;
 	dek_wrap_iv: Buffer;
@@ -74,7 +76,7 @@ export interface PasswordDatabaseRecordType {
 };
 
 export interface TokenDatabaseRecordType {
-	role: "user" | "admin";
+	role: UserRoleType;
 	token: string;
 	expires_at: number;
 }
@@ -151,6 +153,6 @@ export type FirstUserResultType = Result<boolean>;
 export interface SessionPayload extends JWTPayload {
 	id: number;
 	username: string;
-	role: string;
+	role: UserRoleType;
 	dek: string;
 };

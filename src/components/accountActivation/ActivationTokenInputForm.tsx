@@ -10,10 +10,11 @@ import {
 	InputOTPSlot,
 } from "@/components/ui/input-otp";
 
-import { ActivationUserInputForm } from './ActivationUserInputForm';
-import { activateTokenAction, type State } from '@/actions/activateTokenAction';
+import { ActivationUserInputForm } from '@/components/accountActivation/ActivationUserInputForm';
+import { type ActivateTokenState } from '@/types/activate';
+import { activateTokenAction } from '@/actions/accountActivation/activateTokenAction';
 
-const initialState: State = { success: false, not_found: false };
+const initialState: ActivateTokenState = { success: false, not_found: false };
 
 export function ActivationTokenInputForm() {
     const [state, formAction, pending] = useActionState(activateTokenAction, initialState);
@@ -21,7 +22,7 @@ export function ActivationTokenInputForm() {
     return (
         <>
         { state.success ? (
-            <ActivationUserInputForm role={state.data.role}/>
+            <ActivationUserInputForm token={state.data.token} role={state.data.role}/>
         ) :  (
 			<form action={formAction} className="border-1 border-solid rounded-lg p-10 mt-10 flex flex-col gap-5">
                 <div>
@@ -39,15 +40,16 @@ export function ActivationTokenInputForm() {
 						    <InputOTPSlot index={5} />	
 					    </InputOTPGroup>
 				    </InputOTP>
-				    <div id="token-error" aria-live="polite" aria-atomic="true">
-					    {!state.success && state.formError && (
-  							    <p className="text-sm text-red-500">
-    								    {state.formError}
-  							    </p>
-						    )}
-				    </div>
+					<div id="token-error" aria-live="polite" aria-atomic="true">
+						{!state.success && (state.formError || state.error) && (
+							<p className="text-sm text-red-500">
+								{state.formError ?? state.error}
+							</p>
+						)}
+
+					</div>
                 </div>
-				<Button type="submit" className="w-full mt-5" aria-disabled={pending} disabled={pending}>Next</Button>
+				<Button type="submit" className="w-full mt-5" disabled={pending} aria-disabled={pending}>Next</Button>
 			</form>
         )}
         </>

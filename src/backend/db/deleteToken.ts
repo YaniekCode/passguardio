@@ -19,32 +19,24 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import openDb from "@/backend/db/openDb";
-import { type ActivateTokenState} from '@/types/activate';
+import openDb from '@/backend/db/openDb';
+import { MessageResultType } from '@/types';
 
+export async function deleteToken(token: string): Promise<MessageResultType> {
 
-export async function getDataByToken(token: string): Promise<ActivateTokenState> {
 	const db = await openDb();
 
 	try {
-        const row = await db.get(
-			`SELECT role, token, expires_at
-            FROM tokens
-            WHERE token = ? 
-            `,
-            token
-		);
+		await db.run(
+            		`DELETE FROM tokens WHERE token=?`,	
+			token,
+        	);
 
-
-		if (row) {
-			return { success: true, data: row };
-		} else {
-			return { success: false, not_found: true, error: "Token not found" };
-		}
+		return { success: true, message: "Token deleted successfully" };
 
 	} catch (err: unknown) {
 		console.log(err);
-		return { success: false, not_found: false, error: "An error occurred when reading token data" };
+		return { success: false, error: "An error occurred when deleting the token" };
 	} finally {
 		try {
 			await db.close();
@@ -52,4 +44,4 @@ export async function getDataByToken(token: string): Promise<ActivateTokenState>
 			console.error("Failed to close DB: ", closeErr);
 		}
 	}
-};
+}
