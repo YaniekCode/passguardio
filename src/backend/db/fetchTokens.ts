@@ -13,7 +13,7 @@ export async function fetchTokens(): Promise<Result<TokenDatabaseRecordType[]>>{
 		return { success: true, data: tokens };
 	} catch (err: unknown) {
 		console.log(err);
-		return { success: false, error: "An error occurred when reading tokens" };
+		return { success: false, error: "An error occurred when fetching tokens" };
 	} finally {
 		try {
 			await db.close();

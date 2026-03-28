@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2025 YaniekCode
+ * Copyright (C) 2026 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -20,7 +20,12 @@
 */
 
 import type { Metadata } from "next";
+import { Shield } from 'lucide-react';
 
+import {
+	Card,
+	CardContent,
+} from "@/components/ui/card"
 import SignupForm from "@/components/signup/signupForm";
 
 export const metadata: Metadata = {
@@ -30,11 +35,17 @@ export const metadata: Metadata = {
 
 export default function SignupPage() {
 	return (
-		<div>
-      			<main>
-      				<h1>Sign up</h1>
-				<SignupForm />
-      			</main>
-    		</div>
+		<main className="flex min-h-screen flex-col items-center justify-center px-4">
+			<header className="flex flex-col items-center my-8">
+				<Shield strokeWidth={2.5} size={40}/>
+      			<h1 className="text-3xl font-semibold">Create Account</h1>
+				<p className="text-muted-foreground text-center">Sign up to start managing your passwords securely</p>
+			</header>
+			<Card className="w-full max-w-sm sm:max-w-md md:max-w-lg">
+				<CardContent>
+					<SignupForm />
+				</CardContent>
+			</Card>
+      	</main>
 	);
 }

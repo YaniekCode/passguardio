@@ -22,9 +22,9 @@ export function PasswordSearch({ placeholder }: { placeholder: string }) {
 	}, 300);
 
 	return (
-		<InputGroup className="bg-stone-200 border-none py-5">
+		<InputGroup className="mt-10 mb-5 shadow-none bg-card border-none py-5">
 			<InputGroupInput
-				className="placeholder:text-neutral-700"
+				className="placeholder:text-muted-foreground"
 				placeholder={placeholder}
 				onChange={(e) => {
 					handleSearch(e.target.value);	

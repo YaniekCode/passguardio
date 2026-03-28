@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2025 YaniekCode
+ * Copyright (C) 2026 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -27,6 +27,9 @@ export interface User {
 	password: string;
 	role: UserRoleType;
 };
+
+export type UserView = Pick<User, 'username' | 'email' | 'role'>
+
 
 export type UserRoleType = "user" | "admin";
 
@@ -116,6 +119,13 @@ export type PasswordStatsType = {
 	strongPasswordCount: number,
 	weakPasswordCount: number,
 	recentlyAddedPasswordCount: number
+};
+
+export type UsersStatsType = { 
+	totalUsersCount: number,
+	totalPasswordsCount: number,
+	strongPasswordsCount: number,
+	weakPasswordsCount: number
 };
 
 export type FormState =

@@ -39,7 +39,7 @@ export async function handleFetchPasswordStats(): Promise<FetchPasswordStatsResu
 	// If the password strength is smaller of equal to 3 on a 5 scale range we count it as weak
 	const weakPasswordCount = passwordStatList.data.filter(password => password.strength <= 3).length;
 
-	// If the password was created less than seven days ago we count it as recently added
+	// If the password was added less than seven days ago we count it as recently added
 	const recentlyAddedPasswordCount = passwordStatList.data
 		.filter(password =>
 			new Date().getTime() - password.created_at

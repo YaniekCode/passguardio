@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2025 YaniekCode
+ * Copyright (C) 2026 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -19,11 +19,9 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import styles from "@/components/FormMessageBox.module.css";
-
 export default function FormMessageBox({ message } : { message: string }) {
 	return (
-		<div role="alert" aria-live="assertive" className={`${styles.formMessageBox}`}>
+		<div className="text-center bg-red-200 text-red-800 rounded-md py-3 my-2 w-full" role="alert" aria-live="assertive"> 
 			<p>{message}</p>
 		</div>
 	);

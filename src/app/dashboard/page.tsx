@@ -20,14 +20,24 @@
 */
 
 import type { Metadata } from 'next';
-import { Shield } from 'lucide-react';
 import { Suspense } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbPage,
+  BreadcrumbList,
+} from "@/components/ui/breadcrumb"
+import {
+	Card,
+	CardHeader,
+	CardContent }
+from "@/components/ui/card";
 import { handleFetchPasswordStats } from '@/backend/password/handleFetchPasswordStats';
 import { PasswordSearch } from '@/components/PasswordSearch';
 import { PasswordsTable } from '@/components/PasswordsTable';
-import { PasswordStatCard } from '@/components/PasswordStatCard';
+import { StatCard } from '@/components/StatCard';
 import { AddPasswordDialog } from '@/components/addPassword/AddPasswordDialog';
 
 
@@ -56,10 +66,16 @@ export default async function Dashboard(props: {
 	const { totalPasswordCount, strongPasswordCount, weakPasswordCount, recentlyAddedPasswordCount } = fetchPasswordStatsResult.data;
 
 	return (
-		<main>
+		<main className="mt-5">
+			<Breadcrumb>
+				<BreadcrumbList>
+					<BreadcrumbItem>
+						<BreadcrumbPage>Dashboard</BreadcrumbPage>
+					</BreadcrumbItem>	
+				</BreadcrumbList>	
+			</Breadcrumb>
 			<header className="flex items-center justify-between">
 				<div className="flex items-center gap-5">
-					<Shield size="30"/>
 					<div>
 						<h1 className="text-3xl font-semibold">Password Vault</h1>
 						<h2 className="text-muted-foreground">Manage your passwords securely</h2>
@@ -68,17 +84,21 @@ export default async function Dashboard(props: {
 				<AddPasswordDialog />
 			</header>
 			<PasswordSearch placeholder="Search passwords..."/>
-			<section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-				<PasswordStatCard title="Total Password" counter={totalPasswordCount} icon="key"/>
-				<PasswordStatCard title="Strong Passwords" counter={strongPasswordCount} icon="shield"/>
-				<PasswordStatCard title="Weak Passwords" counter={weakPasswordCount} icon="danger"/>
-				<PasswordStatCard title="Recently Added" counter={recentlyAddedPasswordCount} icon="trend"/>
+			<section className="my-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+				<StatCard title="Total Password" counter={totalPasswordCount} icon="key"/>
+				<StatCard title="Strong Passwords" counter={strongPasswordCount} icon="shield"/>
+				<StatCard title="Weak Passwords" counter={weakPasswordCount} icon="danger"/>
+				<StatCard title="Recently Added" counter={recentlyAddedPasswordCount} icon="trend"/>
 			</section>
-			<section>
-			<h2 className="text-xl font-[500]">All Passwords</h2>
-				<Suspense key={query + currentPage} fallback={<Skeleton count={10} />}>
-					<PasswordsTable query={query} currentPage={currentPage} />
-				</Suspense>
+			<section className="my-5">
+				<Card className="border-[1.5] border-solid shadow-none">
+					<CardHeader className="text-xl font-[500]">All Passwords</CardHeader>
+					<CardContent>
+						<Suspense key={query + currentPage} fallback={<Skeleton count={10} />}>
+							<PasswordsTable query={query} currentPage={currentPage} />
+						</Suspense>
+					</CardContent>
+				</Card>
 			</section>
 		</main>
 	);

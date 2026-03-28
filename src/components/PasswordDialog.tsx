@@ -1,6 +1,6 @@
 'use client';
 
-import { Plus, PenSquare } from 'lucide-react';
+import { CirclePlus, PenSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -64,7 +64,7 @@ export function PasswordDialog(props: PasswordDialogProps) {
     // Adding correct text and icons based on the type of the component
     const title = props.mode === 'edit' ? 'Edit Password' : 'Add New Password';
     const submitText = props.mode === 'edit' ? 'Save Password' : 'Add Password';
-    const triggerIcon = props.mode === 'edit' ? <PenSquare /> : <Plus />;
+    const triggerIcon = props.mode === 'edit' ? <PenSquare /> : <CirclePlus />;
 
     // No text for edit icon
     const triggerText = props.mode === 'edit' ? '': 'Add Password';

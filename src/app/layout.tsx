@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2025 YaniekCode
+ * Copyright (C) 2026 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -24,11 +24,11 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { poppinsSans } from '@/app/fonts';
 import { Toaster } from '@/components/ui/sonner';
-
+import { TooltipProvider } from '@/components/ui/tooltip';
 
 export const metadata: Metadata = {
 	title: {
-    		default: "Passguardio",
+    	default: "Passguardio",
 		template: "%s | Passguardio",
 	},
 	description: "A simple, local and fast password manager with a web interface.",
@@ -45,9 +45,12 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
-			<body className={`${poppinsSans.variable} antialiased`}>
-				<main>{children}</main>
-				<Toaster />
+			<body className={`${poppinsSans.variable} bg-background antialiased`}>
+				{/* tooltip provider responsible for displaying tooltips on hover */}
+				<TooltipProvider>
+					<main>{children}</main>
+					<Toaster />
+				</TooltipProvider>
 			</body>
 		</html>
 	);

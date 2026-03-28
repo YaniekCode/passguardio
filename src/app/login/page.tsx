@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2025 YaniekCode
+ * Copyright (C) 2026 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -19,22 +19,33 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import type { Metadata } from "next";
+import type { Metadata } from 'next';
+import { Shield } from 'lucide-react';
 
-import LoginForm from "@/components/login/loginForm";
+import {
+	Card,
+	CardContent,
+} from "@/components/ui/card"
+import LoginForm from '@/components/login/LoginForm';
 
 export const metadata: Metadata = {
-	title: 'Log in',
-	description: 'Log in to Passguardio to access your secure, local password manager.',
+	title: "Log in",
+	description: "Log in to Passguardio to access your secure, local password manager.",
 };
 
 export default function LoginPage() {
 	return (
-    		<div>
-      			<main>
-      				<h1>Log in</h1>
-				<LoginForm/>
-      			</main>
-    		</div>
+      	<main className="flex min-h-screen flex-col items-center justify-center px-4">
+			<header className="flex flex-col items-center my-8">
+				<Shield strokeWidth={2.5} size={40}/>
+      			<h1 className="text-3xl font-semibold">Welcome Back</h1>
+				<p className="text-muted-foreground text-center">Log in to access your password vault</p>
+			</header>
+			<Card className="w-full max-w-sm sm:max-w-md md:max-w-lg">
+				<CardContent>
+					<LoginForm/>
+				</CardContent>
+			</Card>
+      	</main>
 	);
 };

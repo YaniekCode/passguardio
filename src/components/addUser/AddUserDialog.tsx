@@ -1,6 +1,6 @@
 'use client';
 
-import { Plus } from 'lucide-react';
+import { CirclePlus } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
 	Dialog,
@@ -40,7 +40,7 @@ export function AddUserDialog() {
 	return (
 		<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
 			<DialogTrigger asChild>
-				<Button onClick={() => setIsDialogOpen(true)} ><Plus />Add User</Button>	
+				<Button onClick={() => setIsDialogOpen(true)} ><CirclePlus />Add User</Button>	
 			</DialogTrigger>
 			<DialogContent>
 				{(generatedToken == null) ? (

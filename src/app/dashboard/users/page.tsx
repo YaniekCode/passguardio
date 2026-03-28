@@ -20,22 +20,33 @@
 */
 
 import type { Metadata } from 'next';
-import { User } from 'lucide-react';
-import {
-	Table,
-	TableBody,
-	TableCaption,
-	TableCell,
-	TableHead,
-	TableHeader,
-	TableRow
-} from '@/components/ui/table';
 
-import { firaCode } from '@/app/fonts';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
+import {
+	Tabs,
+	TabsContent,
+	TabsList,
+	TabsTrigger
+} from '@/components/ui/tabs';
+import {
+	Card,
+	CardHeader,
+	CardContent }
+from "@/components/ui/card";
+import UsersTable from '@/components/UsersTable';
+import TokensTable from '@/components/TokensTable';
+import { StatCard } from '@/components/StatCard';
+import { fetchUsers } from '@/backend/db/fetchUsers';
 import { fetchTokens } from '@/backend/db/fetchTokens';
-import { UserRoleBadge } from '@/components/UserRoleBadge';
+import { handleFetchUserStats } from '@/backend/users/handleFetchUserStats';
 import { AddUserDialog } from '@/components/addUser/AddUserDialog';
-import { DeleteTokenDialog } from '@/components/DeleteTokenDialog';
 
 
 export const metadata: Metadata = {
@@ -43,71 +54,80 @@ export const metadata: Metadata = {
 	description: "Manage users of your PassGuardio instance from the users panel.",
 };
 
-function formatDate(ms: number) {
-	const date = new Date(ms);
-
-	const weekday = date.toLocaleDateString('en-US', { weekday: 'short' });
-	const day = date.getDate();
-	const month = date.toLocaleDateString('en-US', { month: 'long' });
-	const year = date.getFullYear();
-
-	const time = date.toLocaleTimeString('en-US', {
-		hour: '2-digit',
-		minute: '2-digit',
-		hour12: true,
-	});
-
-  return `${weekday} ${day} ${month} ${year} | ${time}`;
-}
-
 export default async function Dashboard() {
+	const users = await fetchUsers();
 	const tokens = await fetchTokens();
+
+
+	const fetchUsersStatsResult = await handleFetchUserStats();
+	if (!fetchUsersStatsResult?.success) {
+		// todo failed reading users stats
+		return;
+	}
+
+	const { totalUsersCount, totalPasswordsCount, strongPasswordsCount, weakPasswordsCount } = fetchUsersStatsResult.data;
+
 	return (
-		<main>
+		<main className="mt-5">
+			<Breadcrumb>
+				<BreadcrumbList>
+					<BreadcrumbItem>
+						<BreadcrumbLink href="/dashboard">Dashboard</BreadcrumbLink>
+					</BreadcrumbItem>	
+					<BreadcrumbSeparator />
+					<BreadcrumbItem>
+						<BreadcrumbPage>Users</BreadcrumbPage>
+					</BreadcrumbItem>
+				</BreadcrumbList>	
+			</Breadcrumb>
 			<header className="flex items-center justify-between">
 				<div className="flex items-center gap-5">
-					<User size="30"/>
 					<div>
-						<h1 className="text-3xl font-semibold">Users Panel</h1>
-						<h2 className="text-muted-foreground">Manage users of your PassGuardio instance</h2>
+						<h1 className="text-3xl font-semibold">Users & Tokens</h1>
+						<h2 className="text-muted-foreground">Manage users and tokens of your PassGuardio instance</h2>
 					</div>
 				</div>
 				<AddUserDialog />
 			</header>
-			{tokens.success ? (
-				tokens.data.length === 0 ? (
-					<p>No tokens found</p>
-				) : (
-			<Table>
-				<TableCaption>A list of tokens</TableCaption>
-				<TableHeader>
-					<TableRow>
-						<TableHead>Token</TableHead>
-						<TableHead>Role</TableHead>
-						<TableHead>Expires at</TableHead>
-						<TableHead>Actions</TableHead>
-					</TableRow>
-				</TableHeader>
-				<TableBody>
-					{tokens.data.map((token) => {
-						const formattedToken = token.token && token.token.replace(/(\d{3})(\d{3})/, "$1-$2");
-						return (
-							<TableRow key={token.token}>
-								<TableCell className={`${firaCode.className} font-[500]`}>{formattedToken}</TableCell>
-								<TableCell>
-									<UserRoleBadge role={token.role}/>
-								</TableCell>
-								<TableCell>{formatDate(token.expires_at)}</TableCell>
-								<TableCell>
-									<DeleteTokenDialog token={token.token}/>
-								</TableCell>
-							</TableRow>
-						)
-
-					})}
-				</TableBody>
-			</Table>
-			)) : <p>Something went wrong</p>}
+			<section className="mt-10 mb-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+				<StatCard title="Total Users" counter={totalUsersCount} icon="user"/>
+				<StatCard title="Total Passwords" counter={totalPasswordsCount} icon="purpleKey"/>
+				<StatCard title="Strong Passwords" counter={strongPasswordsCount} icon="shield"/>
+				<StatCard title="Weak Passwords" counter={weakPasswordsCount} icon="danger"/>
+			</section>
+			<Tabs defaultValue="users">
+				<TabsList>
+					<TabsTrigger value="users">Users</TabsTrigger>
+					<TabsTrigger value="tokens">Tokens</TabsTrigger>
+				</TabsList>
+				<TabsContent value="users">
+					{users.success ? (
+						users.data.length === 0 ? (
+							<p>No users found</p>
+						) : (
+							<Card className="border-[1.5] border-solid shadow-none">
+								<CardHeader className="text-xl font-[500]">Users</CardHeader>
+								<CardContent>
+									<UsersTable users={users.data} />
+								</CardContent>
+							</Card>
+						)) : <p>Something went wrong</p>
+					}
+				</TabsContent>
+				<TabsContent value="tokens">
+					{tokens.success ? (
+						tokens.data.length === 0 ? (
+							<p>No tokens found</p>
+						) : (
+							<Card className="border-[1.5] border-solid shadow-none">
+								<CardHeader className="text-xl font-[500]">Tokens</CardHeader>
+								<CardContent>
+									<TokensTable tokens={tokens.data} />
+								</CardContent>
+							</Card>
+						)) : <p>Something went wrong</p>}
+				</TabsContent>
+			</Tabs>
 		</main>
 	);
 };
