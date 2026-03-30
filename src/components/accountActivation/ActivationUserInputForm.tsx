@@ -88,7 +88,7 @@ export function ActivationUserInputForm({ token, role }: { token: string, role: 
 					)}
 				</div>
             </div>
-			<div id="error" aria-live="polite" aria-atomic="true">
+			<div id="token-error" aria-live="polite" aria-atomic="true">
 				{!state.success && state.error && (
   					<p className="text-sm text-red-500">
     					{state.error}

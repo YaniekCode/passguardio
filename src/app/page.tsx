@@ -26,7 +26,7 @@ import {
 	Card,
 	CardContent,
 } from "@/components/ui/card"
-import SignupForm from "@/components/signup/signupForm";
+import SignupForm from "@/components/signup/SignupForm";
 
 export const metadata: Metadata = {
 	title: 'Sign up',
@@ -41,7 +41,7 @@ export default function SignupPage() {
       			<h1 className="text-3xl font-semibold">Create Account</h1>
 				<p className="text-muted-foreground text-center">Sign up to start managing your passwords securely</p>
 			</header>
-			<Card className="w-full max-w-sm sm:max-w-md md:max-w-lg">
+			<Card className="w-full max-w-sm">
 				<CardContent>
 					<SignupForm />
 				</CardContent>

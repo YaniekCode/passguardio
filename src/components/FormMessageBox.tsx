@@ -21,7 +21,7 @@
 
 export default function FormMessageBox({ message } : { message: string }) {
 	return (
-		<div className="text-center bg-red-200 text-red-800 rounded-md py-3 my-2 w-full" role="alert" aria-live="assertive"> 
+		<div className="text-center bg-red-200 text-red-800 rounded-md py-3 my-2 w-full" role="alert" aria-atomic="true" aria-live="polite"> 
 			<p>{message}</p>
 		</div>
 	);

@@ -27,12 +27,12 @@ import { startTransition} from 'react';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Button } from '@/components/ui/button';
-import signup from '@/actions/signup/signup';
+import { signupAction } from '@/actions/signup/signupAction';
 import { FormState } from '@/types';
 import FormMessageBox from '@/components/FormMessageBox';
 
 export default function SignupForm() {
-	const [state, formAction, isPending] = useActionState<FormState, FormData>(signup, { success: true, message: "" });
+	const [state, formAction, isPending] = useActionState<FormState, FormData>(signupAction, { success: true, message: "" });
 
 	// function responsible for not clearing form fields afrer form submition and sending FormData
 	function handleSubmit(e: React.FormEvent<HTMLFormElement>) {

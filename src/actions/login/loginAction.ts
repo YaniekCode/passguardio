@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2025 YaniekCode
+ * Copyright (C) 2026 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -20,15 +20,16 @@
 */
 
 'use server';
+
 import { redirect } from 'next/navigation';
 
-import { LoginUserInterface, FormState } from '@/types';
+import { type FormState } from '@/types';
 import { validateLoginInput } from '@/utils/validation/loginValidation/validateLoginInput';
 import handleLogin from '@/backend/login/handleLogin';
 import { createSession } from '@/utils/session/sessionUtils';
 
-export default async function login(prevState: FormState, formData: FormData): Promise<FormState> {
-	const rawFormData: LoginUserInterface = {
+export async function loginAction(prevState: FormState, formData: FormData): Promise<FormState> {
+	const rawFormData = {
 		email: formData.get('email')?.toString() || "",
 		password: formData.get('password')?.toString() || "",
 	};
@@ -48,5 +49,4 @@ export default async function login(prevState: FormState, formData: FormData): P
 	const userSessionData = userLoginResult.data;
 	await createSession(userSessionData);
 	redirect("/dashboard"); // redirecting to dashboard
-	//return userLoginResult;
 };

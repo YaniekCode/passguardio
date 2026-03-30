@@ -41,7 +41,7 @@ export default function LoginPage() {
       			<h1 className="text-3xl font-semibold">Welcome Back</h1>
 				<p className="text-muted-foreground text-center">Log in to access your password vault</p>
 			</header>
-			<Card className="w-full max-w-sm sm:max-w-md md:max-w-lg">
+			<Card className="w-full max-w-sm">
 				<CardContent>
 					<LoginForm/>
 				</CardContent>

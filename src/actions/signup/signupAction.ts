@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2025 YaniekCode
+ * Copyright (C) 2026 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -20,13 +20,14 @@
 */
 
 'use server';
+
 import { redirect } from 'next/navigation';
 
 import { User, FormState } from '@/types';
 import { validateSignupInput } from '@/utils/validation/signupValidation/validateSignupInput';
 import handleSignup from '@/backend/signup/handleSignup';
 
-export default async function signup(prevState: FormState, formData: FormData): Promise<FormState> {
+export async function signupAction(prevState: FormState, formData: FormData): Promise<FormState> {
 	const rawFormData: User = {
 		username: formData.get('username')?.toString() || "",
 		email: formData.get('email')?.toString() || "",
@@ -34,19 +35,17 @@ export default async function signup(prevState: FormState, formData: FormData): 
 		role: "admin", // when a user signs up they automatically become an admin
 	};
 
-	const validation = validateSignupInput(rawFormData);
-	if (!validation.success) {
-		return validation;
+	const validationResult = validateSignupInput(rawFormData);
+	if (!validationResult.success) {
+		return validationResult;
 	};
 
-	const userData = validation.data;
+	const userData = validationResult.data;
 	const signupResult = await handleSignup(userData);
 	
 	if (!signupResult.success) {
 		return signupResult;
-	} else {
-		redirect("/login"); // reditecting to login page
-		//return signupResult;
-	};
+	}
 	
+	redirect("/login");
 };

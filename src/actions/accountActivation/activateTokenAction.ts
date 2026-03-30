@@ -1,7 +1,7 @@
 'use server';
 
-import { getDataByToken } from '@/backend/db/getDataByToken';
 import { type ActivateTokenState } from '@/types/activate';
+import { isTokenExpiredOrMissing } from '@/utils/isTokenExpiredOrMissing';
 
 export async function activateTokenAction(
     prevState: ActivateTokenState,
@@ -20,23 +20,8 @@ export async function activateTokenAction(
         };
     }
 
-    // Get the token data(role, token, expires_at) from the DB
-    const tokenData = await getDataByToken(token);
+    // Check if the token has expired, is missing or is valid
+    const tokenExpiredOrMissingResult = await isTokenExpiredOrMissing(token);
 
-    if (!tokenData.success || !tokenData.data) {
-        return { success: false, not_found: true, error: "Token not found" };
-    }
-
-    const tokenExpiryDate = tokenData.data.expires_at;
-    const currentTime = Date.now();
-
-    // Check if the token has already expired
-    if (currentTime > tokenExpiryDate) {
-        return { success: false, not_found: false, error: "Token has expired" };
-    }
-
-    return {
-        success: true,
-        data: tokenData.data,
-    };
+    return tokenExpiredOrMissingResult;
 }
