@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2025 YaniekCode
+ * Copyright (C) 2026 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -19,12 +19,10 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-"use server";
-
-import openDb from "@/api/db/openDb";
-import decryptUserPasswords from "@/utils/encryption/decryptUserPasswords";
-import { getSession } from "@/utils/session/sessionUtils";
-import { PasswordDatabaseRecord, PasswordByUUIDResult, PasswordData } from "@/lib";
+import openDb from '@/backend/db/openDb';
+import decryptUserPasswords from '@/utils/encryption/decryptUserPasswords';
+import { getSession } from '@/utils/session/sessionUtils';
+import { PasswordDatabaseRecord, PasswordByUUIDResult, PasswordData } from '@/lib';
 
 export default async function getPasswordByUUID(uuid: string): Promise<PasswordByUUIDResult | undefined>  {
 	const db = await openDb();

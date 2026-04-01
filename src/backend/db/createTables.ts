@@ -19,8 +19,6 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-'use server';
-
 import openDb from '@/backend/db/openDb';
 
 export default async function createTables(): Promise<void> {

@@ -22,6 +22,7 @@
 import type { Metadata } from 'next';
 
 import './globals.css';
+import 'react-loading-skeleton/dist/skeleton.css';
 import { poppinsSans } from '@/app/fonts';
 import { Toaster } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';

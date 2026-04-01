@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2025 YaniekCode
+ * Copyright (C) 2026 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -19,8 +19,8 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import openDb from "@/backend/db/openDb";
-import { MessageResultType } from "@/types";
+import openDb from '@/backend/db/openDb';
+import type { MessageResultType } from '@/types';
 
 export default async function deletePassword(user_id: number, uuid: string): Promise<MessageResultType> {
 	const db = await openDb();

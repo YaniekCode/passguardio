@@ -23,8 +23,8 @@
 
 import { revalidatePath } from 'next/cache';
 
-import { type FormState } from '@/types';
-import handleAddPassword from '@/backend/password/handleAddPassword';
+import type { FormState } from '@/types';
+import { handleAddPassword } from '@/backend/password/handleAddPassword';
 import { validateAddPasswordInput } from '@/utils/validation/validateAddPasswordInput';
 
 
@@ -35,7 +35,7 @@ export async function addPasswordAction(prevState: FormState, formData: FormData
 	const websiteUrl = formData.get("websiteUrl")?.toString() || "";
 	const usernameOrEmail = formData.get("usernameOrEmail")?.toString() || "";
 
-	// If we don't succeed in validating the form data we return an error
+	// Return the error if it occured during validation
 	if (!validatedFormData.success) {
 		return {
 			success: false,
@@ -43,12 +43,10 @@ export async function addPasswordAction(prevState: FormState, formData: FormData
 		};
 	};
 
-	// If we succeed in validating the form data we proceed
 	const { password, category } = validatedFormData.data;
-
 	const validatedPasswordData = { websiteName, websiteUrl, usernameOrEmail, password, category };
 
-	// Adding the password data to the DB
+	// Add the password data to the DB
 	const passwordInputResult = await handleAddPassword(validatedPasswordData);
 
 	revalidatePath("/dashboard");

@@ -30,7 +30,6 @@ export interface User {
 
 export type UserView = Pick<User, 'username' | 'email' | 'role'>
 
-
 export type UserRoleType = "user" | "admin";
 
 
@@ -147,13 +146,7 @@ export type FetchPasswordStatsResultType = Result<PasswordStatsType>;
 
 export type SignupValidationResultType = Result<User>;
 
-export type LoginValidationResultType = Result<LoginUserInterface>;
-
-export type LoginResultType = Result<SessionPayload>;
-
 export type PasswordDatabaseResultType = Result<PasswordDatabaseRecordType[]>;
-
-export type HandleLoginResultType = Result<UserDatabaseRecord>;
 
 export type PasswordByUUIDResultType = Result<PasswordData>;
 

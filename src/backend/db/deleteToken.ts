@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2025 YaniekCode
+ * Copyright (C) 2026 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -20,10 +20,9 @@
 */
 
 import openDb from '@/backend/db/openDb';
-import { MessageResultType } from '@/types';
+import type { MessageResultType } from '@/types';
 
 export async function deleteToken(token: string): Promise<MessageResultType> {
-
 	const db = await openDb();
 
 	try {

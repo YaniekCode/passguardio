@@ -3,7 +3,7 @@
 import { type ActivateTokenState } from '@/types/activate';
 import { isTokenExpiredOrMissing } from '@/utils/isTokenExpiredOrMissing';
 
-export async function activateTokenAction(
+export async function tokenValidateAction(
     prevState: ActivateTokenState,
     formData: FormData
 ): Promise<ActivateTokenState> {

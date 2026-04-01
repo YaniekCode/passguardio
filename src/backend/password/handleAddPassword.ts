@@ -1,19 +1,40 @@
+/*
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *
+ * Copyright (C) 2026 YaniekCode
+ *
+ * This file is part of PassGuardio.
+ *
+ * PassGuardio is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PassGuardio is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 import crypto from 'node:crypto';
 
-import { PasswordInfo, PasswordDatabaseRecordType, MessageResultType } from '@/types';
+import type { PasswordInfo, PasswordDatabaseRecordType, MessageResultType } from '@/types';
 import encryptPassword from '@/utils/encryption/encryptPassword';
 import { getPasswordStrengthAndCrackTime } from '@/utils/getPasswordStrengthAndCrackTime';
 import { getSession } from '@/utils/session/sessionUtils';
 import addPassword from '@/backend/db/addPassword';
 
-export default async function handleAddPassword(passwordData: PasswordInfo): Promise<MessageResultType> {
+export async function handleAddPassword(passwordData: PasswordInfo): Promise<MessageResultType> {
 	const session = await getSession();
 	if (!session) {
 		return { success: false, error: "User not authenticated"};
 	};
 
 	// Encrypt the password and generate a random UUID
-	const dek = Buffer.from(session.dek, "hex"); // convert dek from string to Buffer type
+	const dek = Buffer.from(session.dek, "hex");
 
 	const { encryptedPassword, iv, tag } = encryptPassword(passwordData.password, dek);
 	const passwordUUID = crypto.randomUUID();
@@ -38,6 +59,7 @@ export default async function handleAddPassword(passwordData: PasswordInfo): Pro
 		tag: tag,
 	};
 
+	// Add the password to the DB
 	const passwordInputResult = await addPassword(passwordDatabaseInputRecord);
 
 	return passwordInputResult;

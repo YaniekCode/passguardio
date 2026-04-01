@@ -21,18 +21,19 @@
 
 'use server';
 
-import { ActivateUserState } from "@/types/activate";
+import type { UserRoleType } from "@/types"; 
+import type { ActivateUserState } from "@/types/activate";
 import { isTokenExpiredOrMissing } from "@/utils/isTokenExpiredOrMissing";
-import handleSignup from "@/backend/signup/handleSignup";
+import { handleSignup } from "@/backend/signup/handleSignup";
 import { validateNewUserInput } from "@/utils/validation/validateNewUserInput";
 import { deleteToken } from "@/backend/db/deleteToken";
 
 export async function activateUserAction(
     token: string,
-    role: "user" | "admin",
-    prevState: ActivateUserState,
+    role: UserRoleType,
     formData: FormData
 ): Promise<ActivateUserState> {
+
     // Check if the token has expired, is missing or is valid
     const tokenExpiredOrMissingResult = await isTokenExpiredOrMissing(token);
     
@@ -40,7 +41,6 @@ export async function activateUserAction(
     if (!tokenExpiredOrMissingResult.success) {
         return tokenExpiredOrMissingResult;
     }
-
 
     // Validating the formData except for the role
     const validationResult = validateNewUserInput(formData);
@@ -65,6 +65,7 @@ export async function activateUserAction(
         }
     }
 
+    // Delete the token when we've added the user
     await deleteToken(token);
     return {
         success: true,

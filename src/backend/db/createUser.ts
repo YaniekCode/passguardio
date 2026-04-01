@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2025 YaniekCode
+ * Copyright (C) 2026 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -19,12 +19,12 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-"use server";
+import type { UserDatabaseRecordType, MessageResultType } from '@/types';
+import openDb from '@/backend/db/openDb';
 
-import { UserDatabaseInsertType, MessageResultType } from "@/types";
-import openDb from "@/backend/db/openDb";
+type Props = Omit<UserDatabaseRecordType, "id">;
 
-export default async function createUser(userData: UserDatabaseInsert): Promise<MessageResultType> {
+export default async function createUser(userData: Props): Promise<MessageResultType> {
 	const db = await openDb();
 
 	try {

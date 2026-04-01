@@ -25,7 +25,7 @@ import { Shield } from 'lucide-react';
 import {
 	Card,
 	CardContent,
-} from "@/components/ui/card"
+} from '@/components/ui/card'
 import LoginForm from '@/components/login/LoginForm';
 
 export const metadata: Metadata = {

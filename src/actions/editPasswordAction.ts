@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2025 YaniekCode
+ * Copyright (C) 2026 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -20,10 +20,11 @@
 */
 
 'use server';
+
 import { revalidatePath } from 'next/cache';
 
 import { type FormState } from '@/types';
-import handleEditPassword from '@/backend/password/handleEditPassword';
+import { handleEditPassword } from '@/backend/password/handleEditPassword';
 import { validateAddPasswordInput } from '@/utils/validation/validateAddPasswordInput';
 
 

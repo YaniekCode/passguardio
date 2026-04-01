@@ -23,9 +23,9 @@
 
 import { redirect } from 'next/navigation';
 
-import { type FormState } from '@/types';
+import type { FormState } from '@/types';
 import { validateLoginInput } from '@/utils/validation/loginValidation/validateLoginInput';
-import handleLogin from '@/backend/login/handleLogin';
+import { handleLogin } from '@/backend/login/handleLogin';
 import { createSession } from '@/utils/session/sessionUtils';
 
 export async function loginAction(prevState: FormState, formData: FormData): Promise<FormState> {
@@ -40,7 +40,7 @@ export async function loginAction(prevState: FormState, formData: FormData): Pro
 	};
 
 	const validatedFormData = inputValidationResult.data;
-	const userLoginResult = await handleLogin(validatedFormData); // function responsible for checking the user in db
+	const userLoginResult = await handleLogin(validatedFormData); // function responsible for checking the user in the db
 
 	if (!userLoginResult.success) {
 		return userLoginResult;

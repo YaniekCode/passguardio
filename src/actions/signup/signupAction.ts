@@ -25,7 +25,7 @@ import { redirect } from 'next/navigation';
 
 import { User, FormState } from '@/types';
 import { validateSignupInput } from '@/utils/validation/signupValidation/validateSignupInput';
-import handleSignup from '@/backend/signup/handleSignup';
+import { handleSignup } from '@/backend/signup/handleSignup';
 
 export async function signupAction(prevState: FormState, formData: FormData): Promise<FormState> {
 	const rawFormData: User = {

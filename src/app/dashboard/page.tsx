@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2025 YaniekCode
+ * Copyright (C) 2026 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -23,23 +23,9 @@ import type { Metadata } from 'next';
 import { Suspense } from 'react';
 import Skeleton from 'react-loading-skeleton';
 
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbPage,
-  BreadcrumbList,
-} from "@/components/ui/breadcrumb"
-import {
-	Card,
-	CardHeader,
-	CardContent }
-from "@/components/ui/card";
-import { handleFetchPasswordStats } from '@/backend/password/handleFetchPasswordStats';
-import { PasswordSearch } from '@/components/PasswordSearch';
-import { PasswordsTable } from '@/components/PasswordsTable';
-import { StatCard } from '@/components/StatCard';
-import { AddPasswordDialog } from '@/components/addPassword/AddPasswordDialog';
-
+import DashboardHeader from '@/components/dashboard/DashboardHeader';
+import DashboardPasswordStats from '@/components/dashboard/DashboardPasswordStats';
+import DashboardPasswords from '@/components/dashboard/DashboardPasswords';
 
 export const metadata: Metadata = {
 	title: "Dashboard",
@@ -56,50 +42,13 @@ export default async function Dashboard(props: {
 	const query = searchParams?.query || '';
 	const currentPage = Number(searchParams?.page) || 1;
 	
-
-	const fetchPasswordStatsResult = await handleFetchPasswordStats();
-	if (!fetchPasswordStatsResult?.success) {
-		// todo failed reading password stats
-		return;
-	}
-
-	const { totalPasswordCount, strongPasswordCount, weakPasswordCount, recentlyAddedPasswordCount } = fetchPasswordStatsResult.data;
-
 	return (
 		<main className="mt-5">
-			<Breadcrumb>
-				<BreadcrumbList>
-					<BreadcrumbItem>
-						<BreadcrumbPage>Dashboard</BreadcrumbPage>
-					</BreadcrumbItem>	
-				</BreadcrumbList>	
-			</Breadcrumb>
-			<header className="flex items-center justify-between">
-				<div className="flex items-center gap-5">
-					<div>
-						<h1 className="text-3xl font-semibold">Password Vault</h1>
-						<h2 className="text-muted-foreground">Manage your passwords securely</h2>
-					</div>
-				</div>
-				<AddPasswordDialog />
-			</header>
-			<PasswordSearch placeholder="Search passwords..."/>
-			<section className="my-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-				<StatCard title="Total Password" counter={totalPasswordCount} icon="key"/>
-				<StatCard title="Strong Passwords" counter={strongPasswordCount} icon="shield"/>
-				<StatCard title="Weak Passwords" counter={weakPasswordCount} icon="danger"/>
-				<StatCard title="Recently Added" counter={recentlyAddedPasswordCount} icon="trend"/>
-			</section>
-			<section className="my-5">
-				<Card className="border-[1.5] border-solid shadow-none">
-					<CardHeader className="text-xl font-[500]">All Passwords</CardHeader>
-					<CardContent>
-						<Suspense key={query + currentPage} fallback={<Skeleton count={10} />}>
-							<PasswordsTable query={query} currentPage={currentPage} />
-						</Suspense>
-					</CardContent>
-				</Card>
-			</section>
+			<DashboardHeader />
+			<Suspense fallback={<Skeleton count={6}/>}>
+				<DashboardPasswordStats />
+			</Suspense>
+			<DashboardPasswords query={query} currentPage={currentPage}/>
 		</main>
 	);
 };

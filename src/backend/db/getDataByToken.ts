@@ -19,8 +19,8 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import openDb from "@/backend/db/openDb";
-import { type ActivateTokenState} from '@/types/activate';
+import openDb from '@/backend/db/openDb';
+import type { ActivateTokenState} from '@/types/activate';
 
 
 export async function getDataByToken(token: string): Promise<ActivateTokenState> {

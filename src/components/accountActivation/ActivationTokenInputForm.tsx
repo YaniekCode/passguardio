@@ -33,13 +33,13 @@ import {
 
 import { ActivationUserInputForm } from '@/components/accountActivation/ActivationUserInputForm';
 import { type ActivateTokenState } from '@/types/activate';
-import { activateTokenAction } from '@/actions/accountActivation/activateTokenAction';
+import { tokenValidateAction } from '@/actions/accountActivation/tokenValidateAction';
 import FormMessageBox from '@/components/FormMessageBox';
 
 const initialState: ActivateTokenState = { success: false, not_found: false };
 
 export function ActivationTokenInputForm() {
-    const [state, formAction, pending] = useActionState(activateTokenAction, initialState);
+    const [state, formAction, pending] = useActionState(tokenValidateAction, initialState);
 
     return (
         <>

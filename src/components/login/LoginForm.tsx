@@ -61,7 +61,7 @@ export default function LoginForm() {
 				<Input type="password" id="passwordInput" name="password" placeholder="Enter your password" autoComplete="current-password" required></Input>
 			</div>
 			{ !state.success && state.error &&
-				<FormMessageBox message={state.error}/>
+				<FormMessageBox message={state.error} />
 			}
 			<Button className="w-full" disabled={isPending} aria-disabled={isPending}>Login</Button>
 		</form>

@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2025 YaniekCode
+ * Copyright (C) 2026 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -20,6 +20,7 @@
 */
 
 'use server';
+
 import { getSession } from '@/utils/session/sessionUtils';
 
 import { type MessageResultType } from '@/types';
@@ -29,6 +30,7 @@ export async function deletePasswordAction(
 	passwordUUID: string,
 	prevState: MessageResultType,
 ): Promise<MessageResultType> {
+
 	const session = await getSession();
 	if (!session) {
 		return { success: false, error: "User not authenticated"};

@@ -19,35 +19,27 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import openDb from '@/backend/db/openDb';
-import type { MessageResultType } from '@/types';
+import { Suspense } from 'react';
+import Skeleton from 'react-loading-skeleton';
 
-export async function addToken(
-	role: "user" | "admin",
-	token: string,
-	expiresAt: number
-): Promise<MessageResultType> {
-	const db = await openDb();
+import {
+	Card,
+	CardHeader,
+	CardContent }
+from "@/components/ui/card";
+import { PasswordsTable } from '@/components/PasswordsTable';
 
-	try {
-		await db.run(
-            		`INSERT INTO tokens (role, token, expires_at)
-             		VALUES (?, ?, ?)`,
-			role,
-			token,
-			expiresAt
-        	);
-
-		return { success: true, message: "Token added successfully" };
-
-	} catch (err: unknown) {
-		console.log(err);
-		return { success: false, error: "An error occurred when adding the token" };
-	} finally {
-		try {
-			await db.close();
-		} catch (closeErr) {
-			console.error("Failed to close DB: ", closeErr);
-		}
-	}
+export default function DashboardPasswords({ query, currentPage }: { query: string, currentPage: number }) {
+    return (
+        <section className="my-5">
+			<Card className="border-[1.5] border-solid shadow-none">
+				<CardHeader className="text-xl font-[500]">All Passwords</CardHeader>
+				<CardContent>
+					<Suspense key={query + currentPage} fallback={<Skeleton count={10} />}>
+						<PasswordsTable query={query} currentPage={currentPage} />
+					</Suspense>
+				</CardContent>
+			</Card>
+		</section>
+    )
 }
