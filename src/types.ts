@@ -100,9 +100,9 @@ export interface PasswordData {
 	password: string;
 	category: PasswordCategoryType;
 	strength: number;
-	last_modified: number;
-	created_at: number;
-	crack_time: string;
+	lastModified: number;
+	createdAt: number;
+	crackTime: string;
 };
 
 export type PasswordCategoryType =
@@ -142,13 +142,9 @@ export type MessageResultType =
 	| { success: true, message: string }
 	| { success: false, error: string }
 
-export type FetchPasswordStatsResultType = Result<PasswordStatsType>;
-
 export type SignupValidationResultType = Result<User>;
 
-export type PasswordDatabaseResultType = Result<PasswordDatabaseRecordType[]>;
-
-export type PasswordByUUIDResultType = Result<PasswordData>;
+export type PasswordByUUIDResultType = Result<PasswordData[]>;
 
 export type FirstUserResultType = Result<boolean>;
 

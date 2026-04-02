@@ -37,17 +37,19 @@ export async function handleEditPassword(passwordData: PasswordInfoWithUUID): Pr
 	};
 	const { id, dek } = session;
 
-	const isPasswordInDb = await isPasswordUUIDInDb(id, passwordData.uuid); // check if the password to edit exists and that the user is the owner of it 
-
+	// Check if the password to edit exists and that the user is the owner of it 
+	const isPasswordInDb = await isPasswordUUIDInDb(id, passwordData.uuid);
 	if (!isPasswordInDb.success) {
 		return { success: false, error: "Password not found" };
 	};
 
+	// Encrypt the password data
 	const { encryptedPassword, iv, tag } = encryptPassword(passwordData.password, Buffer.from(dek, "hex"));
 
 	// Get password strength and crack time
 	const { strength, crack_time } = getPasswordStrengthAndCrackTime(passwordData.password);
 
+	// Construct the database input record
 	const passwordDatabaseInputRecord: PasswordDatabaseRecordType = {
 		user_id: session.id,
 		uuid: passwordData.uuid,
@@ -64,6 +66,7 @@ export async function handleEditPassword(passwordData: PasswordInfoWithUUID): Pr
 		tag: tag,
 	};
 
+	// Update the password record in DB
 	const passwordUpdateResult = updatePassword(passwordDatabaseInputRecord);
 
 	return passwordUpdateResult;

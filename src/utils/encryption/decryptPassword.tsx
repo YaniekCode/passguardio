@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2025 YaniekCode
+ * Copyright (C) 2026 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -19,11 +19,12 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import crypto from "node:crypto";
+import crypto from 'node:crypto';
 
 export default function decryptPassword(encryptedPassword: Buffer, dek: Buffer, iv: Buffer, tag: Buffer): string {
 	const decipher = crypto.createDecipheriv("aes-256-gcm", dek, iv);
 	decipher.setAuthTag(tag);
+
 	const decryptedPassword = Buffer.concat([decipher.update(encryptedPassword), decipher.final()])
 	return decryptedPassword.toString("utf8");
 }

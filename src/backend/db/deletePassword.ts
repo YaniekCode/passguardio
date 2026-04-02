@@ -19,7 +19,7 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import openDb from '@/backend/db/openDb';
+import { openDb } from '@/backend/db/openDb';
 import type { MessageResultType } from '@/types';
 
 export default async function deletePassword(user_id: number, uuid: string): Promise<MessageResultType> {

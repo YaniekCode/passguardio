@@ -19,19 +19,18 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-'use server';
-
-import type { LoginResultType } from '@/types/login';
-import { LoginUserInterface, SessionPayload } from '@/types';
+import type { LoginResultType, UserLoginCredentials } from '@/types/login';
+import { SessionPayload } from '@/types';
 import createTables from '@/backend/db/createTables';
 import deriveKEK from '@/utils/encryption/deriveKEK';
 import unwrapDEK from '@/utils/encryption/unwrapDEK';
-import loginUser from '@/backend/db/loginUser';
+import { authenticateUser } from '@/backend/db/authenticateUser';
 
-export async function handleLogin(userData: LoginUserInterface): Promise<LoginResultType> {
-	await createTables(); // create default tables in sqlite db
-	const dbLoginUserResult= await loginUser(userData);
-	if (dbLoginUserResult.success) { // User found and password is correct
+export async function handleLogin(userData: UserLoginCredentials): Promise<LoginResultType> {
+	await createTables(); // create default tables in DB unless they already exist
+
+	const dbLoginUserResult= await authenticateUser(userData);
+	if (dbLoginUserResult.success) {
 		const user = dbLoginUserResult.data;
 		const kek = deriveKEK(userData.password, user.encryption_salt);
 		const dek = unwrapDEK(user.wrapped_dek, user.dek_wrap_iv, user.dek_wrap_tag, kek).toString("hex");

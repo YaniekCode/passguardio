@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2025 YaniekCode
+ * Copyright (C) 2026 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -19,20 +19,19 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-'use server';
-
-import { UserDatabaseRecord, LoginUserInterface, HandleLoginResultType } from '@/types';
+import type { UserDatabaseRecordType, Result } from '@/types';
+import type { UserLoginCredentials } from '@/types/login';
 import { compareHash } from '@/utils/hashing/compareHash';
 import openDb from '@/backend/db/openDb';
 
-export default async function loginUser(userData: LoginUserInterface): Promise<HandleLoginResultType>{
+export async function authenticateUser(userData: UserLoginCredentials): Promise<Result<UserDatabaseRecordType>>{
 	const db = await openDb();
 
 	try {
 		const user = (await db.get(
 			"SELECT * FROM users WHERE email = ?",
 			userData.email
-		)) as UserDatabaseRecord | undefined;
+		)) as UserDatabaseRecordType | undefined;
 		if (!user) {
 			return { success: false, error: "Invalid email or password" };
 		};

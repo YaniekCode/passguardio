@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2025 YaniekCode
+ * Copyright (C) 2026 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -27,7 +27,7 @@ import { getDataDirectory } from '@/utils/getDataDirectory';
 
 sqlite3.verbose();
 
-export default async function openDb(): Promise<Database> {
+export async function openDb(): Promise<Database> {
 	const dataDir = getDataDirectory();
 	const dbPath = path.join(dataDir, "passguardio.db");
 
@@ -38,4 +38,3 @@ export default async function openDb(): Promise<Database> {
 
   	return db;
 };
-

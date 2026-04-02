@@ -21,7 +21,7 @@
 
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 
-import handleGetPasswords from '@/backend/password/handleGetPasswords';
+import { handleGetPasswords } from '@/backend/password/handleGetPasswords';
 import { PasswordData } from '@/types';
 import { EditPasswordDialog } from '@/components/editPassword/EditPasswordDialog';
 import { DeletePasswordDialog } from '@/components/deletePassword/DeletePasswordDialog';
@@ -61,7 +61,7 @@ export async function PasswordsTable({ query, currentPage } : { query: string, c
 							<TableCell>
 								<PasswordCategoryBadge category={passwordEntry.category} />
 							</TableCell>
-							<TableCell>{formatTimeDifference(passwordEntry.last_modified, new Date().getTime())}</TableCell>
+							<TableCell>{formatTimeDifference(passwordEntry.lastModified, new Date().getTime())}</TableCell>
 							<TableCell>
 								<EditPasswordDialog
 									uuid={passwordEntry.uuid}

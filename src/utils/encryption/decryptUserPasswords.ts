@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2025 YaniekCode
+ * Copyright (C) 2026 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -19,12 +19,13 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-"use server";
+import type { PasswordDatabaseRecordType, PasswordData } from '@/types';
+import decryptPassword from '@/utils/encryption/decryptPassword'; 
 
-import { PasswordDatabaseRecord, PasswordData } from "@/lib";
-import decryptPassword from "@/utils/encryption/decryptPassword"; 
-
-export default async function decryptUserPasswords(passwords: PasswordDatabaseRecord[], dek: string): Promise<PasswordData[]> {
+export default async function decryptUserPasswords(
+	passwords: PasswordDatabaseRecordType[],
+	dek: string
+):Promise<PasswordData[]> {
 	const formattedDek = Buffer.from(dek, "hex");
 	const userPasswords: PasswordData[] = [];
 
@@ -38,8 +39,9 @@ export default async function decryptUserPasswords(passwords: PasswordDatabaseRe
 			password: decryptedPassword,
 			category: userPasswordData.category,
 			strength: userPasswordData.strength,
-			last_modified: userPasswordData.last_modified,
-			crack_time: userPasswordData.crack_time,
+			lastModified: userPasswordData.last_modified,
+			createdAt: userPasswordData.created_at,
+			crackTime: userPasswordData.crack_time,
 		}
 		userPasswords.push(passwordObject);
 	});

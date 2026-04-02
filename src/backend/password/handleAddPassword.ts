@@ -43,6 +43,7 @@ export async function handleAddPassword(passwordData: PasswordInfo): Promise<Mes
 	// Get password strength and crack time
 	const { strength, crack_time } = getPasswordStrengthAndCrackTime(passwordData.password);
 
+	// Construct the database input record
 	const passwordDatabaseInputRecord: PasswordDatabaseRecordType = {
 		user_id: session.id,
 		uuid: passwordUUID,

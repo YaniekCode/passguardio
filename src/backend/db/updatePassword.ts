@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2025 YaniekCode
+ * Copyright (C) 2026 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -19,17 +19,15 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-'use server';
-
-import openDb from '@/backend/db/openDb';
-import { PasswordDatabaseRecordType, MessageResultType } from '@/types';
+import type { PasswordDatabaseRecordType, MessageResultType } from '@/types';
+import { openDb } from '@/backend/db/openDb';
 
 export default async function updatePassword(passwordData: PasswordDatabaseRecordType): Promise<MessageResultType>{
 	const db = await openDb();
 
 	try {
 		await db.run(
-            		`UPDATE passwords SET website_name=?, website_url=?, username_or_email=?, password=?, category=?, strength=?, last_modified=?, crack_time=?, iv=?, tag=? WHERE uuid=?`,
+            `UPDATE passwords SET website_name=?, website_url=?, username_or_email=?, password=?, category=?, strength=?, last_modified=?, crack_time=?, iv=?, tag=? WHERE uuid=?`,
 			passwordData.website_name,
 			passwordData.website_url,
 			passwordData.username_or_email,

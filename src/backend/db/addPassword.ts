@@ -19,7 +19,7 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import openDb from '@/backend/db/openDb';
+import { openDb } from '@/backend/db/openDb';
 import type { PasswordDatabaseRecordType, MessageResultType } from '@/types';
 
 export default async function addPassword(passwordDatabaseInputRecord: PasswordDatabaseRecordType): Promise<MessageResultType> {

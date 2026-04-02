@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2025 YaniekCode
+ * Copyright (C) 2026 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -19,12 +19,13 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-'use server';
+import { openDb } from '@/backend/db/openDb';
 
-import openDb from '@/backend/db/openDb';
-import { MessageResultType } from '@/types';
+type IsPasswordInDBResult = 
+	{ success: true, message: string, found: boolean }
+	| { success: false, error: string }
 
-export default async function isPasswordUUIDInDb(userId: number, uuid: string): Promise<MessageResultType> {
+export default async function isPasswordUUIDInDb(userId: number, uuid: string): Promise<IsPasswordInDBResult> {
 	const db = await openDb();
 
 	try {
@@ -33,11 +34,13 @@ export default async function isPasswordUUIDInDb(userId: number, uuid: string): 
 			uuid,
 			userId
 		)) as { uuid: string } | undefined;
-		if (passwordEntry?.uuid) {
-			return { success: true, message: "Password found in DB" };
-		} else {
-			return { success: false, error: "Password not found in DB" };
-		};
+
+		// Return `success: true`, but `data` indicates whether the password was found
+		return {
+			success: true,
+			message: passwordEntry?.uuid ? "Password found in DB" : "Password not found in DB",
+			found: Boolean(passwordEntry?.uuid)
+		}
 	} catch (err: unknown) {
 		console.log(err);
 		return { success: false, error: "An error occured when validating the password" };

@@ -19,7 +19,7 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import openDb from '@/backend/db/openDb';
+import { openDb } from '@/backend/db/openDb';
 import type { PasswordData } from '@/types';
 
 export async function fetchPasswordStats(userId: number) {
@@ -29,7 +29,7 @@ export async function fetchPasswordStats(userId: number) {
 		const passwordStatList = (await db.all(
             		`SELECT strength, last_modified, created_at FROM passwords WHERE user_id=?`,
 			userId
-        	)) as Pick<PasswordData, 'strength' | 'last_modified' | 'created_at'>[];
+        	)) as Pick<PasswordData, 'strength' | 'lastModified' | 'createdAt'>[];
 
 		return { success: true, data: passwordStatList };
 	} catch (err: unknown) {
