@@ -30,28 +30,28 @@ export async function createTables(): Promise<void> {
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
 			username TEXT NOT NULL,
 			email TEXT NOT NULL UNIQUE,
-			password_hash TEXT NOT NULL,
+			passwordHash TEXT NOT NULL,
 			role TEXT NOT NULL DEFAULT 'user',
-			encryption_salt BLOB,
-			wrapped_dek BLOB,
-			dek_wrap_iv BLOB,
-			dek_wrap_tag BLOB
+			encryptionSalt BLOB,
+			wrappedDek BLOB,
+			dekWrapIv BLOB,
+			dekWrapTag BLOB
 	)`);
 
 	// Create the table for passwords
 	await db.run(`
 		CREATE TABLE IF NOT EXISTS passwords (
-			user_id INTEGER REFERENCES users(id),
+			userId INTEGER REFERENCES users(id),
 			uuid BLOB UNIQUE NOT NULL,
-			website_name TEXT,
-			website_url TEXT,
-			username_or_email TEXT,
+			websiteName TEXT,
+			websiteUrl TEXT,
+			usernameOrEmail TEXT,
 			password TEXT,
 			category TEXT,
 			strength INTEGER,
-			last_modified TEXT,
-			created_at TEXT,
-			crack_time TEXT,
+			lastModified TEXT,
+			createdAt TEXT,
+			crackTime TEXT,
 			iv BLOB NOT NULL,
 			tag BLOB NOT NULL
 	)`);
@@ -61,6 +61,6 @@ export async function createTables(): Promise<void> {
 		CREATE TABLE IF NOT EXISTS tokens (
 			role TEXT,
 			token TEXT,
-			expires_at INTEGER
+			expiresAt INTEGER
 	)`);
 };

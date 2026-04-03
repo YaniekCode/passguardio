@@ -45,34 +45,34 @@ export type UserRoleType = "user" | "admin";
 export interface EncryptionDataType {
 	encryption_salt: Buffer;
 	wrapped_dek: Buffer;
-	dek_wrap_iv: Buffer;
-	dek_wrap_tag: Buffer;
+	dekWrapIv: Buffer;
+	dekWrapTag: Buffer;
 };
 
 export interface UserDatabaseRecordType {
 	id: number;
 	username: string;
 	email: string;
-	password_hash: string;
+	passwordHash: string;
 	role: UserRoleType;
 	encryption_salt: Buffer;
-	wrapped_dek: Buffer;
-	dek_wrap_iv: Buffer;
-	dek_wrap_tag: Buffer;
+	wrappedDek: Buffer;
+	dekWrapIv: Buffer;
+	dekWrapTag: Buffer;
 }
 
 export interface PasswordDatabaseRecordType {
-	user_id: number;
+	userId: number;
 	uuid: string;
-	website_name: string;
-	website_url: string;
-	username_or_email: string;
+	websiteName: string;
+	websiteUrl: string;
+	usernameOrEmail: string;
 	password: Buffer;
 	category: PasswordCategoryType;
 	strength: number;
-	last_modified: number;
-	created_at: number;
-	crack_time: string;
+	lastModified: number;
+	createdAt: number;
+	crackTime: string;
 	iv: Buffer;
 	tag: Buffer;
 };
@@ -80,7 +80,7 @@ export interface PasswordDatabaseRecordType {
 export interface TokenDatabaseRecordType {
 	role: UserRoleType;
 	token: string;
-	expires_at: number;
+	expiresAt: number;
 }
 
 
