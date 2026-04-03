@@ -19,12 +19,22 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-export default function FormMessageBox({ message } : { message: string }) {
-	return (
-		<div aria-live="polite" aria-atomic="true">
-			<p className="text-sm text-red-500">
-    			{message}
-  			</p>
-		</div>
-	);
-};
+import { Shield, Home, Users2 } from 'lucide-react';
+
+import DashboardNavItem from '@/components/dashboard/DashboardNavItem';
+
+export default function DashboardNav() {
+    return (
+        <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-card sm:flex" >
+            <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
+                <Shield strokeWidth={4}/>
+                <DashboardNavItem href="/dashboard" label="Dashboard">
+                    <Home className="h-5 w-5" /> 
+                </DashboardNavItem>
+                <DashboardNavItem href="/dashboard/users" label="Users">
+                    <Users2 className="h-5 w-5" /> 
+                </DashboardNavItem>
+            </nav>
+       </aside>
+    )
+}

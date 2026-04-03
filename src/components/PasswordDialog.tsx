@@ -1,6 +1,28 @@
+/*
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *
+ * Copyright (C) 2026 YaniekCode
+ *
+ * This file is part of PassGuardio.
+ *
+ * PassGuardio is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PassGuardio is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 'use client';
 
 import { CirclePlus, PenSquare } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
 import {
     Dialog,
@@ -15,9 +37,9 @@ import {
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 
-import { PasswordCategoryType } from '@/types';
-import { GeneratePasswordField } from '@/components/GeneratePasswordField';
-import { CategorySelect } from '@/components/CategorySelect';
+import type { PasswordCategoryType } from '@/types';
+import GeneratePasswordField from '@/components/GeneratePasswordField';
+import CategorySelect from '@/components/CategorySelect';
 import { useAddPassword } from '@/hooks/useAddPassword';
 import { useEditPassword } from '@/hooks/useEditPassword';
 
@@ -35,7 +57,7 @@ type PasswordDialogProps =
         mode: 'add';
     }
 
-export function PasswordDialog(props: PasswordDialogProps) {
+export default function PasswordDialog(props: PasswordDialogProps) {
     const addPasswordHook = useAddPassword();
     const editPasswordHook = useEditPassword(props.mode === 'edit' ? props.uuid : '');
 
@@ -128,9 +150,9 @@ export function PasswordDialog(props: PasswordDialogProps) {
                         ariaDescribedBy="password-error"
                     />
                     <div id="password-error" aria-live="polite" aria-atomic="true">
-						{!state.success && state.formErrors?.password && (
+						{!state.success && state.formErrors?.['password'] && (
   							<p className="text-sm text-red-500">
-    								{state.formErrors.password[0]}
+    								{state.formErrors['password'][0]}
   							</p>
 						)}
 					</div> 
@@ -140,9 +162,9 @@ export function PasswordDialog(props: PasswordDialogProps) {
                         ariaDescribedBy="category-error"
                     />
 					<div id="category-error" aria-live="polite" aria-atomic="true">
-						{!state.success && state.formErrors?.category && (
+						{!state.success && state.formErrors?.['category'] && (
   							<p className="text-sm text-red-500">
-    								{state.formErrors.category[0]}
+    								{state.formErrors['category'][0]}
   							</p>
 						)}
 					</div>

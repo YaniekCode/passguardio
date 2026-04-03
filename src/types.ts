@@ -146,9 +146,6 @@ export type SignupValidationResultType = Result<User>;
 
 export type PasswordByUUIDResultType = Result<PasswordData[]>;
 
-export type FirstUserResultType = Result<boolean>;
-
-
 export interface SessionPayload extends JWTPayload {
 	id: number;
 	username: string;

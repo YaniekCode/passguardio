@@ -19,14 +19,21 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { StatCard } from '@/components/StatCard';
+import StatCard from '@/components/StatCard';
+import RetryButton from '@/components/RetryButton';
 import { handleFetchPasswordStats } from '@/backend/password/handleFetchPasswordStats';
 
 export default async function DashboardPasswordStats() {
     const fetchPasswordStatsResult = await handleFetchPasswordStats();
+
+	// Display an appropriate message if an error occured when fetching password statistics
 	if (!fetchPasswordStatsResult?.success) {
-		// todo failed reading password stats
-		return;
+		return (
+			<div className="flex items-center gap-3">
+				<p className="text-lg">Password statistics could not be loaded</p>
+				<RetryButton message="Try Again"/>
+			</div>
+		);
 	}
 
 	const { totalPasswordCount, strongPasswordCount, weakPasswordCount, recentlyAddedPasswordCount } = fetchPasswordStatsResult.data;

@@ -19,17 +19,25 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import {
+	Table,
+	TableBody,
+	TableCaption,
+	TableCell,
+	TableHead,
+	TableHeader,
+	TableRow
+} from '@/components/ui/table';
 
+import type { PasswordData } from '@/types';
 import { handleGetPasswords } from '@/backend/password/handleGetPasswords';
-import { PasswordData } from '@/types';
-import { EditPasswordDialog } from '@/components/editPassword/EditPasswordDialog';
-import { DeletePasswordDialog } from '@/components/deletePassword/DeletePasswordDialog';
+import EditPasswordDialog from '@/components/editPassword/EditPasswordDialog';
+import DeletePasswordDialog from '@/components/deletePassword/DeletePasswordDialog';
 import { formatTimeDifference } from '@/utils/timeDifference/formatTimeDifference';
-import { PasswordCategoryBadge } from '@/components/PasswordCategoryBadge';
-import { PasswordField } from '@/components/PasswordField';
+import PasswordCategoryBadge from '@/components/PasswordCategoryBadge';
+import PasswordField from '@/components/PasswordField';
 
-export async function PasswordsTable({ query, currentPage } : { query: string, currentPage: number }) {
+export default async function PasswordsTable({ query, currentPage } : { query: string, currentPage: number }) {
 	const getPasswordsResult = await handleGetPasswords(query, currentPage);
 
 	let passwords: PasswordData[] = [];
@@ -53,7 +61,7 @@ export async function PasswordsTable({ query, currentPage } : { query: string, c
 				<TableBody>	
 					{passwords.map((passwordEntry, index) => (
 						<TableRow key={index}>
-							<TableCell>{passwordEntry.websiteName}</TableCell>
+							<TableCell className="font-medium">{passwordEntry.websiteName}</TableCell>
 							<TableCell>{passwordEntry.usernameOrEmail}</TableCell>
 							<TableCell>
 								<PasswordField password={passwordEntry.password}/>	

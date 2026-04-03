@@ -19,8 +19,8 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import openDb from '@/backend/db/openDb';
 import type { Result, TokenDatabaseRecordType } from '@/types';
+import { openDb } from '@/backend/db/openDb';
 
 
 export async function fetchTokens(): Promise<Result<TokenDatabaseRecordType[]>>{

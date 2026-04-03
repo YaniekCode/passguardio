@@ -19,8 +19,8 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import openDb from '@/backend/db/openDb';
 import type { Result, UsersStatsType } from '@/types';
+import { openDb } from '@/backend/db/openDb';
 
 export async function fetchUserStats(): Promise<Result<UsersStatsType>> {
 	const db = await openDb();
@@ -34,8 +34,8 @@ export async function fetchUserStats(): Promise<Result<UsersStatsType>> {
             		`SELECT 
                         (SELECT COUNT(*) FROM users) AS totalUsersCount,
                         COUNT(*) AS totalPasswordsCount,
-                        SUM(CASE WHEN strength > 3 THEN 1 ELSE 0 END) AS strongPasswordsCount,
-                        SUM(CASE WHEN strength <= 3 THEN 1 ELSE 0 END) AS weakPasswordsCount
+                        COALESCE(SUM(CASE WHEN strength > 3 THEN 1 ELSE 0 END), 0) AS strongPasswordsCount,
+                        COALESCE(SUM(CASE WHEN strength <= 3 THEN 1 ELSE 0 END), 0) AS weakPasswordsCount
                     FROM passwords;`,
         	)) as UsersStatsType;
 

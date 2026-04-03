@@ -40,7 +40,9 @@ export async function loginAction(prevState: FormState, formData: FormData): Pro
 	};
 
 	const validatedFormData = inputValidationResult.data;
-	const userLoginResult = await handleLogin(validatedFormData); // function responsible for checking the user in the db
+
+	// Handle user login
+	const userLoginResult = await handleLogin(validatedFormData);
 
 	if (!userLoginResult.success) {
 		return userLoginResult;
@@ -48,5 +50,5 @@ export async function loginAction(prevState: FormState, formData: FormData): Pro
 
 	const userSessionData = userLoginResult.data;
 	await createSession(userSessionData);
-	redirect("/dashboard"); // redirecting to dashboard
+	redirect("/dashboard");
 };

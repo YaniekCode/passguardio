@@ -25,11 +25,13 @@ import decryptPassword from '@/utils/encryption/decryptPassword';
 export default async function decryptUserPasswords(
 	passwords: PasswordDatabaseRecordType[],
 	dek: string
-):Promise<PasswordData[]> {
+): Promise<PasswordData[]> {
 	const formattedDek = Buffer.from(dek, "hex");
+
 	const userPasswords: PasswordData[] = [];
 
-	passwords.map((userPasswordData) => {
+	// Go through each password, decrypt it and add it to an array
+	passwords.forEach((userPasswordData) => {
 		const decryptedPassword = decryptPassword(userPasswordData.password, formattedDek, userPasswordData.iv, userPasswordData.tag);    
 		const passwordObject = {
 			uuid: userPasswordData.uuid,

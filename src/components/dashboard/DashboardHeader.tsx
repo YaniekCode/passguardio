@@ -24,9 +24,10 @@ import {
   BreadcrumbItem,
   BreadcrumbPage,
   BreadcrumbList,
-} from "@/components/ui/breadcrumb"
-import { PasswordSearch } from '@/components/PasswordSearch';
-import { AddPasswordDialog } from '@/components/addPassword/AddPasswordDialog';
+} from '@/components/ui/breadcrumb';
+
+import PasswordSearch from '@/components/PasswordSearch';
+import AddPasswordDialog from '@/components/addPassword/AddPasswordDialog';
 
 export default function DashboardHeader() {
     return (

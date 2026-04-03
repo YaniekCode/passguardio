@@ -31,6 +31,7 @@ import { deleteToken } from "@/backend/db/deleteToken";
 export async function activateUserAction(
     token: string,
     role: UserRoleType,
+    prevState: ActivateUserState,
     formData: FormData
 ): Promise<ActivateUserState> {
 
@@ -58,14 +59,17 @@ export async function activateUserAction(
     // Creating a new user in the database
     const signupResult = await handleSignup({ username, email, password, role });
 
+    // If the user already exists in the DB an appropriate error is returned
     if (!signupResult.success) {
         return {
             success: false,
-            error: "Something went wrong",
-        }
+            error: signupResult.uniqueError
+                ? "This user already exists"
+                : "Something went wrong"
+        };
     }
 
-    // Delete the token when we've added the user
+    // Delete token after the user gets added
     await deleteToken(token);
     return {
         success: true,

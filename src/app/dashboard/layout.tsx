@@ -19,7 +19,7 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import DashboardNav from "@/components/dashboardNavigation/DashboardNav";
+import DashboardNav from '@/components/dashboard/DashboardNav';
 
 export default function DashboardLayout({
     children

@@ -2,10 +2,13 @@
 
 import { useState, useActionState } from 'react';
 
-import { type State } from '@/actions/addUserAction';
+import type { AddUserState } from '@/actions/addUserAction';
 import { addUserAction } from '@/actions/addUserAction';
 
-const initialState: State = { success: false, formErrors: {}, error: "" };
+const initialState: AddUserState = {
+	success: false,
+	error: ""
+};
 
 export function useAddUser() {
 	const [state, formAction, pending] = useActionState(addUserAction, initialState);

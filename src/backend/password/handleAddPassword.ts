@@ -35,8 +35,8 @@ export async function handleAddPassword(passwordData: PasswordInfo): Promise<Mes
 
 	// Encrypt the password and generate a random UUID
 	const dek = Buffer.from(session.dek, "hex");
-
 	const { encryptedPassword, iv, tag } = encryptPassword(passwordData.password, dek);
+
 	const passwordUUID = crypto.randomUUID();
 
 

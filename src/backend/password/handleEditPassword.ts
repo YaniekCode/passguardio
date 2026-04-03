@@ -23,7 +23,7 @@ import type { PasswordInfo, PasswordDatabaseRecordType, MessageResultType } from
 import { getSession } from '@/utils/session/sessionUtils';
 import isPasswordUUIDInDb from '@/backend/db/isPasswordUUIDInDb';
 import encryptPassword from '@/utils/encryption/encryptPassword'; 
-import updatePassword from '@/backend/db/updatePassword';
+import { updatePassword } from '@/backend/db/updatePassword';
 import { getPasswordStrengthAndCrackTime } from '@/utils/getPasswordStrengthAndCrackTime';
 
 interface PasswordInfoWithUUID extends PasswordInfo {
@@ -67,7 +67,7 @@ export async function handleEditPassword(passwordData: PasswordInfoWithUUID): Pr
 	};
 
 	// Update the password record in DB
-	const passwordUpdateResult = updatePassword(passwordDatabaseInputRecord);
+	const passwordUpdateResult = await updatePassword(passwordDatabaseInputRecord);
 
 	return passwordUpdateResult;
 };

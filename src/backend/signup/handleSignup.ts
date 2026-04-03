@@ -19,27 +19,32 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import type { User, MessageResultType } from "@/types";
-import createTables from "@/backend/db/createTables";
-import createUser from "@/backend/db/createUser";
+import type { User } from "@/types";
+import type { CreateUserResult } from "@/types/signup";
+import { createTables } from "@/backend/db/createTables";
+import { createUser } from "@/backend/db/createUser";
 import { generatePasswordHash } from "@/utils/hashing/generatePasswordHash";
 import generateEncryptionCredentials from "@/utils/encryption/generateEncryptionCredentials";
 
-export async function handleSignup(userData: User): Promise<MessageResultType> {
-	await createTables(); // create default tables in the DB
-
+export async function handleSignup(userData: User): Promise<CreateUserResult> {
+	// Create the default tables in the DB unless they already exist
+	await createTables();
+ 
+	// Generate the password hash
 	const passwordHash = generatePasswordHash(userData.password);
+
+	// Generate password encryption credentials
 	const userEncryptionData = generateEncryptionCredentials(userData.password);
 	const user = { ...userData, password_hash: passwordHash, ...userEncryptionData};
 
-	const dbResult = await createUser(user);
-	if (dbResult.success) {
-		return { success: true, message: "User created successfully" };
-	} else {
-		console.log(`An error occured when creating a user. Error: ${dbResult.error}`);
-		return { success: false, error: dbResult.error };
-	};
+	// Create the user in the DB
+	const createUserResult = await createUser(user);
+	if (!createUserResult.success) {
+		console.log(`An error occured when creating a user. Error: ${createUserResult.error}`);
+		return createUserResult;
+	}
 
+	return createUserResult;
 };
 
 

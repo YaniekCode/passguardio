@@ -19,12 +19,13 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import type { UserDatabaseRecordType, MessageResultType } from '@/types';
-import openDb from '@/backend/db/openDb';
+import type { UserDatabaseRecordType } from '@/types';
+import type { CreateUserResult } from '@/types/signup';
+import { openDb } from '@/backend/db/openDb';
 
 type Props = Omit<UserDatabaseRecordType, "id">;
 
-export default async function createUser(userData: Props): Promise<MessageResultType> {
+export async function createUser(userData: Props): Promise<CreateUserResult> {
 	const db = await openDb();
 
 	try {
@@ -41,11 +42,10 @@ export default async function createUser(userData: Props): Promise<MessageResult
 		);
 		return { success: true, message: "User created successfully" };
 	} catch (err: unknown) {
-		console.log(err);
 		if (err instanceof Error && err.message.toUpperCase().includes("UNIQUE")) {
-			return { success: false, error: "This user already exists" };
+			return { success: false, uniqueError: true, error: "This user already exists" };
 		}
-		return { success: false, error: "An error occurred when creating a user" };
+		return { success: false, uniqueError: false, error: "An error occurred when creating a user" };
 	} finally {
 		try {
 			await db.close();

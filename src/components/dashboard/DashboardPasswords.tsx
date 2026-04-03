@@ -26,8 +26,9 @@ import {
 	Card,
 	CardHeader,
 	CardContent }
-from "@/components/ui/card";
-import { PasswordsTable } from '@/components/PasswordsTable';
+from '@/components/ui/card';
+
+import PasswordsTable from '@/components/PasswordsTable';
 
 export default function DashboardPasswords({ query, currentPage }: { query: string, currentPage: number }) {
     return (

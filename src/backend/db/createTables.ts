@@ -19,11 +19,12 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import openDb from '@/backend/db/openDb';
+import { openDb } from '@/backend/db/openDb';
 
-export default async function createTables(): Promise<void> {
+export async function createTables(): Promise<void> {
 	const db = await openDb();
 
+	// Create the table for users
 	await db.run(`
 		CREATE TABLE IF NOT EXISTS users (
 			id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -37,6 +38,7 @@ export default async function createTables(): Promise<void> {
 			dek_wrap_tag BLOB
 	)`);
 
+	// Create the table for passwords
 	await db.run(`
 		CREATE TABLE IF NOT EXISTS passwords (
 			user_id INTEGER REFERENCES users(id),
@@ -54,6 +56,7 @@ export default async function createTables(): Promise<void> {
 			tag BLOB NOT NULL
 	)`);
 
+	// Create the table for tokens
 	await db.run(`
 		CREATE TABLE IF NOT EXISTS tokens (
 			role TEXT,

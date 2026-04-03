@@ -26,7 +26,7 @@ import { fetchPasswordStats } from '@/backend/db/fetchPasswordStats';
 export async function handleFetchPasswordStats(): Promise<Result<PasswordStatsType>> {
 	const session = await getSession();
 	if (!session) {
-		return { success: false, error: "Not authenticated user" };
+		return { success: false, error: "User not authenticated" };
 	};
 
 	const userId = session.id;
@@ -45,7 +45,7 @@ export async function handleFetchPasswordStats(): Promise<Result<PasswordStatsTy
 
 	};
 
-	// Return zeros for every stat if the user does not own any passwords
+	// Return zeros for every stat, if the user does not own any passwords
 	if (passwordStatList.data.length == 0) {
 		return { 
 			success: true, 

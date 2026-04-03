@@ -19,12 +19,20 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-export default function FormMessageBox({ message } : { message: string }) {
-	return (
-		<div aria-live="polite" aria-atomic="true">
-			<p className="text-sm text-red-500">
-    			{message}
-  			</p>
-		</div>
-	);
-};
+'use client';
+
+import { useRouter } from 'next/navigation';
+
+import { Button } from '@/components/ui/button';
+
+export default function RetryButton({ message }: { message: string }) {
+    const router = useRouter();
+
+    return (
+        <Button variant="default"
+            onClick={() => router.refresh()} 
+        >
+            {message}
+        </Button>
+    )
+}

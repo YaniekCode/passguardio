@@ -27,7 +27,7 @@ import { revalidatePath } from 'next/cache';
 import { addToken } from '@/backend/db/addToken';
 import { validateAddUserInput } from '@/utils/validation/validateAddUserInput';
 
-export type State =
+export type AddUserState =
 	| { success: true, token: string }
 	| { success: false,
 		formErrors?: Record<string, string[]>;
@@ -40,7 +40,7 @@ function generateToken(): string {
 };
 
 
-export async function addUserAction(prevState: State, formData: FormData): Promise<State> {
+export async function addUserAction(prevState: AddUserState, formData: FormData): Promise<AddUserState> {
 	const validatedFormData = validateAddUserInput(formData);
 
 	// Return the error if it occured during validation

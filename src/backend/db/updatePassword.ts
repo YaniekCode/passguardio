@@ -22,10 +22,11 @@
 import type { PasswordDatabaseRecordType, MessageResultType } from '@/types';
 import { openDb } from '@/backend/db/openDb';
 
-export default async function updatePassword(passwordData: PasswordDatabaseRecordType): Promise<MessageResultType>{
+export async function updatePassword(passwordData: PasswordDatabaseRecordType): Promise<MessageResultType>{
 	const db = await openDb();
 
 	try {
+		// Update the record in the DB
 		await db.run(
             `UPDATE passwords SET website_name=?, website_url=?, username_or_email=?, password=?, category=?, strength=?, last_modified=?, crack_time=?, iv=?, tag=? WHERE uuid=?`,
 			passwordData.website_name,

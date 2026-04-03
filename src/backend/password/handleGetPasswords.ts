@@ -34,6 +34,7 @@ export async function handleGetPasswords(query: string, currentPage: number): Pr
 	};
 
 	const { dek } = session;
+	// Fetch passwords from the DB
 	const getPasswordResult = await getPasswords(session.id, query, currentPage);
 
 	if (!getPasswordResult.success) {
@@ -43,13 +44,10 @@ export async function handleGetPasswords(query: string, currentPage: number): Pr
 		}
 	};
 
-	const passwordList = Array.isArray(getPasswordResult.data)
-		? getPasswordResult.data
-		: [getPasswordResult.data];
+	const passwordList = getPasswordResult.data;
 
-	const userPasswordsRaw = await decryptUserPasswords(passwordList, dek);
-	const userPasswords = Array.isArray(userPasswordsRaw)
-		? userPasswordsRaw
-		: [userPasswordsRaw];
+	// Decrypt user's passwords
+	const userPasswords = await decryptUserPasswords(passwordList, dek);
+
 	return { success: true, data: userPasswords };
 };

@@ -22,7 +22,7 @@
 import 'server-only';
 import { cookies } from 'next/headers';
 import { SignJWT, jwtVerify } from 'jose';
-import { SessionPayload } from "@/lib";
+import { SessionPayload } from "@/types";
 
 import { getSessionKey } from "@/utils/session/getSessionKey";
 

@@ -1,6 +1,28 @@
+/*
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *
+ * Copyright (C) 2026 YaniekCode
+ *
+ * This file is part of PassGuardio.
+ *
+ * PassGuardio is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * PassGuardio is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
 'use client';
 
 import { CirclePlus } from 'lucide-react';
+
 import { Button } from '@/components/ui/button';
 import {
 	Dialog,
@@ -18,11 +40,11 @@ import {
 } from "@/components/ui/native-select"
 import { Label } from '@/components/ui/label';
 
-import { firaCode } from '@/app/fonts';
 import { useAddUser } from '@/hooks/useAddUser';
+import { firaCode } from '@/app/fonts';
 
 
-export function AddUserDialog() {
+export default function AddUserDialog() {
 	const { state, isDialogOpen, setIsDialogOpen, formAction, pending } = useAddUser();
 
 	const generatedToken = state.success ? state.token : null;
@@ -33,9 +55,10 @@ export function AddUserDialog() {
 	// Copy the token without the hyphen
 	function handleCopy(e: React.ClipboardEvent) {
 		e.preventDefault();
-		generatedToken && e.clipboardData.setData("text/plain", generatedToken);
+		if (generatedToken) {
+			e.clipboardData.setData("text/plain", generatedToken);
+		}
 	};
-
 
 	return (
 		<Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
@@ -57,9 +80,9 @@ export function AddUserDialog() {
 						<NativeSelectOption value="admin">Admin</NativeSelectOption>	
 					</NativeSelect>
 					<div id="role-error" aria-live="polite" aria-atomic="true">
-						{!state.success && "formErrors" in state && state.formErrors?.role && (
+						{!state.success && state.formErrors?.['role'] && (
   							<p className="text-sm text-red-500">
-    								{state.formErrors.role[0]}
+    								{state.formErrors['role'][0]}
   							</p>
 						)}
 					</div>

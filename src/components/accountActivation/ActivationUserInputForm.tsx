@@ -22,17 +22,19 @@
 'use client';
 
 import { useEffect, useActionState } from 'react';
+import { toast } from 'sonner';
+
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { toast } from 'sonner';
 
-import { ActivateUserState } from '@/types/activate';
+import type { ActivateUserState } from '@/types/activate';
 import { activateUserAction } from '@/actions/accountActivation/activateUserAction';
+import FormMessageBox from '@/components/FormMessageBox';
 
 const initialState: ActivateUserState = { success: false };
 
-export function ActivationUserInputForm({ token, role }: { token: string, role: "user" | "admin" }) {
+export default function ActivationUserInputForm({ token, role }: { token: string, role: "user" | "admin" }) {
     const activateUserWithRoleAndTokenAction = activateUserAction.bind(null, token, role);
 
     const [state, formAction, pending] = useActionState(activateUserWithRoleAndTokenAction, initialState);
@@ -54,9 +56,7 @@ export function ActivationUserInputForm({ token, role }: { token: string, role: 
                 <Input type="text" name="username" id="username" placeholder="Enter your full name" autoComplete="name" required/>
                 <div id="username-error" aria-live="polite" aria-atomic="true">
 					{!state.success && state.formErrors?.username && (
-  						<p className="text-sm text-red-500">
-    						{state.formErrors.username}
-  						</p>
+						<FormMessageBox message={state.formErrors.username} />
 					)}
 				</div>
             </div>
@@ -68,9 +68,7 @@ export function ActivationUserInputForm({ token, role }: { token: string, role: 
                 <Input type="email" name="email" id="email" placeholder="Enter your email" autoComplete="email" required/>
                 <div id="email-error" aria-live="polite" aria-atomic="true">
 					{!state.success && state.formErrors?.email && (
-  						<p className="text-sm text-red-500">
-    						{state.formErrors.email}
-  						</p>
+						<FormMessageBox message={state.formErrors.email} />
 					)}
 				</div>
             </div>
@@ -82,19 +80,10 @@ export function ActivationUserInputForm({ token, role }: { token: string, role: 
                 <Input type="password" name="password" id="password" placeholder="Create a password" autoComplete="new-password" required/>
                 <div id="password-error" aria-live="polite" aria-atomic="true">
 					{!state.success && state.formErrors?.password && (
-  						<p className="text-sm text-red-500">
-    						{state.formErrors.password}
-  						</p>
+						<FormMessageBox message={state.formErrors.password} />
 					)}
 				</div>
             </div>
-			<div id="token-error" aria-live="polite" aria-atomic="true">
-				{!state.success && state.error && (
-  					<p className="text-sm text-red-500">
-    					{state.error}
-  					</p>
-				)}
-			</div>
 			<Button type="submit" className="w-full" disabled={pending} aria-disabled={pending}>Activate Account</Button>
 		</form>
     )

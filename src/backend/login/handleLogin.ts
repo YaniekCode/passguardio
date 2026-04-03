@@ -21,24 +21,30 @@
 
 import type { LoginResultType, UserLoginCredentials } from '@/types/login';
 import { SessionPayload } from '@/types';
-import createTables from '@/backend/db/createTables';
+import { createTables } from '@/backend/db/createTables';
 import deriveKEK from '@/utils/encryption/deriveKEK';
 import unwrapDEK from '@/utils/encryption/unwrapDEK';
 import { authenticateUser } from '@/backend/db/authenticateUser';
 
 export async function handleLogin(userData: UserLoginCredentials): Promise<LoginResultType> {
-	await createTables(); // create default tables in DB unless they already exist
+	// Create default tables in the DB unless they already exist
+	await createTables();
 
-	const dbLoginUserResult= await authenticateUser(userData);
-	if (dbLoginUserResult.success) {
-		const user = dbLoginUserResult.data;
-		const kek = deriveKEK(userData.password, user.encryption_salt);
-		const dek = unwrapDEK(user.wrapped_dek, user.dek_wrap_iv, user.dek_wrap_tag, kek).toString("hex");
+	// Verify the correctness of the user's credentials
+	const userLoginResult  = await authenticateUser(userData);
 
-		const userSessionData: SessionPayload = { id: user.id, username: user.username, role: user.role, dek: dek }
-		return { success: true, data: userSessionData };
-	} else {
-		return { success: false, error: dbLoginUserResult.error };
-	};
+	if (!userLoginResult.success) {
+		return {
+			success: false,
+			error: userLoginResult.error
+		}
+	}
+
+	const user = userLoginResult.data;
+	const kek = deriveKEK(userData.password, user.encryption_salt);
+	const dek = unwrapDEK(user.wrapped_dek, user.dek_wrap_iv, user.dek_wrap_tag, kek).toString("hex");
+
+	const userSessionData: SessionPayload = { id: user.id, username: user.username, role: user.role, dek: dek }
+	return { success: true, data: userSessionData };
 
 };

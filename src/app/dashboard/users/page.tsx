@@ -42,12 +42,12 @@ import {
 from "@/components/ui/card";
 import UsersTable from '@/components/UsersTable';
 import TokensTable from '@/components/TokensTable';
-import { StatCard } from '@/components/StatCard';
+import StatCard from '@/components/StatCard';
+import RetryButton from '@/components/RetryButton';
 import { fetchUsers } from '@/backend/db/fetchUsers';
 import { fetchTokens } from '@/backend/db/fetchTokens';
 import { handleFetchUserStats } from '@/backend/users/handleFetchUserStats';
-import { AddUserDialog } from '@/components/addUser/AddUserDialog';
-
+import AddUserDialog from '@/components/addUser/AddUserDialog';
 
 export const metadata: Metadata = {
 	title: "Users",
@@ -60,9 +60,14 @@ export default async function Dashboard() {
 
 
 	const fetchUsersStatsResult = await handleFetchUserStats();
+	// Display an appropriate message if an error occured when fetching password statistics
 	if (!fetchUsersStatsResult?.success) {
-		// todo failed reading users stats
-		return;
+		return (
+			<div className="flex items-center gap-3">
+				<p className="text-lg">Password statistics could not be loaded</p>
+				<RetryButton message="Try Again"/>
+			</div>
+		);
 	}
 
 	const { totalUsersCount, totalPasswordsCount, strongPasswordsCount, weakPasswordsCount } = fetchUsersStatsResult.data;

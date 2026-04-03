@@ -12,7 +12,7 @@ export type ActivateTokenState =
         data: TokenDatabaseRecordType
     } | {
         success: false,
-        not_found: boolean,
+        notFound: boolean,
         formError?: string,
         error?: string
     }

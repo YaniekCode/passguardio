@@ -22,12 +22,13 @@
 import type { UserDatabaseRecordType, Result } from '@/types';
 import type { UserLoginCredentials } from '@/types/login';
 import { compareHash } from '@/utils/hashing/compareHash';
-import openDb from '@/backend/db/openDb';
+import { openDb } from '@/backend/db/openDb';
 
 export async function authenticateUser(userData: UserLoginCredentials): Promise<Result<UserDatabaseRecordType>>{
 	const db = await openDb();
 
 	try {
+		// Get the user from the DB
 		const user = (await db.get(
 			"SELECT * FROM users WHERE email = ?",
 			userData.email
@@ -36,11 +37,12 @@ export async function authenticateUser(userData: UserLoginCredentials): Promise<
 			return { success: false, error: "Invalid email or password" };
 		};
 
+		// Check if the password passed by the user matches it's password hash
 		const isEqual = compareHash(userData.password, user.password_hash);
 		if (isEqual) {
 			return { success: true, data: user };
 		} else {
-			return { success: false, error: "Invalid email or password "};
+			return { success: false, error: "Invalid email or password" };
 		};
 	} catch (err: unknown) {
 		console.log(err);

@@ -19,8 +19,8 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import openDb from '@/backend/db/openDb';
 import type { MessageResultType } from '@/types';
+import { openDb } from '@/backend/db/openDb';
 
 export async function addToken(
 	role: "user" | "admin",

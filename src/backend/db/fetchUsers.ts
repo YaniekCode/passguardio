@@ -19,9 +19,8 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import openDb from '@/backend/db/openDb';
 import type { Result, UserView } from '@/types';
-
+import { openDb } from '@/backend/db/openDb';
 
 export async function fetchUsers(): Promise<Result<UserView[]>>{
 	const db = await openDb();
