@@ -30,18 +30,19 @@ export async function createUser(userData: Props): Promise<CreateUserResult> {
 
 	try {
 		await db.run(
-      			"INSERT INTO users (username, email, password_hash, role, encryption_salt, wrapped_dek, dek_wrap_iv, dek_wrap_tag) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+      			"INSERT INTO users (username, email, passwordHash, role, encryptionSalt, wrappedDek, dekWrapIv, dekWrapTag) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
 			userData.username,
 			userData.email,
-			userData.password_hash,
+			userData.passwordHash,
 			userData.role,
-			userData.encryption_salt,
-			userData.wrapped_dek,
-			userData.dek_wrap_iv,
-			userData.dek_wrap_tag
+			userData.encryptionSalt,
+			userData.wrappedDek,
+			userData.dekWrapIv,
+			userData.dekWrapTag
 		);
 		return { success: true, message: "User created successfully" };
 	} catch (err: unknown) {
+		console.log(err);
 		if (err instanceof Error && err.message.toUpperCase().includes("UNIQUE")) {
 			return { success: false, uniqueError: true, error: "This user already exists" };
 		}

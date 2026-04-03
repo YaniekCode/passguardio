@@ -30,7 +30,7 @@ export default async function isPasswordUUIDInDb(userId: number, uuid: string): 
 
 	try {
 		const passwordEntry = (await db.get(
-			`SELECT uuid FROM passwords WHERE uuid=? AND user_id=?`,
+			`SELECT uuid FROM passwords WHERE uuid=? AND userId=?`,
 			uuid,
 			userId
 		)) as { uuid: string } | undefined;

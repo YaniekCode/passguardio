@@ -28,7 +28,7 @@ export async function fetchTokens(): Promise<Result<TokenDatabaseRecordType[]>>{
 
 	try {
 		const tokens  = (await db.all(
-            		`SELECT role, token, expires_at FROM tokens`,
+            		`SELECT role, token, expiresAt FROM tokens`,
         	)) as TokenDatabaseRecordType[];
 
 		return { success: true, data: tokens };

@@ -77,7 +77,7 @@ export default function TokensTable({ tokens }: Props) {
 								<TableCell>
 									<UserRoleBadge role={token.role}/>
 								</TableCell>
-								<TableCell>{formatDate(token.expires_at)}</TableCell>
+								<TableCell>{formatDate(token.expiresAt)}</TableCell>
 								<TableCell>
 									<DeleteTokenDialog token={token.token}/>
 								</TableCell>

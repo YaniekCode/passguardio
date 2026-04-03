@@ -23,7 +23,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { randomBytes } from 'node:crypto';
 
-import  { getDataDirectory } from '@/utils/getDataDirectory';
+import { getDataDirectory } from '@/utils/getDataDirectory';
 
 const SESSION_KEY_FILE = "session.key";
 const SESSION_KEY_SIZE = 32;

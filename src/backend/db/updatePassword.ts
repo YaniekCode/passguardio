@@ -28,15 +28,15 @@ export async function updatePassword(passwordData: PasswordDatabaseRecordType): 
 	try {
 		// Update the record in the DB
 		await db.run(
-            `UPDATE passwords SET website_name=?, website_url=?, username_or_email=?, password=?, category=?, strength=?, last_modified=?, crack_time=?, iv=?, tag=? WHERE uuid=?`,
-			passwordData.website_name,
-			passwordData.website_url,
-			passwordData.username_or_email,
-		       	passwordData.password,
+            `UPDATE passwords SET websiteName=?, websiteUrl=?, usernameOrEmail=?, password=?, category=?, strength=?, lastModified=?, crackTime=?, iv=?, tag=? WHERE uuid=?`,
+			passwordData.websiteName,
+			passwordData.websiteUrl,
+			passwordData.usernameOrEmail,
+		    passwordData.password,
 			passwordData.category,
 			passwordData.strength,
-			passwordData.last_modified,
-			passwordData.crack_time,
+			passwordData.lastModified,
+			passwordData.crackTime,
 			passwordData.iv,
 			passwordData.tag,
 			passwordData.uuid

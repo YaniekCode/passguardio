@@ -25,8 +25,8 @@ import fs from "node:fs";
 // Function outputs the DB dirname based on the running environment
 export function getDataDirectory(): string {
 	// If dirname is specified in .env
-	if (process.env.PASSGUARDIO_DB_PATH) {
-		return path.dirname(process.env.PASSGUARDIO_DB_PATH);
+	if (process.env['PASSGUARDIO_DB_PATH']) {
+		return path.dirname(process.env['PASSGUARDIO_DB_PATH']);
 	};
 	
 	// If running in a docker container the path is '/data'

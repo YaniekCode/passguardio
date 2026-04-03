@@ -22,14 +22,14 @@
 import { openDb } from '@/backend/db/openDb';
 import type { MessageResultType } from '@/types';
 
-export default async function deletePassword(user_id: number, uuid: string): Promise<MessageResultType> {
+export default async function deletePassword(userId: number, uuid: string): Promise<MessageResultType> {
 	const db = await openDb();
 
 	try {
 		await db.run(
-            		`DELETE FROM passwords WHERE uuid = ? AND user_id = ?`,
+            		`DELETE FROM passwords WHERE uuid = ? AND userId = ?`,
 			uuid,
-			user_id
+			userId
         	);
 		return { success: true, message: "Password deleted successfully" };
 	} catch (err: unknown) {

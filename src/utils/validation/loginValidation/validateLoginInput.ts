@@ -21,12 +21,11 @@
 
 import { fromError } from 'zod-validation-error';
 
-import type { LoginUserInterface, LoginValidationResultType } from '@/types/login';
+import type { UserLoginCredentials, LoginValidationResultType } from '@/types/login';
 import { LoginSchema } from '@/utils/validation/userSchemas';
 
-export function validateLoginInput(userData: LoginUserInterface): LoginValidationResultType {
+export function validateLoginInput(userData: UserLoginCredentials): LoginValidationResultType {
 	const result = LoginSchema.safeParse(userData);
-	console.log("Wynik: ", result);
 
 	if (result.success) {
 		const validationResult: LoginValidationResultType = { success: true, data: result.data };

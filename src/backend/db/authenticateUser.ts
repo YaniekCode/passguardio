@@ -38,7 +38,7 @@ export async function authenticateUser(userData: UserLoginCredentials): Promise<
 		};
 
 		// Check if the password passed by the user matches it's password hash
-		const isEqual = compareHash(userData.password, user.password_hash);
+		const isEqual = compareHash(userData.password, user.passwordHash);
 		if (isEqual) {
 			return { success: true, data: user };
 		} else {

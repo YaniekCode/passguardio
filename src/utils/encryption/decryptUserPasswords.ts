@@ -35,15 +35,15 @@ export default async function decryptUserPasswords(
 		const decryptedPassword = decryptPassword(userPasswordData.password, formattedDek, userPasswordData.iv, userPasswordData.tag);    
 		const passwordObject = {
 			uuid: userPasswordData.uuid,
-			websiteName: userPasswordData.website_name,
-			websiteUrl: userPasswordData.website_url,
-			usernameOrEmail: userPasswordData.username_or_email,
+			websiteName: userPasswordData.websiteName,
+			websiteUrl: userPasswordData.websiteUrl,
+			usernameOrEmail: userPasswordData.usernameOrEmail,
 			password: decryptedPassword,
 			category: userPasswordData.category,
 			strength: userPasswordData.strength,
-			lastModified: userPasswordData.last_modified,
-			createdAt: userPasswordData.created_at,
-			crackTime: userPasswordData.crack_time,
+			lastModified: userPasswordData.lastModified,
+			createdAt: userPasswordData.createdAt,
+			crackTime: userPasswordData.crackTime,
 		}
 		userPasswords.push(passwordObject);
 	});

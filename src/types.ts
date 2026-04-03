@@ -43,8 +43,8 @@ export type UserRoleType = "user" | "admin";
 */
 
 export interface EncryptionDataType {
-	encryption_salt: Buffer;
-	wrapped_dek: Buffer;
+	encryptionSalt: Buffer;
+	wrappedDek: Buffer;
 	dekWrapIv: Buffer;
 	dekWrapTag: Buffer;
 };
@@ -55,7 +55,7 @@ export interface UserDatabaseRecordType {
 	email: string;
 	passwordHash: string;
 	role: UserRoleType;
-	encryption_salt: Buffer;
+	encryptionSalt: Buffer;
 	wrappedDek: Buffer;
 	dekWrapIv: Buffer;
 	dekWrapTag: Buffer;

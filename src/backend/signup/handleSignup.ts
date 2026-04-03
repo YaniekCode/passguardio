@@ -35,7 +35,7 @@ export async function handleSignup(userData: User): Promise<CreateUserResult> {
 
 	// Generate password encryption credentials
 	const userEncryptionData = generateEncryptionCredentials(userData.password);
-	const user = { ...userData, password_hash: passwordHash, ...userEncryptionData};
+	const user = { ...userData, passwordHash: passwordHash, ...userEncryptionData};
 
 	// Create the user in the DB
 	const createUserResult = await createUser(user);

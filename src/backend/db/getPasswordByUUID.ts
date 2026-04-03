@@ -20,7 +20,7 @@
 */
 
 import type { PasswordDatabaseRecordType, PasswordByUUIDResultType } from '@/types';
-import openDb from '@/backend/db/openDb';
+import { openDb } from '@/backend/db/openDb';
 import decryptUserPasswords from '@/utils/encryption/decryptUserPasswords';
 import { getSession } from '@/utils/session/sessionUtils';
 

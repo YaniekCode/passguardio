@@ -41,8 +41,8 @@ export async function handleLogin(userData: UserLoginCredentials): Promise<Login
 	}
 
 	const user = userLoginResult.data;
-	const kek = deriveKEK(userData.password, user.encryption_salt);
-	const dek = unwrapDEK(user.wrapped_dek, user.dek_wrap_iv, user.dek_wrap_tag, kek).toString("hex");
+	const kek = deriveKEK(userData.password, user.encryptionSalt);
+	const dek = unwrapDEK(user.wrappedDek, user.dekWrapIv, user.dekWrapTag, kek).toString("hex");
 
 	const userSessionData: SessionPayload = { id: user.id, username: user.username, role: user.role, dek: dek }
 	return { success: true, data: userSessionData };

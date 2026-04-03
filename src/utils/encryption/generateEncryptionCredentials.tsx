@@ -19,24 +19,24 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import crypto from "node:crypto";
+import crypto from 'node:crypto';
 
-import deriveKEK from "@/utils/encryption/deriveKEK"; 
-import { UserEncryptionData } from "@/lib";
+import deriveKEK from '@/utils/encryption/deriveKEK'; 
+import { EncryptionDataType } from '@/types';
 
-export default function generateEncryptionCredentials(password: string): UserEncryptionData {
-	const encryption_salt = crypto.randomBytes(32);	
+export default function generateEncryptionCredentials(password: string): EncryptionDataType {
+	const encryptionSalt = crypto.randomBytes(32);	
 
 	const dek = crypto.randomBytes(32);
-	const kek = deriveKEK(password, encryption_salt);
+	const kek = deriveKEK(password, encryptionSalt);
 
 	const wrap = wrapDEK(dek, kek);
 
-	const userEncryptionData: UserEncryptionData = {
-		encryption_salt,
-		wrapped_dek: wrap.wrapped,
-		dek_wrap_iv: wrap.iv,
-		dek_wrap_tag: wrap.tag
+	const userEncryptionData: EncryptionDataType = {
+		encryptionSalt,
+		wrappedDek: wrap.wrapped,
+		dekWrapIv: wrap.iv,
+		dekWrapTag: wrap.tag
 	};
 
 	return userEncryptionData;

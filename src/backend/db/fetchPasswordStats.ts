@@ -27,7 +27,7 @@ export async function fetchPasswordStats(userId: number) {
 
 	try {
 		const passwordStatList = (await db.all(
-            		`SELECT strength, last_modified, created_at FROM passwords WHERE user_id=?`,
+            		`SELECT strength, lastModified, createdAt FROM passwords WHERE userId=?`,
 			userId
         	)) as Pick<PasswordData, 'strength' | 'lastModified' | 'createdAt'>[];
 

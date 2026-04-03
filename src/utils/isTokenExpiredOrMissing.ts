@@ -27,15 +27,15 @@ export async function isTokenExpiredOrMissing(token: string): Promise<ActivateTo
     const tokenData = await getDataByToken(token);
 
     if (!tokenData.success || !tokenData.data) {
-        return { success: false, not_found: true, error: "Token not found" };
+        return { success: false, notFound: true, error: "Token not found" };
     }
 
-    const tokenExpiryDate = tokenData.data.expires_at;
+    const tokenExpiryDate = tokenData.data.expiresAt;
     const currentTime = Date.now();
 
     // Check if the token has already expired
     if (currentTime > tokenExpiryDate) {
-        return { success: false, not_found: false, error: "Token has expired" };
+        return { success: false, notFound: false, error: "Token has expired" };
     }
 
     return {

@@ -10,7 +10,7 @@ export function validateSignupInput(userData: UserType): SignupValidationResultT
 		const validationResult: SignupValidationResultType = { success: true, data: result.data };
 		return validationResult;
 	} else {
-		const errorMessage = fromError(result.error).details[0].message;
+		const errorMessage = fromError(result.error).details?.[0]?.message || "Unknown error";
 		const validationError: SignupValidationResultType = { success: false, error: errorMessage};
 		return validationError;
 	}

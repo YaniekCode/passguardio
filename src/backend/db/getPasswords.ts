@@ -40,11 +40,11 @@ export async function getPasswords(
 			SELECT
 			*
 			FROM passwords
-			WHERE user_id=?
+			WHERE userId=?
 			AND (
-				website_name LIKE ?	
-				OR website_url LIKE ?
-				OR username_or_email LIKE ?
+				websiteName LIKE ?	
+				OR websiteUrl LIKE ?
+				OR usernameOrEmail LIKE ?
 				OR category LIKE ?
 			)
 			LIMIT ? OFFSET ?

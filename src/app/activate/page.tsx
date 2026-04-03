@@ -26,7 +26,7 @@ import {
 	Card,
 	CardContent
 } from '@/components/ui/card';
-import { ActivationTokenInputForm } from '@/components/accountActivation/ActivationTokenInputForm';
+import ActivationTokenInputForm from '@/components/accountActivation/ActivationTokenInputForm';
 
 export default function Page() {
 

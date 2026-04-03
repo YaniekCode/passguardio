@@ -31,7 +31,7 @@ export async function addToken(
 
 	try {
 		await db.run(
-            		`INSERT INTO tokens (role, token, expires_at)
+            		`INSERT INTO tokens (role, token, expiresAt)
              		VALUES (?, ?, ?)`,
 			role,
 			token,

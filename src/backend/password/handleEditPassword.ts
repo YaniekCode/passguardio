@@ -47,21 +47,21 @@ export async function handleEditPassword(passwordData: PasswordInfoWithUUID): Pr
 	const { encryptedPassword, iv, tag } = encryptPassword(passwordData.password, Buffer.from(dek, "hex"));
 
 	// Get password strength and crack time
-	const { strength, crack_time } = getPasswordStrengthAndCrackTime(passwordData.password);
+	const { strength, crackTime } = getPasswordStrengthAndCrackTime(passwordData.password);
 
 	// Construct the database input record
 	const passwordDatabaseInputRecord: PasswordDatabaseRecordType = {
-		user_id: session.id,
+		userId: session.id,
 		uuid: passwordData.uuid,
-		website_name: passwordData.websiteName,
-		website_url: passwordData.websiteUrl,
-		username_or_email: passwordData.usernameOrEmail,
+		websiteName: passwordData.websiteName,
+		websiteUrl: passwordData.websiteUrl,
+		usernameOrEmail: passwordData.usernameOrEmail,
 		category: passwordData.category,
 		password: encryptedPassword,
 		strength: strength,
-		last_modified: new Date().getTime(),
-		created_at: new Date().getTime(),
-		crack_time: crack_time,
+		lastModified: new Date().getTime(),
+		createdAt: new Date().getTime(),
+		crackTime: crackTime,
 		iv: iv,
 		tag: tag,
 	};
