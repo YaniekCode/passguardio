@@ -20,7 +20,7 @@
 */
 
 import type { PasswordDatabaseRecordType, PasswordData } from '@/types';
-import decryptPassword from '@/utils/encryption/decryptPassword'; 
+import { decryptPassword } from '@/utils/encryption/decryptPassword'; 
 
 export default async function decryptUserPasswords(
 	passwords: PasswordDatabaseRecordType[],
@@ -32,7 +32,13 @@ export default async function decryptUserPasswords(
 
 	// Go through each password, decrypt it and add it to an array
 	passwords.forEach((userPasswordData) => {
-		const decryptedPassword = decryptPassword(userPasswordData.password, formattedDek, userPasswordData.iv, userPasswordData.tag);    
+		const decryptedPassword = decryptPassword({
+			encryptedPassword: userPasswordData.password,
+			dek: formattedDek,
+			iv: userPasswordData.iv,
+			tag: userPasswordData.tag
+		});    
+
 		const passwordObject = {
 			uuid: userPasswordData.uuid,
 			websiteName: userPasswordData.websiteName,

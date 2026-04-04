@@ -32,16 +32,6 @@ export type UserView = Pick<User, 'username' | 'email' | 'role'>
 
 export type UserRoleType = "user" | "admin";
 
-
-/*export interface UserData {
-	id: number;
-	username: string;
-	email: string;
-	password_hash: string;
-	role: "user" | "admin";
-};
-*/
-
 export interface EncryptionDataType {
 	encryptionSalt: Buffer;
 	wrappedDek: Buffer;

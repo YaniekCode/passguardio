@@ -24,7 +24,7 @@ import type { CreateUserResult } from "@/types/signup";
 import { createTables } from "@/backend/db/createTables";
 import { createUser } from "@/backend/db/createUser";
 import { generatePasswordHash } from "@/utils/hashing/generatePasswordHash";
-import generateEncryptionCredentials from "@/utils/encryption/generateEncryptionCredentials";
+import { generateEncryptionCredentials } from "@/utils/encryption/generateEncryptionCredentials";
 
 export async function handleSignup(userData: User): Promise<CreateUserResult> {
 	// Create the default tables in the DB unless they already exist

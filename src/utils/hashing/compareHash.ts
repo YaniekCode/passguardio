@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2025 YaniekCode
+ * Copyright (C) 2026 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -24,6 +24,5 @@ import bcrypt from 'bcryptjs';
 
 // Function compares a plain-text password with a hashed password using bcrypt
 export function compareHash(password: string, hash: string): boolean {
-	const isEqual = bcrypt.compareSync(password, hash);
-	return isEqual;
+	return bcrypt.compareSync(password, hash);
 };	

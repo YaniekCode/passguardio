@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2025 YaniekCode
+ * Copyright (C) 2026 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -21,10 +21,10 @@
 
 import crypto from 'node:crypto';
 
-import deriveKEK from '@/utils/encryption/deriveKEK'; 
-import { EncryptionDataType } from '@/types';
+import type { EncryptionDataType } from '@/types';
+import { deriveKEK } from '@/utils/encryption/deriveKEK'; 
 
-export default function generateEncryptionCredentials(password: string): EncryptionDataType {
+export function generateEncryptionCredentials(password: string): EncryptionDataType {
 	const encryptionSalt = crypto.randomBytes(32);	
 
 	const dek = crypto.randomBytes(32);

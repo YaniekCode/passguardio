@@ -22,8 +22,8 @@
 import type { LoginResultType, UserLoginCredentials } from '@/types/login';
 import { SessionPayload } from '@/types';
 import { createTables } from '@/backend/db/createTables';
-import deriveKEK from '@/utils/encryption/deriveKEK';
-import unwrapDEK from '@/utils/encryption/unwrapDEK';
+import { deriveKEK } from '@/utils/encryption/deriveKEK';
+import { unwrapDEK } from '@/utils/encryption/unwrapDEK';
 import { authenticateUser } from '@/backend/db/authenticateUser';
 
 export async function handleLogin(userData: UserLoginCredentials): Promise<LoginResultType> {

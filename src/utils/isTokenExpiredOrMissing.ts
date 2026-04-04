@@ -19,8 +19,8 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import type { ActivateTokenState } from "@/types/activate";
 import { getDataByToken } from "@/backend/db/getDataByToken";
-import { ActivateTokenState } from "@/types/activate";
 
 export async function isTokenExpiredOrMissing(token: string): Promise<ActivateTokenState> {
     // Get the token data(role, token, expires_at) from the DB

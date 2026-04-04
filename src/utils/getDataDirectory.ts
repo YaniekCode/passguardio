@@ -19,8 +19,8 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import path from "node:path";
-import fs from "node:fs";
+import path from 'node:path';
+import fs from 'node:fs';
 
 // Function outputs the DB dirname based on the running environment
 export function getDataDirectory(): string {

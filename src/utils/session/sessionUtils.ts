@@ -1,7 +1,7 @@
 /*
  * SPDX-License-Identifier: GPL-3.0-or-later
  *
- * Copyright (C) 2025 YaniekCode
+ * Copyright (C) 2026 YaniekCode
  *
  * This file is part of PassGuardio.
  *
@@ -22,8 +22,8 @@
 import 'server-only';
 import { cookies } from 'next/headers';
 import { SignJWT, jwtVerify } from 'jose';
-import { SessionPayload } from '@/types';
 
+import type { SessionPayload } from '@/types';
 import { getSessionKey } from '@/utils/session/getSessionKey';
 
 const secretKey = getSessionKey();

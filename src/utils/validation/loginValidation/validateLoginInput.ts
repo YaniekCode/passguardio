@@ -30,9 +30,10 @@ export function validateLoginInput(userData: UserLoginCredentials): LoginValidat
 	if (result.success) {
 		const validationResult: LoginValidationResultType = { success: true, data: result.data };
 		return validationResult;
-	} else {
-		const errorMessage = fromError(result.error).details?.[0]?.message || "Unknown error";
-		const validationError: LoginValidationResultType= { success: false, error: errorMessage};
-		return validationError;
 	}
+
+	const errorMessage = fromError(result.error).details?.[0]?.message || "Unknown error";
+	const validationError: LoginValidationResultType= { success: false, error: errorMessage};
+
+	return validationError;
 }

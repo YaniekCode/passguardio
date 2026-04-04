@@ -19,8 +19,8 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import type { ActivateUserFieldErrors, ActivateUserValidationResult } from "@/types/activate";
-import { NewUserSchema } from "@/utils/validation/userSchemas";
+import type { ActivateUserFieldErrors, ActivateUserValidationResult } from '@/types/activate';
+import { NewUserSchema } from '@/utils/validation/userSchemas';
 
 export function validateNewUserInput(formData: FormData): ActivateUserValidationResult {
 	const validatedFormData = NewUserSchema.safeParse({

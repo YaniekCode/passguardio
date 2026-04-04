@@ -22,7 +22,7 @@
 import type { PasswordInfo, PasswordDatabaseRecordType, MessageResultType } from '@/types';
 import { getSession } from '@/utils/session/sessionUtils';
 import isPasswordUUIDInDb from '@/backend/db/isPasswordUUIDInDb';
-import encryptPassword from '@/utils/encryption/encryptPassword'; 
+import { encryptPassword } from '@/utils/encryption/encryptPassword'; 
 import { updatePassword } from '@/backend/db/updatePassword';
 import { getPasswordStrengthAndCrackTime } from '@/utils/getPasswordStrengthAndCrackTime';
 

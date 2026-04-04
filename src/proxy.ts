@@ -22,8 +22,8 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-import { getSession } from "@/utils/session/sessionUtils";
-import { isFirstUser } from "@/backend/db/isFirstUser";
+import { getSession } from '@/utils/session/sessionUtils';
+import { isFirstUser } from '@/backend/db/isFirstUser';
  
 export async function proxy(request: NextRequest) {
 	const { pathname } = request.nextUrl;
@@ -37,18 +37,23 @@ export async function proxy(request: NextRequest) {
 		};
 		return NextResponse.next();
 	} else {
-		if (pathname == "/") {
+		if (pathname === "/") {
 			return NextResponse.redirect(new URL("/login", request.url));
 		};
 	};
 
-	// If the user is not first we check if the session exists
+	// Check if the session exists
 	if (pathname.startsWith("/dashboard")) {
 		const session = await getSession();
 
 		if (!session || !session.username) {
- 			return NextResponse.redirect(new URL('/login', request.url))
+ 			return NextResponse.redirect(new URL('/login', request.url));
 		};
+
+		// If the user in not admin and tries to access the users page they get redirected back to dashboard
+		if (session.role !== "admin" && pathname === "/dashboard/users") {
+			return NextResponse.redirect(new URL('/dashboard', request.url));
+		}
 	};
 
 	return NextResponse.next();

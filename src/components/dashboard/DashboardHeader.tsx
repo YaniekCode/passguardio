@@ -28,8 +28,15 @@ import {
 
 import PasswordSearch from '@/components/PasswordSearch';
 import AddPasswordDialog from '@/components/addPassword/AddPasswordDialog';
+import { getSession } from '@/utils/session/sessionUtils';
 
-export default function DashboardHeader() {
+export default async function DashboardHeader() {
+	const session = await getSession();
+
+	const greeting = session?.username
+		? `Hello, ${session.username}`
+		: "Hello";
+
     return (
         <>
             <Breadcrumb>
@@ -42,7 +49,7 @@ export default function DashboardHeader() {
 			<header className="flex items-center justify-between">
 				<div className="flex items-center gap-5">
 					<div>
-						<h1 className="text-3xl font-semibold">Password Vault</h1>
+						<h1 className="text-3xl font-semibold">{greeting}</h1>
 						<h2 className="text-muted-foreground">Manage your passwords securely</h2>
 					</div>
 				</div>

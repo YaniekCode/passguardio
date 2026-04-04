@@ -22,7 +22,7 @@
 import crypto from 'node:crypto';
 
 import type { PasswordInfo, PasswordDatabaseRecordType, MessageResultType } from '@/types';
-import encryptPassword from '@/utils/encryption/encryptPassword';
+import { encryptPassword } from '@/utils/encryption/encryptPassword';
 import { getPasswordStrengthAndCrackTime } from '@/utils/getPasswordStrengthAndCrackTime';
 import { getSession } from '@/utils/session/sessionUtils';
 import addPassword from '@/backend/db/addPassword';
