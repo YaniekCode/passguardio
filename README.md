@@ -1,6 +1,6 @@
 # 🔐 PassGuardio — Simple, Local & Fast Password Manager
 
-**PassGuardio** is a *simple, local and fast password manager* focused on privacy, minimalism, and performance. The project is **open source** and designed to work entirely **offline**, without sending any data to external servers.
+**PassGuardio** is a *simple, local and fast password manager* focused on privacy, minimalism, and performance. The project is **open source** and designed to work without sending any data to external servers.
 
 ---
 
@@ -144,6 +144,8 @@ as long as the license terms are respected.
 ## ⭐ Support
 
 If you find this project useful, consider giving it a ⭐ on GitHub.
+
+This project is open source and will always remain free. If you'd like to support its development, you can [buy me a coffee](https://buymeacoffee.com/yaniekcode) ☕
 
 ---
 
