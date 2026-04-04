@@ -26,6 +26,17 @@ export async function isFirstUser(): Promise<Result<boolean>> {
 	const db = await openDb();
 
 	try {
+
+		// Check if the table 'users' exists
+		const table = await db.get<{ name: string }> (
+			`SELECT name from sqlite_master WHERE type='table' AND name='users'`	
+		);
+
+		if (!table) {
+			return { success: true, data: true };
+		}
+
+		// Count the number of users
 		const row = await db.get<{ count: number }>(
 			`SELECT COUNT(*) as count FROM users`
 		);
