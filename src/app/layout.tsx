@@ -26,6 +26,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 import { poppinsSans } from "@/app/fonts";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export const metadata: Metadata = {
 	title: {
@@ -44,14 +45,21 @@ export default function RootLayout({
 	children: React.ReactNode;
 }>) {
 	return (
-		<html lang="en">
+		<html lang="en" suppressHydrationWarning>
 			<meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 			<body className={`${poppinsSans.variable} bg-background antialiased`}>
-				{/* tooltip provider responsible for displaying tooltips on hover */}
-				<TooltipProvider>
-					<main>{children}</main>
-					<Toaster />
-				</TooltipProvider>
+				<ThemeProvider
+					attribute="class"
+					defaultTheme="system"
+					enableSystem
+					disableTransitionOnChange
+				>
+					{/* tooltip provider responsible for displaying tooltips on hover */}
+					<TooltipProvider>
+						<main>{children}</main>
+						<Toaster />
+					</TooltipProvider>
+				</ThemeProvider>
 			</body>
 		</html>
 	);
