@@ -1,46 +1,79 @@
 # 🔐 PassGuardio — Simple, Local & Fast Password Manager
 
-**PassGuardio** is a _simple, local and fast password manager_ focused on privacy, minimalism, and performance. The project is **open source** and designed to work without sending any data to external servers.
+> Privacy-first password manager that keeps your data **100% local**
+
+![License](https://img.shields.io/badge/license-GPLv3-blue?style=for-the-badge)
+![Status](https://img.shields.io/badge/status-active-success?style=for-the-badge)
+![Local First](https://img.shields.io/badge/data-local--only-informational?style=for-the-badge)
+
+**PassGuardio** is a simple, fast, and privacy-first password manager that stores your data locally and works without external services.
+
+---
+
+## ❓ Why PassGuardio?
+
+Most modern password managers rely on the cloud.
+
+PassGuardio is different:
+
+- 📴 Works fully offline
+- 🔐 No third-party access to your data
+- ⚡ Instant performance — no network latency
+- 🧘 No unnecessary complexity
+
+Built for people who value **privacy, control, and simplicity**.
 
 ---
 
 ## ✨ Features
 
-- 🗄 **Local-first** – all data is stored locally on your device
-- ⚡ **Fast & lightweight** – no unnecessary dependencies
-- 🔒 **Privacy-focused** – no tracking, no cloud, no telemetry
+- 🗄 **100% Local Storage** – your data never leaves your device
+- ⚡ **Fast & lightweight** – no bloated dependencies
+- 🚫 **No cloud, no tracking** – zero telemetry, zero analytics
 - 🧠 **Simple UX** – minimal interface, easy to use
-- 🧩 **Open Source** – transparent codebase, community-friendly
+- 🧩 **Open Source** – fully transparent and community-driven
 
 ---
 
 ## 🎯 Philosophy
 
-This project was created with a clear goal:
-
 > _Your passwords should belong only to you._
 
-Unlike many modern password managers, this application:
+PassGuardio is built around a simple principle: **full user control**.
 
-- does **not** sync data to the cloud
-- does **not** collect analytics
+- no cloud sync
+- no analytics
+- no external services
 
-Everything runs locally, giving you full control over your data.
+Everything runs locally — your data stays yours.
 
-PassGuardio is not a cloud password manager and never will be.
+**This is not a cloud password manager. And it never will be.**
 
 ---
 
 ## 🛠 Tech Stack
 
-- **Frontend:** Next.js / React
-- **Backend:** Local-only logic (no external API)
-- **Storage:** Local Sqlite3 database
-- **Language:** TypeScript
+- **Frontend:**  
+  ![Next.js](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white)
+  ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+
+- **Backend:**  
+  ![Local-first](https://img.shields.io/badge/Architecture-Local--first-informational?style=for-the-badge)
+
+- **Storage:**  
+  ![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)
+
+- **Language:**  
+  ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+
+- **UI:**  
+  ![shadcn/ui](https://img.shields.io/badge/shadcn/ui-black?style=for-the-badge)
 
 ---
 
 ## 🚀 Installation
+
+Get up and running in under a minute.
 
 PassGuardio can be installed in two ways: **using Docker (recommended)** or **manually**.
 
@@ -100,10 +133,9 @@ http://localhost:9820
 ## 🔐 Security Notes
 
 - Passwords are stored **locally**
-- Encryption is always enabled
+- Data is **encrypted at rest**
+- No data is sent to external servers
 - Always use a **strong master password**
-
-> This project is provided as-is. Review the code before using it for sensitive data.
 
 ---
 
@@ -139,9 +171,13 @@ as long as the license terms are respected.
 
 ## ⭐ Support
 
-If you find this project useful, consider giving it a ⭐ on GitHub.
+If you find this project useful, consider giving it a ⭐ on GitHub — it really helps.
 
-This project is open source and will always remain free. If you'd like to support its development, you can [buy me a coffee](https://buymeacoffee.com/yaniekcode) ☕
+This project is free and open source, but its continued development depends on community support.  
+If you'd like to help keep it alive and evolving, consider supporting it:
+
+[![BuyMeACoffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/yaniekcode)
+[![Ko-Fi](https://img.shields.io/badge/Ko--fi-F16061?style=for-the-badge&logo=ko-fi&logoColor=white)](https://ko-fi.com/yaniekcode)
 
 ---
 
