@@ -17,9 +17,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import { openDb } from '@/backend/db/openDb';
+import { openDb } from "@/backend/db/openDb";
 
 export async function createTables(): Promise<void> {
 	const db = await openDb();
@@ -63,4 +63,4 @@ export async function createTables(): Promise<void> {
 			token TEXT,
 			expiresAt INTEGER
 	)`);
-};
+}

@@ -17,18 +17,17 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import { z } from 'zod';
+import { z } from "zod";
 
 const FormSchema = z.object({
-	role: z.enum(["user", "admin"], "Unknown role"), 
+	role: z.enum(["user", "admin"], "Unknown role"),
 });
 
 export type FormState =
-	| { success: true, data: { role: "user" | "admin" }}
-	| { success: false, errors: { role?: string[] }};
-
+	| { success: true; data: { role: "user" | "admin" } }
+	| { success: false; errors: { role?: string[] } };
 
 export function validateAddUserInput(formData: FormData): FormState {
 	const validatedFormData = FormSchema.safeParse({
@@ -36,15 +35,16 @@ export function validateAddUserInput(formData: FormData): FormState {
 	});
 
 	if (!validatedFormData.success) {
-		return { 
+		return {
 			success: false,
 			errors: validatedFormData.error.flatten().fieldErrors,
 		};
-	};
+	}
 
 	return {
 		success: true,
 		data: {
-			role: validatedFormData.data.role
-		}};
-};
+			role: validatedFormData.data.role,
+		},
+	};
+}

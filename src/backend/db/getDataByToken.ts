@@ -17,34 +17,35 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import type { ActivateTokenState} from '@/types/activate';
-import { openDb } from '@/backend/db/openDb';
-
+import type { ActivateTokenState } from "@/types/activate";
+import { openDb } from "@/backend/db/openDb";
 
 export async function getDataByToken(token: string): Promise<ActivateTokenState> {
 	const db = await openDb();
 
 	try {
-        const row = await db.get(
+		const row = await db.get(
 			`SELECT role, token, expiresAt
             FROM tokens
             WHERE token = ? 
             `,
-            token
+			token,
 		);
-
 
 		if (row) {
 			return { success: true, data: row };
 		} else {
 			return { success: false, notFound: true, error: "Token not found" };
 		}
-
 	} catch (err: unknown) {
 		console.log(err);
-		return { success: false, notFound: false, error: "An error occurred when reading token data" };
+		return {
+			success: false,
+			notFound: false,
+			error: "An error occurred when reading token data",
+		};
 	} finally {
 		try {
 			await db.close();
@@ -52,4 +53,4 @@ export async function getDataByToken(token: string): Promise<ActivateTokenState>
 			console.error("Failed to close DB: ", closeErr);
 		}
 	}
-};
+}

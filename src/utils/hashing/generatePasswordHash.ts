@@ -17,16 +17,17 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import bcrypt from 'bcryptjs';
-
+import bcrypt from "bcryptjs";
 
 // Function generates a password hash using bcrypt. The number of salt rounds can be changed
 // in .env file - by default it's set to 13 rounds
 export function generatePasswordHash(password: string): string {
-	const saltRounds = process.env['BCRYPT_SALT_ROUNDS'] ? Number(process.env['BCRYPT_SALT_ROUNDS']) : 13;
+	const saltRounds = process.env["BCRYPT_SALT_ROUNDS"]
+		? Number(process.env["BCRYPT_SALT_ROUNDS"])
+		: 13;
 
 	const hash = bcrypt.hashSync(password, saltRounds);
 	return hash;
-};
+}

@@ -17,15 +17,15 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import type { Result, SessionPayload } from '@/types';
+import type { Result, SessionPayload } from "@/types";
 
 export type LoginResultType = Result<SessionPayload>;
 
 export type UserLoginCredentials = {
-    email: string,
-    password: string
+	email: string;
+	password: string;
 };
 
 export type LoginValidationResultType = Result<UserLoginCredentials>;

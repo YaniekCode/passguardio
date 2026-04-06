@@ -17,18 +17,21 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-'use server';
+"use server";
 
-import { revalidatePath } from 'next/cache';
+import { revalidatePath } from "next/cache";
 
-import { type FormState } from '@/types';
-import { handleEditPassword } from '@/backend/password/handleEditPassword';
-import { validateAddPasswordInput } from '@/utils/validation/validateAddPasswordInput';
+import { type FormState } from "@/types";
+import { handleEditPassword } from "@/backend/password/handleEditPassword";
+import { validateAddPasswordInput } from "@/utils/validation/validateAddPasswordInput";
 
-
-export async function editPasswordAction(uuid: string, prevState: FormState, formData: FormData): Promise<FormState> {
+export async function editPasswordAction(
+	uuid: string,
+	prevState: FormState,
+	formData: FormData,
+): Promise<FormState> {
 	const validatedFormData = validateAddPasswordInput(formData);
 
 	const websiteName = formData.get("websiteName")?.toString() || "";
@@ -37,16 +40,23 @@ export async function editPasswordAction(uuid: string, prevState: FormState, for
 
 	// If we don't succeed we return the error
 	if (!validatedFormData.success) {
-		return { 
+		return {
 			success: false,
-			formErrors: validatedFormData.errors
+			formErrors: validatedFormData.errors,
 		};
-	};
+	}
 
 	// If we succeed in validating the form data we proceed
 	const { password, category } = validatedFormData.data;
 
-	const validatedPasswordData = { uuid, websiteName, websiteUrl, usernameOrEmail, password, category };
+	const validatedPasswordData = {
+		uuid,
+		websiteName,
+		websiteUrl,
+		usernameOrEmail,
+		password,
+		category,
+	};
 
 	// Adding the password data to the DB
 	const passwordInputResult = await handleEditPassword(validatedPasswordData);
@@ -65,4 +75,4 @@ export async function editPasswordAction(uuid: string, prevState: FormState, for
 		success: true,
 		message: "Password updated successfully",
 	};
-};
+}

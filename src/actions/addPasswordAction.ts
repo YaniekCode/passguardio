@@ -17,18 +17,20 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-'use server';
+"use server";
 
-import { revalidatePath } from 'next/cache';
+import { revalidatePath } from "next/cache";
 
-import type { FormState } from '@/types';
-import { handleAddPassword } from '@/backend/password/handleAddPassword';
-import { validateAddPasswordInput } from '@/utils/validation/validateAddPasswordInput';
+import type { FormState } from "@/types";
+import { handleAddPassword } from "@/backend/password/handleAddPassword";
+import { validateAddPasswordInput } from "@/utils/validation/validateAddPasswordInput";
 
-
-export async function addPasswordAction(prevState: FormState, formData: FormData): Promise<FormState> {
+export async function addPasswordAction(
+	prevState: FormState,
+	formData: FormData,
+): Promise<FormState> {
 	const validatedFormData = validateAddPasswordInput(formData);
 
 	const websiteName = formData.get("websiteName")?.toString() || "";
@@ -39,12 +41,18 @@ export async function addPasswordAction(prevState: FormState, formData: FormData
 	if (!validatedFormData.success) {
 		return {
 			success: false,
-			formErrors: validatedFormData.errors
+			formErrors: validatedFormData.errors,
 		};
-	};
+	}
 
 	const { password, category } = validatedFormData.data;
-	const validatedPasswordData = { websiteName, websiteUrl, usernameOrEmail, password, category };
+	const validatedPasswordData = {
+		websiteName,
+		websiteUrl,
+		usernameOrEmail,
+		password,
+		category,
+	};
 
 	// Add the password data to the DB
 	const passwordInputResult = await handleAddPassword(validatedPasswordData);
@@ -63,5 +71,4 @@ export async function addPasswordAction(prevState: FormState, formData: FormData
 		success: true,
 		message: "Password added successfully",
 	};
-
-};
+}

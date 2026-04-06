@@ -17,24 +17,26 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import { openDb } from '@/backend/db/openDb';
-import type { MessageResultType } from '@/types';
+import { openDb } from "@/backend/db/openDb";
+import type { MessageResultType } from "@/types";
 
-export default async function deletePassword(userId: number, uuid: string): Promise<MessageResultType> {
+export default async function deletePassword(
+	userId: number,
+	uuid: string,
+): Promise<MessageResultType> {
 	const db = await openDb();
 
 	try {
-		await db.run(
-            		`DELETE FROM passwords WHERE uuid = ? AND userId = ?`,
-			uuid,
-			userId
-        	);
+		await db.run(`DELETE FROM passwords WHERE uuid = ? AND userId = ?`, uuid, userId);
 		return { success: true, message: "Password deleted successfully" };
 	} catch (err: unknown) {
 		console.log(err);
-		return { success: false, error: "An error occurred when deleting a password" };
+		return {
+			success: false,
+			error: "An error occurred when deleting a password",
+		};
 	} finally {
 		try {
 			await db.close();

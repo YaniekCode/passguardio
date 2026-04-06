@@ -17,27 +17,27 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-'use server';
+"use server";
 
-import { redirect } from 'next/navigation';
+import { redirect } from "next/navigation";
 
-import type { FormState } from '@/types';
-import { validateLoginInput } from '@/utils/validation/loginValidation/validateLoginInput';
-import { handleLogin } from '@/backend/login/handleLogin';
-import { createSession } from '@/utils/session/sessionUtils';
+import type { FormState } from "@/types";
+import { validateLoginInput } from "@/utils/validation/loginValidation/validateLoginInput";
+import { handleLogin } from "@/backend/login/handleLogin";
+import { createSession } from "@/utils/session/sessionUtils";
 
 export async function loginAction(prevState: FormState, formData: FormData): Promise<FormState> {
 	const rawFormData = {
-		email: formData.get('email')?.toString() || "",
-		password: formData.get('password')?.toString() || "",
+		email: formData.get("email")?.toString() || "",
+		password: formData.get("password")?.toString() || "",
 	};
 
 	const inputValidationResult = validateLoginInput(rawFormData);
 	if (!inputValidationResult.success) {
 		return inputValidationResult;
-	};
+	}
 
 	const validatedFormData = inputValidationResult.data;
 
@@ -51,4 +51,4 @@ export async function loginAction(prevState: FormState, formData: FormData): Pro
 	const userSessionData = userLoginResult.data;
 	await createSession(userSessionData);
 	redirect("/dashboard");
-};
+}

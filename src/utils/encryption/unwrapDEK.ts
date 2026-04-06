@@ -17,18 +17,13 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import crypto from 'node:crypto';
+import crypto from "node:crypto";
 
-export function unwrapDEK(
-	wrapped: Buffer,
-	iv: Buffer,
-	tag: Buffer,
-	kek: Buffer
-):Buffer {
+export function unwrapDEK(wrapped: Buffer, iv: Buffer, tag: Buffer, kek: Buffer): Buffer {
 	const decipher = crypto.createDecipheriv("aes-256-gcm", kek, iv);
 	decipher.setAuthTag(tag);
 
 	return Buffer.concat([decipher.update(wrapped), decipher.final()]);
-};
+}

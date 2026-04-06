@@ -17,34 +17,39 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import type { PasswordInfo, PasswordDatabaseRecordType, MessageResultType } from '@/types';
-import { getSession } from '@/utils/session/sessionUtils';
-import isPasswordUUIDInDb from '@/backend/db/isPasswordUUIDInDb';
-import { encryptPassword } from '@/utils/encryption/encryptPassword'; 
-import { updatePassword } from '@/backend/db/updatePassword';
-import { getPasswordStrengthAndCrackTime } from '@/utils/getPasswordStrengthAndCrackTime';
+import type { PasswordInfo, PasswordDatabaseRecordType, MessageResultType } from "@/types";
+import { getSession } from "@/utils/session/sessionUtils";
+import isPasswordUUIDInDb from "@/backend/db/isPasswordUUIDInDb";
+import { encryptPassword } from "@/utils/encryption/encryptPassword";
+import { updatePassword } from "@/backend/db/updatePassword";
+import { getPasswordStrengthAndCrackTime } from "@/utils/getPasswordStrengthAndCrackTime";
 
 interface PasswordInfoWithUUID extends PasswordInfo {
 	uuid: string;
 }
 
-export async function handleEditPassword(passwordData: PasswordInfoWithUUID): Promise<MessageResultType> {
+export async function handleEditPassword(
+	passwordData: PasswordInfoWithUUID,
+): Promise<MessageResultType> {
 	const session = await getSession();
 	if (!session) {
-		return { success: false, error: "User not authenticated"};
-	};
+		return { success: false, error: "User not authenticated" };
+	}
 	const { id, dek } = session;
 
-	// Check if the password to edit exists and that the user is the owner of it 
+	// Check if the password to edit exists and that the user is the owner of it
 	const isPasswordInDb = await isPasswordUUIDInDb(id, passwordData.uuid);
 	if (!isPasswordInDb.success) {
 		return { success: false, error: "Password not found" };
-	};
+	}
 
 	// Encrypt the password data
-	const { encryptedPassword, iv, tag } = encryptPassword(passwordData.password, Buffer.from(dek, "hex"));
+	const { encryptedPassword, iv, tag } = encryptPassword(
+		passwordData.password,
+		Buffer.from(dek, "hex"),
+	);
 
 	// Get password strength and crack time
 	const { strength, crackTime } = getPasswordStrengthAndCrackTime(passwordData.password);
@@ -70,4 +75,4 @@ export async function handleEditPassword(passwordData: PasswordInfoWithUUID): Pr
 	const passwordUpdateResult = await updatePassword(passwordDatabaseInputRecord);
 
 	return passwordUpdateResult;
-};
+}

@@ -17,21 +17,21 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import crypto from 'node:crypto';
+import crypto from "node:crypto";
 
 type DecryptPasswordProps = {
-	encryptedPassword: Buffer,
-	dek: Buffer,
-	iv: Buffer,
-	tag: Buffer
-}
+	encryptedPassword: Buffer;
+	dek: Buffer;
+	iv: Buffer;
+	tag: Buffer;
+};
 
-export function decryptPassword({encryptedPassword, dek, iv, tag}: DecryptPasswordProps): string {
+export function decryptPassword({ encryptedPassword, dek, iv, tag }: DecryptPasswordProps): string {
 	const decipher = crypto.createDecipheriv("aes-256-gcm", dek, iv);
 	decipher.setAuthTag(tag);
 
-	const decryptedPassword = Buffer.concat([decipher.update(encryptedPassword), decipher.final()])
+	const decryptedPassword = Buffer.concat([decipher.update(encryptedPassword), decipher.final()]);
 	return decryptedPassword.toString("utf8");
 }

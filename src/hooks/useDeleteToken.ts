@@ -17,20 +17,20 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-'use client';
+"use client";
 
-import { useState, useEffect, useTransition, useActionState } from 'react';
-import { useRouter } from 'next/navigation';
-import { toast } from 'sonner';
+import { useState, useEffect, useTransition, useActionState } from "react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 
-import type { MessageResultType } from '@/types';
-import { deleteTokenAction } from '@/actions/deleteTokenAction';
+import type { MessageResultType } from "@/types";
+import { deleteTokenAction } from "@/actions/deleteTokenAction";
 
 const initialState: MessageResultType = {
 	success: false,
-	error: ""
+	error: "",
 };
 
 export function useDeleteToken(token: string) {
@@ -39,24 +39,22 @@ export function useDeleteToken(token: string) {
 
 	const deletePasswordWithUUIDAction = deleteTokenAction.bind(null, token);
 
-	const [state, formAction, pending] = useActionState(deletePasswordWithUUIDAction, initialState)
+	const [state, formAction, pending] = useActionState(deletePasswordWithUUIDAction, initialState);
 	const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
 	useEffect(() => {
 		if (!state.success && state.error) {
 			toast.error(state.error, { position: "bottom-right" });
-		} 
+		}
 
 		if (state.success && state.message) {
 			toast.success(state.message, { position: "bottom-right" });
 			startTransition(() => {
 				setIsDialogOpen(false);
 				router.refresh();
-			})
-		} 
+			});
+		}
+	}, [state, router, startTransition]);
 
-
-	}, [state, router, startTransition])
-
-    return { isDialogOpen, setIsDialogOpen, formAction, pending };
+	return { isDialogOpen, setIsDialogOpen, formAction, pending };
 }

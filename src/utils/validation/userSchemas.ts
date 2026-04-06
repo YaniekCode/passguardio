@@ -17,24 +17,31 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import { z } from 'zod';
+import { z } from "zod";
 
-const usernameField = z.string()
+const usernameField = z
+	.string()
 	.min(3, "Username must be at least 3 characters long.")
 	.max(50, "Username cannot be longer than 50 characters.")
-	.regex(/^[\p{L}0-9_\- ]+$/u, "Username can contain only letters, numbers, underscores, hyphens and spaces");
+	.regex(
+		/^[\p{L}0-9_\- ]+$/u,
+		"Username can contain only letters, numbers, underscores, hyphens and spaces",
+	);
 
 const emailField = z.email();
 
-const passwordField = z.string()
+const passwordField = z
+	.string()
 	.min(8, "Password must be at least 8 characters long.")
 	.max(100, "Password cannot be longer than 100 characters.")
-	.refine((val) => !/\s/.test(val), "Password cannot contain whitespace characters (e.g., space, tab).");
+	.refine(
+		(val) => !/\s/.test(val),
+		"Password cannot contain whitespace characters (e.g., space, tab).",
+	);
 
 const roleField = z.enum(["user", "admin"]);
-
 
 export const SignupSchema = z.object({
 	username: usernameField,

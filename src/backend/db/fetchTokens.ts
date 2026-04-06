@@ -17,19 +17,18 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import type { Result, TokenDatabaseRecordType } from '@/types';
-import { openDb } from '@/backend/db/openDb';
+import type { Result, TokenDatabaseRecordType } from "@/types";
+import { openDb } from "@/backend/db/openDb";
 
-
-export async function fetchTokens(): Promise<Result<TokenDatabaseRecordType[]>>{
+export async function fetchTokens(): Promise<Result<TokenDatabaseRecordType[]>> {
 	const db = await openDb();
 
 	try {
-		const tokens  = (await db.all(
-            		`SELECT role, token, expiresAt FROM tokens`,
-        	)) as TokenDatabaseRecordType[];
+		const tokens = (await db.all(
+			`SELECT role, token, expiresAt FROM tokens`,
+		)) as TokenDatabaseRecordType[];
 
 		return { success: true, data: tokens };
 	} catch (err: unknown) {
@@ -42,4 +41,4 @@ export async function fetchTokens(): Promise<Result<TokenDatabaseRecordType[]>>{
 			console.error("Failed to close DB: ", closeErr);
 		}
 	}
-};
+}

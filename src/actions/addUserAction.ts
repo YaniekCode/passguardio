@@ -17,46 +17,44 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-'use server';
+"use server";
 
-import crypto from 'node:crypto';
-import { revalidatePath } from 'next/cache';
+import crypto from "node:crypto";
+import { revalidatePath } from "next/cache";
 
-import { addToken } from '@/backend/db/addToken';
-import { validateAddUserInput } from '@/utils/validation/validateAddUserInput';
+import { addToken } from "@/backend/db/addToken";
+import { validateAddUserInput } from "@/utils/validation/validateAddUserInput";
 
 export type AddUserState =
-	| { success: true, token: string }
-	| { success: false,
-		formErrors?: Record<string, string[]>;
-		error?: string;
-	};
+	| { success: true; token: string }
+	| { success: false; formErrors?: Record<string, string[]>; error?: string };
 
 // Function which generates a 6 digit token
 function generateToken(): string {
 	return crypto.randomInt(100000, 999999).toString();
-};
+}
 
-
-export async function addUserAction(prevState: AddUserState, formData: FormData): Promise<AddUserState> {
+export async function addUserAction(
+	prevState: AddUserState,
+	formData: FormData,
+): Promise<AddUserState> {
 	const validatedFormData = validateAddUserInput(formData);
 
 	// Return the error if it occured during validation
 	if (!validatedFormData.success) {
 		return {
 			success: false,
-			formErrors: validatedFormData.errors
+			formErrors: validatedFormData.errors,
 		};
-	};
+	}
 
 	const { role } = validatedFormData.data;
 
 	const token = generateToken();
 	const tokenExpiryDate = new Date();
 	tokenExpiryDate.setDate(tokenExpiryDate.getDate() + 7);
-
 
 	// Add the token data to the DB
 	const tokenInputResult = await addToken(role, token, tokenExpiryDate.getTime());
@@ -75,5 +73,4 @@ export async function addUserAction(prevState: AddUserState, formData: FormData)
 		success: true,
 		token: token,
 	};
-
-};
+}

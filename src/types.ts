@@ -17,18 +17,18 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import type { JWTPayload } from 'jose';
+import type { JWTPayload } from "jose";
 
 export interface User {
 	username: string;
 	email: string;
 	password: string;
 	role: UserRoleType;
-};
+}
 
-export type UserView = Pick<User, 'username' | 'email' | 'role'>
+export type UserView = Pick<User, "username" | "email" | "role">;
 
 export type UserRoleType = "user" | "admin";
 
@@ -37,7 +37,7 @@ export interface EncryptionDataType {
 	wrappedDek: Buffer;
 	dekWrapIv: Buffer;
 	dekWrapTag: Buffer;
-};
+}
 
 export interface UserDatabaseRecordType {
 	id: number;
@@ -65,14 +65,13 @@ export interface PasswordDatabaseRecordType {
 	crackTime: string;
 	iv: Buffer;
 	tag: Buffer;
-};
+}
 
 export interface TokenDatabaseRecordType {
 	role: UserRoleType;
 	token: string;
 	expiresAt: number;
 }
-
 
 export interface PasswordInfo {
 	websiteName: string;
@@ -93,7 +92,7 @@ export interface PasswordData {
 	lastModified: number;
 	createdAt: number;
 	crackTime: string;
-};
+}
 
 export type PasswordCategoryType =
 	| "social"
@@ -103,34 +102,29 @@ export type PasswordCategoryType =
 	| "shopping"
 	| "other";
 
-export type PasswordStatsType = { 
-	totalPasswordCount: number,
-	strongPasswordCount: number,
-	weakPasswordCount: number,
-	recentlyAddedPasswordCount: number
+export type PasswordStatsType = {
+	totalPasswordCount: number;
+	strongPasswordCount: number;
+	weakPasswordCount: number;
+	recentlyAddedPasswordCount: number;
 };
 
-export type UsersStatsType = { 
-	totalUsersCount: number,
-	totalPasswordsCount: number,
-	strongPasswordsCount: number,
-	weakPasswordsCount: number
+export type UsersStatsType = {
+	totalUsersCount: number;
+	totalPasswordsCount: number;
+	strongPasswordsCount: number;
+	weakPasswordsCount: number;
 };
 
 export type FormState =
-	| { success: true, message: string }
-	| { success: false,
-		formErrors?: Record<string, string[]>;
-		error?: string;
-	};
+	| { success: true; message: string }
+	| { success: false; formErrors?: Record<string, string[]>; error?: string };
 
-export type Result<Type> =
-    | { success: true, data: Type }
-    | { success: false, error: string }
+export type Result<Type> = { success: true; data: Type } | { success: false; error: string };
 
 export type MessageResultType =
-	| { success: true, message: string }
-	| { success: false, error: string }
+	| { success: true; message: string }
+	| { success: false; error: string };
 
 export type SignupValidationResultType = Result<User>;
 
@@ -141,4 +135,4 @@ export interface SessionPayload extends JWTPayload {
 	username: string;
 	role: UserRoleType;
 	dek: string;
-};
+}

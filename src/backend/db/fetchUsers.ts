@@ -17,18 +17,16 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import type { Result, UserView } from '@/types';
-import { openDb } from '@/backend/db/openDb';
+import type { Result, UserView } from "@/types";
+import { openDb } from "@/backend/db/openDb";
 
-export async function fetchUsers(): Promise<Result<UserView[]>>{
+export async function fetchUsers(): Promise<Result<UserView[]>> {
 	const db = await openDb();
 
 	try {
-		const users  = (await db.all(
-            		`SELECT username, email, role FROM users`,
-        	)) as UserView[];
+		const users = (await db.all(`SELECT username, email, role FROM users`)) as UserView[];
 
 		return { success: true, data: users };
 	} catch (err: unknown) {
@@ -41,4 +39,4 @@ export async function fetchUsers(): Promise<Result<UserView[]>>{
 			console.error("Failed to close DB: ", closeErr);
 		}
 	}
-};
+}

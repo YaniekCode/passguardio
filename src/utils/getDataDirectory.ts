@@ -17,23 +17,23 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import path from 'node:path';
-import fs from 'node:fs';
+import path from "node:path";
+import fs from "node:fs";
 
 // Function outputs the DB dirname based on the running environment
 export function getDataDirectory(): string {
 	// If dirname is specified in .env
-	if (process.env['PASSGUARDIO_DB_PATH']) {
-		return path.dirname(process.env['PASSGUARDIO_DB_PATH']);
-	};
-	
+	if (process.env["PASSGUARDIO_DB_PATH"]) {
+		return path.dirname(process.env["PASSGUARDIO_DB_PATH"]);
+	}
+
 	// If running in a docker container the path is '/data'
 	if (fs.existsSync("/.dockerenv")) {
 		return "/data";
-	};
+	}
 
 	// If running in developer mode the path is './data'
 	return path.resolve("./data");
-};
+}

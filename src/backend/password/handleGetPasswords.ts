@@ -17,21 +17,24 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import type { Result, PasswordData } from '@/types';
+import type { Result, PasswordData } from "@/types";
 import { getSession } from "@/utils/session/sessionUtils";
 import { getPasswords } from "@/backend/db/getPasswords";
 import decryptUserPasswords from "@/utils/encryption/decryptUserPasswords";
 
-export async function handleGetPasswords(query: string, currentPage: number): Promise<Result<PasswordData[]>>{
+export async function handleGetPasswords(
+	query: string,
+	currentPage: number,
+): Promise<Result<PasswordData[]>> {
 	const session = await getSession();
 	if (!session) {
 		return {
 			success: false,
-			error: "User not authenticated"
+			error: "User not authenticated",
 		};
-	};
+	}
 
 	const { dek } = session;
 	// Fetch passwords from the DB
@@ -40,9 +43,9 @@ export async function handleGetPasswords(query: string, currentPage: number): Pr
 	if (!getPasswordResult.success) {
 		return {
 			success: false,
-			error: "An error occured when reading passwords"
-		}
-	};
+			error: "An error occured when reading passwords",
+		};
+	}
 
 	const passwordList = getPasswordResult.data;
 
@@ -50,4 +53,4 @@ export async function handleGetPasswords(query: string, currentPage: number): Pr
 	const userPasswords = await decryptUserPasswords(passwordList, dek);
 
 	return { success: true, data: userPasswords };
-};
+}

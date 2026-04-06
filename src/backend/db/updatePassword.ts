@@ -17,34 +17,39 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import type { PasswordDatabaseRecordType, MessageResultType } from '@/types';
-import { openDb } from '@/backend/db/openDb';
+import type { PasswordDatabaseRecordType, MessageResultType } from "@/types";
+import { openDb } from "@/backend/db/openDb";
 
-export async function updatePassword(passwordData: PasswordDatabaseRecordType): Promise<MessageResultType>{
+export async function updatePassword(
+	passwordData: PasswordDatabaseRecordType,
+): Promise<MessageResultType> {
 	const db = await openDb();
 
 	try {
 		// Update the record in the DB
 		await db.run(
-            `UPDATE passwords SET websiteName=?, websiteUrl=?, usernameOrEmail=?, password=?, category=?, strength=?, lastModified=?, crackTime=?, iv=?, tag=? WHERE uuid=?`,
+			`UPDATE passwords SET websiteName=?, websiteUrl=?, usernameOrEmail=?, password=?, category=?, strength=?, lastModified=?, crackTime=?, iv=?, tag=? WHERE uuid=?`,
 			passwordData.websiteName,
 			passwordData.websiteUrl,
 			passwordData.usernameOrEmail,
-		    passwordData.password,
+			passwordData.password,
 			passwordData.category,
 			passwordData.strength,
 			passwordData.lastModified,
 			passwordData.crackTime,
 			passwordData.iv,
 			passwordData.tag,
-			passwordData.uuid
-        	);
+			passwordData.uuid,
+		);
 		return { success: true, message: "Password updated successfully" };
 	} catch (err: unknown) {
 		console.log(err);
-		return { success: false, error: "An error occurred when updating a password" };
+		return {
+			success: false,
+			error: "An error occurred when updating a password",
+		};
 	} finally {
 		try {
 			await db.close();

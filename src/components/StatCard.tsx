@@ -17,30 +17,20 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import {
-	Key,
-	Shield,
-	AlertTriangle,
-	TrendingUp,
-	User
-} from 'lucide-react';
+import { Key, Shield, AlertTriangle, TrendingUp, User } from "lucide-react";
 
-import {
-	Card,
-	CardHeader,
-	CardContent
-} from '@/components/ui/card';
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
 
 export default function StatCard({
 	title,
 	counter,
-	icon
-} : {
-	title: string,
-	counter: number,
-	icon: "key" | "shield" | "danger" | "trend" | "user" | "purpleKey"
+	icon,
+}: {
+	title: string;
+	counter: number;
+	icon: "key" | "shield" | "danger" | "trend" | "user" | "purpleKey";
 }) {
 	const ICON_CONFIG = {
 		key: {
@@ -72,21 +62,20 @@ export default function StatCard({
 			icon: Key,
 			bg: "bg-[#484361]",
 			color: "#8e51ff",
-		}
-
+		},
 	} as const;
 	const config = ICON_CONFIG[icon];
 	const Icon = config.icon;
 
 	return (
-			<Card className="border-[1.5] border-solid shadow-none min-w-[250px]">
-				<CardHeader className="text-muted-foreground">{ title }</CardHeader>	
-				<CardContent className="flex items-center justify-between">
-					<span className="text-4xl font-semibold">{ counter }</span>
-					<div className={`flex items-center justify-center size-12 rounded-lg ${config.bg}`}>
-						<Icon color={config.color} size={28}/>
-					</div>
-				</CardContent>
-			</Card>
+		<Card className="border-[1.5] border-solid shadow-none min-w-[250px]">
+			<CardHeader className="text-muted-foreground">{title}</CardHeader>
+			<CardContent className="flex items-center justify-between">
+				<span className="text-4xl font-semibold">{counter}</span>
+				<div className={`flex items-center justify-center size-12 rounded-lg ${config.bg}`}>
+					<Icon color={config.color} size={28} />
+				</div>
+			</CardContent>
+		</Card>
 	);
-};
+}

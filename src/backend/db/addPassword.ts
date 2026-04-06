@@ -17,17 +17,19 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import { openDb } from '@/backend/db/openDb';
-import type { PasswordDatabaseRecordType, MessageResultType } from '@/types';
+import { openDb } from "@/backend/db/openDb";
+import type { PasswordDatabaseRecordType, MessageResultType } from "@/types";
 
-export default async function addPassword(passwordDatabaseInputRecord: PasswordDatabaseRecordType): Promise<MessageResultType> {
+export default async function addPassword(
+	passwordDatabaseInputRecord: PasswordDatabaseRecordType,
+): Promise<MessageResultType> {
 	const db = await openDb();
 
 	try {
 		await db.run(
-            		`INSERT INTO passwords (userId, uuid, websiteName, websiteUrl, usernameOrEmail, password, category, strength, lastModified, createdAt, crackTime, iv, tag)
+			`INSERT INTO passwords (userId, uuid, websiteName, websiteUrl, usernameOrEmail, password, category, strength, lastModified, createdAt, crackTime, iv, tag)
              		VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
 			passwordDatabaseInputRecord.userId,
 			passwordDatabaseInputRecord.uuid,
@@ -42,13 +44,15 @@ export default async function addPassword(passwordDatabaseInputRecord: PasswordD
 			passwordDatabaseInputRecord.crackTime,
 			passwordDatabaseInputRecord.iv,
 			passwordDatabaseInputRecord.tag,
-        	);
+		);
 
 		return { success: true, message: "Password added successfully" };
-
 	} catch (err: unknown) {
 		console.log(err);
-		return { success: false, error: "An error occurred when adding a password" };
+		return {
+			success: false,
+			error: "An error occurred when adding a password",
+		};
 	} finally {
 		try {
 			await db.close();

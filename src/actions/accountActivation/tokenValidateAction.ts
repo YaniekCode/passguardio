@@ -17,32 +17,31 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-'use server';
+"use server";
 
-import type { ActivateTokenState } from '@/types/activate';
-import { isTokenExpiredOrMissing } from '@/utils/isTokenExpiredOrMissing';
+import type { ActivateTokenState } from "@/types/activate";
+import { isTokenExpiredOrMissing } from "@/utils/isTokenExpiredOrMissing";
 
 export async function tokenValidateAction(
-    prevState: ActivateTokenState,
-    formData: FormData
+	prevState: ActivateTokenState,
+	formData: FormData,
 ): Promise<ActivateTokenState> {
-    const token = formData.get("token")?.toString() || "";
+	const token = formData.get("token")?.toString() || "";
 
+	const tokenRegex = /^[0-9]{6}$/;
+	// Test if a the token has a valid syntax(6 digits)
+	if (!tokenRegex.test(token)) {
+		return {
+			success: false,
+			notFound: false,
+			formError: "Not an activation token",
+		};
+	}
 
-    const tokenRegex = /^[0-9]{6}$/;
-    // Test if a the token has a valid syntax(6 digits)
-    if (!tokenRegex.test(token)) {
-        return {
-            success: false,
-            notFound: false,
-            formError: "Not an activation token"
-        };
-    }
+	// Check if the token has expired, is missing or is valid
+	const tokenExpiredOrMissingResult = await isTokenExpiredOrMissing(token);
 
-    // Check if the token has expired, is missing or is valid
-    const tokenExpiredOrMissingResult = await isTokenExpiredOrMissing(token);
-
-    return tokenExpiredOrMissingResult;
+	return tokenExpiredOrMissingResult;
 }

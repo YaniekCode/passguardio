@@ -17,23 +17,22 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-'use server';
+"use server";
 
-import { getSession } from '@/utils/session/sessionUtils';
+import { getSession } from "@/utils/session/sessionUtils";
 
-import { type MessageResultType } from '@/types';
-import deletePassword from '@/backend/db/deletePassword';
+import { type MessageResultType } from "@/types";
+import deletePassword from "@/backend/db/deletePassword";
 
 export async function deletePasswordAction(
 	passwordUUID: string,
-	prevState: MessageResultType,
+	_prevState: MessageResultType,
 ): Promise<MessageResultType> {
-
 	const session = await getSession();
 	if (!session) {
-		return { success: false, error: "User not authenticated"};
+		return { success: false, error: "User not authenticated" };
 	}
 
 	const { id } = session;
@@ -44,4 +43,4 @@ export async function deletePasswordAction(
 	}
 
 	return deletePasswordResult;
-};
+}

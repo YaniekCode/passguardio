@@ -17,11 +17,11 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import type { UserDatabaseRecordType } from '@/types';
-import type { CreateUserResult } from '@/types/signup';
-import { openDb } from '@/backend/db/openDb';
+import type { UserDatabaseRecordType } from "@/types";
+import type { CreateUserResult } from "@/types/signup";
+import { openDb } from "@/backend/db/openDb";
 
 type Props = Omit<UserDatabaseRecordType, "id">;
 
@@ -30,7 +30,7 @@ export async function createUser(userData: Props): Promise<CreateUserResult> {
 
 	try {
 		await db.run(
-      			"INSERT INTO users (username, email, passwordHash, role, encryptionSalt, wrappedDek, dekWrapIv, dekWrapTag) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+			"INSERT INTO users (username, email, passwordHash, role, encryptionSalt, wrappedDek, dekWrapIv, dekWrapTag) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
 			userData.username,
 			userData.email,
 			userData.passwordHash,
@@ -38,15 +38,23 @@ export async function createUser(userData: Props): Promise<CreateUserResult> {
 			userData.encryptionSalt,
 			userData.wrappedDek,
 			userData.dekWrapIv,
-			userData.dekWrapTag
+			userData.dekWrapTag,
 		);
 		return { success: true, message: "User created successfully" };
 	} catch (err: unknown) {
 		console.log(err);
 		if (err instanceof Error && err.message.toUpperCase().includes("UNIQUE")) {
-			return { success: false, uniqueError: true, error: "This user already exists" };
+			return {
+				success: false,
+				uniqueError: true,
+				error: "This user already exists",
+			};
 		}
-		return { success: false, uniqueError: false, error: "An error occurred when creating a user" };
+		return {
+			success: false,
+			uniqueError: false,
+			error: "An error occurred when creating a user",
+		};
 	} finally {
 		try {
 			await db.close();
@@ -55,4 +63,3 @@ export async function createUser(userData: Props): Promise<CreateUserResult> {
 		}
 	}
 }
-

@@ -17,14 +17,14 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import type { PasswordDatabaseRecordType, PasswordData } from '@/types';
-import { decryptPassword } from '@/utils/encryption/decryptPassword'; 
+import type { PasswordDatabaseRecordType, PasswordData } from "@/types";
+import { decryptPassword } from "@/utils/encryption/decryptPassword";
 
 export default async function decryptUserPasswords(
 	passwords: PasswordDatabaseRecordType[],
-	dek: string
+	dek: string,
 ): Promise<PasswordData[]> {
 	const formattedDek = Buffer.from(dek, "hex");
 
@@ -36,8 +36,8 @@ export default async function decryptUserPasswords(
 			encryptedPassword: userPasswordData.password,
 			dek: formattedDek,
 			iv: userPasswordData.iv,
-			tag: userPasswordData.tag
-		});    
+			tag: userPasswordData.tag,
+		});
 
 		const passwordObject = {
 			uuid: userPasswordData.uuid,
@@ -50,9 +50,9 @@ export default async function decryptUserPasswords(
 			lastModified: userPasswordData.lastModified,
 			createdAt: userPasswordData.createdAt,
 			crackTime: userPasswordData.crackTime,
-		}
+		};
 		userPasswords.push(passwordObject);
 	});
-	
+
 	return userPasswords;
 }

@@ -17,40 +17,42 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import 'server-only';
-import { cookies } from 'next/headers';
-import { SignJWT, jwtVerify } from 'jose';
+import "server-only";
+import { cookies } from "next/headers";
+import { SignJWT, jwtVerify } from "jose";
 
-import type { SessionPayload } from '@/types';
-import { getSessionKey } from '@/utils/session/getSessionKey';
+import type { SessionPayload } from "@/types";
+import { getSessionKey } from "@/utils/session/getSessionKey";
 
 const secretKey = getSessionKey();
 if (!secretKey) {
-	throw new Error('Session key does not exist');
-};
+	throw new Error("Session key does not exist");
+}
 
 // Function encrypts the session payload
 export async function encryptSession(payload: SessionPayload) {
 	return new SignJWT(payload)
-		.setProtectedHeader({ alg: 'HS256' })
+		.setProtectedHeader({ alg: "HS256" })
 		.setIssuedAt()
-		.setExpirationTime('7d')
-		.sign(secretKey)
-};
+		.setExpirationTime("7d")
+		.sign(secretKey);
+}
 
 // Function decrypts the session payload
-export async function decryptSession(session: string | undefined = ''): Promise<SessionPayload | undefined >{
+export async function decryptSession(
+	session: string | undefined = "",
+): Promise<SessionPayload | undefined> {
 	try {
 		const { payload } = await jwtVerify<SessionPayload>(session, secretKey, {
-			algorithms: ['HS256'],
+			algorithms: ["HS256"],
 		});
 		return payload;
 	} catch (error) {
 		console.log(`Failed to verify session. Error: ${error}`);
-	};
-};
+	}
+}
 
 // Function creates the session which expires after 7 days
 export async function createSession(payload: SessionPayload) {
@@ -58,18 +60,18 @@ export async function createSession(payload: SessionPayload) {
 	const session = await encryptSession({ ...payload, expiresAt });
 	const cookieStore = await cookies();
 
-	cookieStore.set('session', session, {
+	cookieStore.set("session", session, {
 		httpOnly: true,
 		secure: true,
 		expires: expiresAt,
-		sameSite: 'lax',
-		path: '/',
+		sameSite: "lax",
+		path: "/",
 	});
-};
+}
 
 // Function reads the session, decrypts it and returns
 export async function getSession() {
-	const session = (await cookies()).get('session')?.value;
+	const session = (await cookies()).get("session")?.value;
 	if (!session) return null;
 	return await decryptSession(session);
-};
+}

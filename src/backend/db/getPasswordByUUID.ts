@@ -17,30 +17,31 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import type { PasswordDatabaseRecordType, PasswordByUUIDResultType } from '@/types';
-import { openDb } from '@/backend/db/openDb';
-import decryptUserPasswords from '@/utils/encryption/decryptUserPasswords';
-import { getSession } from '@/utils/session/sessionUtils';
+import type { PasswordDatabaseRecordType, PasswordByUUIDResultType } from "@/types";
+import { openDb } from "@/backend/db/openDb";
+import decryptUserPasswords from "@/utils/encryption/decryptUserPasswords";
+import { getSession } from "@/utils/session/sessionUtils";
 
-export default async function getPasswordByUUID(uuid: string): Promise<PasswordByUUIDResultType | undefined>  {
+export default async function getPasswordByUUID(
+	uuid: string,
+): Promise<PasswordByUUIDResultType | undefined> {
 	const session = await getSession();
 	if (!session) {
 		return;
-	};
+	}
 
 	const db = await openDb();
 
 	try {
-		const passwordEntry = (await db.get(
-			`SELECT * FROM passwords WHERE uuid = ?`,
-			uuid
-		)) as PasswordDatabaseRecordType | undefined;
+		const passwordEntry = (await db.get(`SELECT * FROM passwords WHERE uuid = ?`, uuid)) as
+			| PasswordDatabaseRecordType
+			| undefined;
 
 		if (!passwordEntry) {
 			return { success: false, error: "Password not found" };
-		};
+		}
 
 		const { dek } = session;
 
@@ -57,4 +58,4 @@ export default async function getPasswordByUUID(uuid: string): Promise<PasswordB
 			console.error("Failed to close DB: ", closeErr);
 		}
 	}
-};
+}

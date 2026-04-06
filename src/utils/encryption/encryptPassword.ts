@@ -17,9 +17,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import crypto from 'node:crypto';
+import crypto from "node:crypto";
 
 export function encryptPassword(password: string, dek: Buffer) {
 	const iv = crypto.randomBytes(12);

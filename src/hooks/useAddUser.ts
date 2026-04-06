@@ -17,23 +17,23 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-'use client';
+"use client";
 
-import { useState, useActionState } from 'react';
+import { useState, useActionState } from "react";
 
-import type { AddUserState } from '@/actions/addUserAction';
-import { addUserAction } from '@/actions/addUserAction';
+import type { AddUserState } from "@/actions/addUserAction";
+import { addUserAction } from "@/actions/addUserAction";
 
 const initialState: AddUserState = {
 	success: false,
-	error: ""
+	error: "",
 };
 
 export function useAddUser() {
 	const [state, formAction, pending] = useActionState(addUserAction, initialState);
 	const [isDialogOpen, setIsDialogOpen] = useState<boolean>(false);
 
-    return { state, isDialogOpen, setIsDialogOpen, formAction, pending };
+	return { state, isDialogOpen, setIsDialogOpen, formAction, pending };
 }

@@ -17,14 +17,14 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
 
-import { getSession } from '@/utils/session/sessionUtils';
-import { isFirstUser } from '@/backend/db/isFirstUser';
- 
+import { getSession } from "@/utils/session/sessionUtils";
+import { isFirstUser } from "@/backend/db/isFirstUser";
+
 export async function proxy(request: NextRequest) {
 	const { pathname } = request.nextUrl;
 
@@ -34,33 +34,31 @@ export async function proxy(request: NextRequest) {
 	if (isFirst.success && isFirst.data) {
 		if (pathname !== "/") {
 			return NextResponse.redirect(new URL("/", request.url));
-		};
+		}
 		return NextResponse.next();
 	} else {
 		if (pathname === "/") {
 			return NextResponse.redirect(new URL("/login", request.url));
-		};
-	};
+		}
+	}
 
 	// Check if the session exists
 	if (pathname.startsWith("/dashboard")) {
 		const session = await getSession();
 
 		if (!session || !session.username) {
- 			return NextResponse.redirect(new URL('/login', request.url));
-		};
+			return NextResponse.redirect(new URL("/login", request.url));
+		}
 
 		// If the user in not admin and tries to access the users page they get redirected back to dashboard
 		if (session.role !== "admin" && pathname === "/dashboard/users") {
-			return NextResponse.redirect(new URL('/dashboard', request.url));
+			return NextResponse.redirect(new URL("/dashboard", request.url));
 		}
-	};
+	}
 
 	return NextResponse.next();
 }
- 
+
 export const config = {
-	matcher: [
-		"/((?!_next/static|_next/image|favicon.ico|api).*)",
-	],
+	matcher: ["/((?!_next/static|_next/image|favicon.ico|api).*)"],
 };

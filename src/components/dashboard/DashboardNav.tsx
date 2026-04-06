@@ -17,31 +17,31 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import { Shield, Home, Users2 } from 'lucide-react';
+import { Shield, Home, Users2 } from "lucide-react";
 
-import { getSession } from '@/utils/session/sessionUtils';
-import DashboardNavItem from '@/components/dashboard/DashboardNavItem';
+import { getSession } from "@/utils/session/sessionUtils";
+import DashboardNavItem from "@/components/dashboard/DashboardNavItem";
 
 export default async function DashboardNav() {
-    const session = await getSession();
+	const session = await getSession();
 
-    return (
-        <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-card sm:flex" >
-            <nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
-                <Shield strokeWidth={4}/>
-                <DashboardNavItem href="/dashboard" label="Dashboard">
-                    <Home className="h-5 w-5" /> 
-                </DashboardNavItem>
+	return (
+		<aside className="fixed inset-y-0 left-0 z-10 hidden w-14 flex-col border-r bg-card sm:flex">
+			<nav className="flex flex-col items-center gap-4 px-2 sm:py-5">
+				<Shield strokeWidth={4} />
+				<DashboardNavItem href="/dashboard" label="Dashboard">
+					<Home className="h-5 w-5" />
+				</DashboardNavItem>
 
-                { /* Show the "Users" link only for admin users */ }
-                { session?.role === "admin" && (
-                    <DashboardNavItem href="/dashboard/users" label="Users">
-                        <Users2 className="h-5 w-5" /> 
-                    </DashboardNavItem>
-                )}
-            </nav>
-       </aside>
-    )
+				{/* Show the "Users" link only for admin users */}
+				{session?.role === "admin" && (
+					<DashboardNavItem href="/dashboard/users" label="Users">
+						<Users2 className="h-5 w-5" />
+					</DashboardNavItem>
+				)}
+			</nav>
+		</aside>
+	);
 }

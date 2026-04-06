@@ -17,29 +17,28 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import type { MessageResultType } from '@/types';
-import { openDb } from '@/backend/db/openDb';
+import type { MessageResultType } from "@/types";
+import { openDb } from "@/backend/db/openDb";
 
 export async function addToken(
 	role: "user" | "admin",
 	token: string,
-	expiresAt: number
+	expiresAt: number,
 ): Promise<MessageResultType> {
 	const db = await openDb();
 
 	try {
 		await db.run(
-            		`INSERT INTO tokens (role, token, expiresAt)
+			`INSERT INTO tokens (role, token, expiresAt)
              		VALUES (?, ?, ?)`,
 			role,
 			token,
-			expiresAt
-        	);
+			expiresAt,
+		);
 
 		return { success: true, message: "Token added successfully" };
-
 	} catch (err: unknown) {
 		console.log(err);
 		return { success: false, error: "An error occurred when adding the token" };

@@ -17,26 +17,24 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import { Shield } from 'lucide-react';
-import Link from 'next/link';
+import { Shield } from "lucide-react";
+import Link from "next/link";
 
-import {
-	Card,
-	CardContent
-} from '@/components/ui/card';
-import ActivationTokenInputForm from '@/components/accountActivation/ActivationTokenInputForm';
+import { Card, CardContent } from "@/components/ui/card";
+import ActivationTokenInputForm from "@/components/accountActivation/ActivationTokenInputForm";
 
 export default function Page() {
-
 	return (
 		<main className="flex min-h-screen flex-col items-center justify-center">
 			<div className="flex flex-col items-center">
 				<header className="flex flex-col items-center text-center my-8">
-					<Shield size={30}/>
+					<Shield size={30} />
 					<h1 className="text-3xl font-semibold">Activate Your Account</h1>
-					<p className="text-muted-foreground text-center">Activate your account using the activation token</p>
+					<p className="text-muted-foreground text-center">
+						Activate your account using the activation token
+					</p>
 				</header>
 			</div>
 			<Card>
@@ -50,4 +48,4 @@ export default function Page() {
 			</p>
 		</main>
 	);
-};
+}

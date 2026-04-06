@@ -17,33 +17,38 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import StatCard from '@/components/StatCard';
-import RetryButton from '@/components/RetryButton';
-import { handleFetchPasswordStats } from '@/backend/password/handleFetchPasswordStats';
+import StatCard from "@/components/StatCard";
+import RetryButton from "@/components/RetryButton";
+import { handleFetchPasswordStats } from "@/backend/password/handleFetchPasswordStats";
 
 export default async function DashboardPasswordStats() {
-    const fetchPasswordStatsResult = await handleFetchPasswordStats();
+	const fetchPasswordStatsResult = await handleFetchPasswordStats();
 
 	// Display an appropriate message if an error occured when fetching password statistics
 	if (!fetchPasswordStatsResult?.success) {
 		return (
 			<div className="flex items-center gap-3">
 				<p className="text-lg">Password statistics could not be loaded</p>
-				<RetryButton message="Try Again"/>
+				<RetryButton message="Try Again" />
 			</div>
 		);
 	}
 
-	const { totalPasswordCount, strongPasswordCount, weakPasswordCount, recentlyAddedPasswordCount } = fetchPasswordStatsResult.data;
+	const {
+		totalPasswordCount,
+		strongPasswordCount,
+		weakPasswordCount,
+		recentlyAddedPasswordCount,
+	} = fetchPasswordStatsResult.data;
 
-    return (
-        <section className="my-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-			<StatCard title="Total Password" counter={totalPasswordCount} icon="key"/>
-			<StatCard title="Strong Passwords" counter={strongPasswordCount} icon="shield"/>
-			<StatCard title="Weak Passwords" counter={weakPasswordCount} icon="danger"/>
-			<StatCard title="Recently Added" counter={recentlyAddedPasswordCount} icon="trend"/>
+	return (
+		<section className="my-5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+			<StatCard title="Total Password" counter={totalPasswordCount} icon="key" />
+			<StatCard title="Strong Passwords" counter={strongPasswordCount} icon="shield" />
+			<StatCard title="Weak Passwords" counter={weakPasswordCount} icon="danger" />
+			<StatCard title="Recently Added" counter={recentlyAddedPasswordCount} icon="trend" />
 		</section>
-    )
+	);
 }

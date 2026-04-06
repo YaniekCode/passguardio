@@ -17,15 +17,15 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-'use client';
+"use client";
 
-import { useSearchParams, usePathname, useRouter } from 'next/navigation';
-import { useDebouncedCallback } from 'use-debounce';
-import { Search } from 'lucide-react';
+import { useSearchParams, usePathname, useRouter } from "next/navigation";
+import { useDebouncedCallback } from "use-debounce";
+import { Search } from "lucide-react";
 
-import { InputGroup, InputGroupAddon, InputGroupInput } from '@/components/ui/input-group';
+import { InputGroup, InputGroupAddon, InputGroupInput } from "@/components/ui/input-group";
 
 export default function PasswordSearch({ placeholder }: { placeholder: string }) {
 	const searchParams = useSearchParams();
@@ -35,11 +35,11 @@ export default function PasswordSearch({ placeholder }: { placeholder: string })
 	// Add a debounce of 300ms to our search
 	const handleSearch = useDebouncedCallback((term: string) => {
 		const params = new URLSearchParams(searchParams);
-		params.set('page', '1');
+		params.set("page", "1");
 		if (term) {
-			params.set('query', term);
+			params.set("query", term);
 		} else {
-			params.delete('query');
+			params.delete("query");
 		}
 		replace(`${pathname}?${params.toString()}`);
 	}, 300);
@@ -50,13 +50,13 @@ export default function PasswordSearch({ placeholder }: { placeholder: string })
 				className="placeholder:text-muted-foreground"
 				placeholder={placeholder}
 				onChange={(e) => {
-					handleSearch(e.target.value);	
+					handleSearch(e.target.value);
 				}}
-				defaultValue={searchParams.get('query')?.toString()}
-				/>
+				defaultValue={searchParams.get("query")?.toString()}
+			/>
 			<InputGroupAddon>
-				<Search className="text-neutral-700"/>	
+				<Search className="text-neutral-700" />
 			</InputGroupAddon>
 		</InputGroup>
-	)
-};
+	);
+}

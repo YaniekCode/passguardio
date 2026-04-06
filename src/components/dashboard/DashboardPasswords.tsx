@@ -17,22 +17,24 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import { Suspense } from 'react';
-import Skeleton from 'react-loading-skeleton';
+import { Suspense } from "react";
+import Skeleton from "react-loading-skeleton";
 
-import {
-	Card,
-	CardHeader,
-	CardContent }
-from '@/components/ui/card';
+import { Card, CardHeader, CardContent } from "@/components/ui/card";
 
-import PasswordsTable from '@/components/PasswordsTable';
+import PasswordsTable from "@/components/PasswordsTable";
 
-export default function DashboardPasswords({ query, currentPage }: { query: string, currentPage: number }) {
-    return (
-        <section className="my-5">
+export default function DashboardPasswords({
+	query,
+	currentPage,
+}: {
+	query: string;
+	currentPage: number;
+}) {
+	return (
+		<section className="my-5">
 			<Card className="border-[1.5] border-solid shadow-none">
 				<CardHeader className="text-xl font-[500]">All Passwords</CardHeader>
 				<CardContent>
@@ -42,5 +44,5 @@ export default function DashboardPasswords({ query, currentPage }: { query: stri
 				</CardContent>
 			</Card>
 		</section>
-    )
+	);
 }

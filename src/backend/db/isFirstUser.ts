@@ -17,19 +17,18 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import { openDb } from '@/backend/db/openDb';
-import type { Result } from '@/types';
+import { openDb } from "@/backend/db/openDb";
+import type { Result } from "@/types";
 
 export async function isFirstUser(): Promise<Result<boolean>> {
 	const db = await openDb();
 
 	try {
-
 		// Check if the table 'users' exists
-		const table = await db.get<{ name: string }> (
-			`SELECT name from sqlite_master WHERE type='table' AND name='users'`	
+		const table = await db.get<{ name: string }>(
+			`SELECT name from sqlite_master WHERE type='table' AND name='users'`,
 		);
 
 		if (!table) {
@@ -37,21 +36,21 @@ export async function isFirstUser(): Promise<Result<boolean>> {
 		}
 
 		// Count the number of users
-		const row = await db.get<{ count: number }>(
-			`SELECT COUNT(*) as count FROM users`
-		);
+		const row = await db.get<{ count: number }>(`SELECT COUNT(*) as count FROM users`);
 		const count = row?.count ?? 0;
 
 		return { success: true, data: count === 0 };
 	} catch (err: unknown) {
 		console.log("An error occured when counting number of records in DB: ", err);
-		return { success: false, error: "An error occured when counting the number of records in DB" };
+		return {
+			success: false,
+			error: "An error occured when counting the number of records in DB",
+		};
 	} finally {
 		try {
 			await db.close();
 		} catch (closeErr) {
 			console.error("Failed to close DB: ", closeErr);
 		}
-	};
-
-};
+	}
+}

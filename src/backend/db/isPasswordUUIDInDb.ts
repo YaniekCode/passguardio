@@ -17,38 +17,44 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import { openDb } from '@/backend/db/openDb';
+import { openDb } from "@/backend/db/openDb";
 
-type IsPasswordInDBResult = 
-	{ success: true, message: string, found: boolean }
-	| { success: false, error: string }
+type IsPasswordInDBResult =
+	| { success: true; message: string; found: boolean }
+	| { success: false; error: string };
 
-export default async function isPasswordUUIDInDb(userId: number, uuid: string): Promise<IsPasswordInDBResult> {
+export default async function isPasswordUUIDInDb(
+	userId: number,
+	uuid: string,
+): Promise<IsPasswordInDBResult> {
 	const db = await openDb();
 
 	try {
 		const passwordEntry = (await db.get(
 			`SELECT uuid FROM passwords WHERE uuid=? AND userId=?`,
 			uuid,
-			userId
+			userId,
 		)) as { uuid: string } | undefined;
 
 		// Return `success: true`, but `data` indicates whether the password was found
 		return {
 			success: true,
 			message: passwordEntry?.uuid ? "Password found in DB" : "Password not found in DB",
-			found: Boolean(passwordEntry?.uuid)
-		}
+			found: Boolean(passwordEntry?.uuid),
+		};
 	} catch (err: unknown) {
 		console.log(err);
-		return { success: false, error: "An error occured when validating the password" };
+		return {
+			success: false,
+			error: "An error occured when validating the password",
+		};
 	} finally {
 		try {
 			await db.close();
 		} catch (closeErr) {
 			console.error("Failed to close DB: ", closeErr);
-		};
-	};
-};
+		}
+	}
+}

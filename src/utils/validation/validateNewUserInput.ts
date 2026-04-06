@@ -17,10 +17,10 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import type { ActivateUserFieldErrors, ActivateUserValidationResult } from '@/types/activate';
-import { NewUserSchema } from '@/utils/validation/userSchemas';
+import type { ActivateUserFieldErrors, ActivateUserValidationResult } from "@/types/activate";
+import { NewUserSchema } from "@/utils/validation/userSchemas";
 
 export function validateNewUserInput(formData: FormData): ActivateUserValidationResult {
 	const validatedFormData = NewUserSchema.safeParse({
@@ -32,7 +32,7 @@ export function validateNewUserInput(formData: FormData): ActivateUserValidation
 	if (validatedFormData.success) {
 		return {
 			success: true,
-			data: validatedFormData.data
+			data: validatedFormData.data,
 		};
 	}
 
@@ -42,7 +42,7 @@ export function validateNewUserInput(formData: FormData): ActivateUserValidation
 		username: flattened.fieldErrors.username?.[0],
 		email: flattened.fieldErrors.email?.[0],
 		password: flattened.fieldErrors.password?.[0],
-	}
+	};
 
 	return {
 		success: false,

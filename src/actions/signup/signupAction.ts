@@ -17,35 +17,35 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-'use server';
+"use server";
 
-import { redirect } from 'next/navigation';
+import { redirect } from "next/navigation";
 
-import { User, FormState } from '@/types';
-import { validateSignupInput } from '@/utils/validation/signupValidation/validateSignupInput';
-import { handleSignup } from '@/backend/signup/handleSignup';
+import type { User, FormState } from "@/types";
+import { validateSignupInput } from "@/utils/validation/signupValidation/validateSignupInput";
+import { handleSignup } from "@/backend/signup/handleSignup";
 
 export async function signupAction(prevState: FormState, formData: FormData): Promise<FormState> {
 	const rawFormData: User = {
-		username: formData.get('username')?.toString() || "",
-		email: formData.get('email')?.toString() || "",
-		password: formData.get('password')?.toString() || "",
+		username: formData.get("username")?.toString() || "",
+		email: formData.get("email")?.toString() || "",
+		password: formData.get("password")?.toString() || "",
 		role: "admin", // when a user signs up they automatically become an admin
 	};
 
 	const validationResult = validateSignupInput(rawFormData);
 	if (!validationResult.success) {
 		return validationResult;
-	};
+	}
 
 	const userData = validationResult.data;
 	const signupResult = await handleSignup(userData);
-	
+
 	if (!signupResult.success) {
 		return signupResult;
 	}
-	
+
 	redirect("/login");
-};
+}

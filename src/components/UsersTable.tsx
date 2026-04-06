@@ -17,7 +17,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
 import {
 	Table,
@@ -26,21 +26,21 @@ import {
 	TableCell,
 	TableHead,
 	TableHeader,
-	TableRow
-} from '@/components/ui/table';
+	TableRow,
+} from "@/components/ui/table";
 
-import UserRoleBadge from '@/components/UserRoleBadge';
+import UserRoleBadge from "@/components/UserRoleBadge";
 
-import type { UserView } from '@/types';
+import type { UserView } from "@/types";
 
 type Props = {
-    users: UserView[];
-}
+	users: UserView[];
+};
 
 export default function UsersTable({ users }: Props) {
-    return (
+	return (
 		<section className="overflow-hidden rounded-md border">
-        	<Table>
+			<Table>
 				<TableCaption>A list of users</TableCaption>
 				<TableHeader>
 					<TableRow>
@@ -56,13 +56,13 @@ export default function UsersTable({ users }: Props) {
 								<TableCell className="font-medium">{user.username}</TableCell>
 								<TableCell>{user.email}</TableCell>
 								<TableCell>
-									<UserRoleBadge role={user.role}/>
+									<UserRoleBadge role={user.role} />
 								</TableCell>
 							</TableRow>
-						)
+						);
 					})}
 				</TableBody>
 			</Table>
 		</section>
-    )
+	);
 }

@@ -17,14 +17,12 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-export default function FormMessageBox({ message } : { message: string }) {
+export default function FormMessageBox({ message }: { message: string }) {
 	return (
 		<div aria-live="polite" aria-atomic="true">
-			<p className="text-sm text-red-500">
-    			{message}
-  			</p>
+			<p className="text-sm text-red-500">{message}</p>
 		</div>
 	);
-};
+}

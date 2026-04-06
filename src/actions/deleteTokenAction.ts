@@ -17,16 +17,16 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-'use server';
+"use server";
 
-import { type MessageResultType } from '@/types';
-import { deleteToken } from '@/backend/db/deleteToken';
+import { type MessageResultType } from "@/types";
+import { deleteToken } from "@/backend/db/deleteToken";
 
 export async function deleteTokenAction(
 	token: string,
-	prevState: MessageResultType,
+	_prevState: MessageResultType,
 ): Promise<MessageResultType> {
 	const deletePasswordResult = await deleteToken(token);
 
@@ -35,4 +35,4 @@ export async function deleteTokenAction(
 	}
 
 	return deletePasswordResult;
-};
+}

@@ -17,12 +17,11 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import bcrypt from 'bcryptjs'; 
-
+import bcrypt from "bcryptjs";
 
 // Function compares a plain-text password with a hashed password using bcrypt
 export function compareHash(password: string, hash: string): boolean {
 	return bcrypt.compareSync(password, hash);
-};	
+}

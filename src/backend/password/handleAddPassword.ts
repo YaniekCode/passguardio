@@ -17,28 +17,27 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import crypto from 'node:crypto';
+import crypto from "node:crypto";
 
-import type { PasswordInfo, PasswordDatabaseRecordType, MessageResultType } from '@/types';
-import { encryptPassword } from '@/utils/encryption/encryptPassword';
-import { getPasswordStrengthAndCrackTime } from '@/utils/getPasswordStrengthAndCrackTime';
-import { getSession } from '@/utils/session/sessionUtils';
-import addPassword from '@/backend/db/addPassword';
+import type { PasswordInfo, PasswordDatabaseRecordType, MessageResultType } from "@/types";
+import { encryptPassword } from "@/utils/encryption/encryptPassword";
+import { getPasswordStrengthAndCrackTime } from "@/utils/getPasswordStrengthAndCrackTime";
+import { getSession } from "@/utils/session/sessionUtils";
+import addPassword from "@/backend/db/addPassword";
 
 export async function handleAddPassword(passwordData: PasswordInfo): Promise<MessageResultType> {
 	const session = await getSession();
 	if (!session) {
-		return { success: false, error: "User not authenticated"};
-	};
+		return { success: false, error: "User not authenticated" };
+	}
 
 	// Encrypt the password and generate a random UUID
 	const dek = Buffer.from(session.dek, "hex");
 	const { encryptedPassword, iv, tag } = encryptPassword(passwordData.password, dek);
 
 	const passwordUUID = crypto.randomUUID();
-
 
 	// Get password strength and crack time
 	const { strength, crackTime } = getPasswordStrengthAndCrackTime(passwordData.password);
@@ -64,4 +63,4 @@ export async function handleAddPassword(passwordData: PasswordInfo): Promise<Mes
 	const passwordInputResult = await addPassword(passwordDatabaseInputRecord);
 
 	return passwordInputResult;
-};
+}

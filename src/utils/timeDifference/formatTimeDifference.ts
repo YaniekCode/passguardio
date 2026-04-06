@@ -17,13 +17,12 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
 // Function returns strings in a grammatically correct form, so "1 hour ago" instead of "1 hours ago" etc.
 function pluralize(value: number, singular: string, plural: string): string {
-  return value === 1 ? singular : plural;
+	return value === 1 ? singular : plural;
 }
-
 
 // Function returns a user friendly time difference from two times(in ms)
 export function formatTimeDifference(startTime: number, endTime: number): string {
@@ -37,28 +36,28 @@ export function formatTimeDifference(startTime: number, endTime: number): string
 
 	if (timeDiff < msPerMinute) {
 		return "less than a minute ago";
-	};
+	}
 
 	if (timeDiff < msPerHour) {
 		const value = Math.round(timeDiff / msPerMinute);
 		return `${value} ${pluralize(value, "minute", "minutes")} ago`;
-	};
+	}
 
 	if (timeDiff < msPerDay) {
 		const value = Math.round(timeDiff / msPerHour);
 		return `${value} ${pluralize(value, "hour", "hours")} ago`;
-	};
+	}
 
 	if (timeDiff < msPerMonth) {
 		const value = Math.round(timeDiff / msPerDay);
 		return `${value} ${pluralize(value, "day", "days")} ago`;
-	};
+	}
 
 	if (timeDiff < msPerYear) {
 		const value = Math.round(timeDiff / msPerYear);
 		return `${value} ${pluralize(value, "month", "months")} ago`;
-	};
+	}
 
 	const value = Math.round(timeDiff / msPerYear);
 	return `${value} ${pluralize(value, "year", "years")} ago`;
-};
+}

@@ -17,26 +17,23 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
-import { Label } from '@/components/ui/label';
-import {
-	NativeSelect,
-	NativeSelectOption
-} from '@/components/ui/native-select';
+import { Label } from "@/components/ui/label";
+import { NativeSelect, NativeSelectOption } from "@/components/ui/native-select";
 
-import type { PasswordCategoryType } from '@/types';
+import type { PasswordCategoryType } from "@/types";
 
 export default function CategorySelect({
 	defaultCategory,
-	ariaDescribedBy
+	ariaDescribedBy,
 }: {
-	defaultCategory: PasswordCategoryType,
-	ariaDescribedBy?: string
+	defaultCategory: PasswordCategoryType;
+	ariaDescribedBy?: string;
 }) {
 	const [category, setCategory] = useState<string>(defaultCategory);
 	return (
@@ -48,14 +45,14 @@ export default function CategorySelect({
 				onChange={(e) => setCategory(e.target.value)}
 				name="category"
 				aria-describedby={ariaDescribedBy}
-				>
-				<NativeSelectOption value="social">Social</NativeSelectOption>	
-				<NativeSelectOption value="work">Work</NativeSelectOption>	
-				<NativeSelectOption value="finance">Finance</NativeSelectOption>	
-				<NativeSelectOption value="entertainment">Entertainment</NativeSelectOption>	
-				<NativeSelectOption value="shopping">Shopping</NativeSelectOption>	
-				<NativeSelectOption value="other">Other</NativeSelectOption>	
+			>
+				<NativeSelectOption value="social">Social</NativeSelectOption>
+				<NativeSelectOption value="work">Work</NativeSelectOption>
+				<NativeSelectOption value="finance">Finance</NativeSelectOption>
+				<NativeSelectOption value="entertainment">Entertainment</NativeSelectOption>
+				<NativeSelectOption value="shopping">Shopping</NativeSelectOption>
+				<NativeSelectOption value="other">Other</NativeSelectOption>
 			</NativeSelect>
 		</>
 	);
-};
+}

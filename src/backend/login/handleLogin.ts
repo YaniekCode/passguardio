@@ -17,34 +17,38 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import type { LoginResultType, UserLoginCredentials } from '@/types/login';
-import { SessionPayload } from '@/types';
-import { createTables } from '@/backend/db/createTables';
-import { deriveKEK } from '@/utils/encryption/deriveKEK';
-import { unwrapDEK } from '@/utils/encryption/unwrapDEK';
-import { authenticateUser } from '@/backend/db/authenticateUser';
+import type { LoginResultType, UserLoginCredentials } from "@/types/login";
+import type { SessionPayload } from "@/types";
+import { createTables } from "@/backend/db/createTables";
+import { deriveKEK } from "@/utils/encryption/deriveKEK";
+import { unwrapDEK } from "@/utils/encryption/unwrapDEK";
+import { authenticateUser } from "@/backend/db/authenticateUser";
 
 export async function handleLogin(userData: UserLoginCredentials): Promise<LoginResultType> {
 	// Create default tables in the DB unless they already exist
 	await createTables();
 
 	// Verify the correctness of the user's credentials
-	const userLoginResult  = await authenticateUser(userData);
+	const userLoginResult = await authenticateUser(userData);
 
 	if (!userLoginResult.success) {
 		return {
 			success: false,
-			error: userLoginResult.error
-		}
+			error: userLoginResult.error,
+		};
 	}
 
 	const user = userLoginResult.data;
 	const kek = deriveKEK(userData.password, user.encryptionSalt);
 	const dek = unwrapDEK(user.wrappedDek, user.dekWrapIv, user.dekWrapTag, kek).toString("hex");
 
-	const userSessionData: SessionPayload = { id: user.id, username: user.username, role: user.role, dek: dek }
+	const userSessionData: SessionPayload = {
+		id: user.id,
+		username: user.username,
+		role: user.role,
+		dek: dek,
+	};
 	return { success: true, data: userSessionData };
-
-};
+}

@@ -17,10 +17,10 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import PasswordDialog from '@/components/PasswordDialog';
+import PasswordDialog from "@/components/PasswordDialog";
 
 export default function AddPasswordDialog() {
-	return <PasswordDialog mode='add'/>
-};
+	return <PasswordDialog mode="add" />;
+}

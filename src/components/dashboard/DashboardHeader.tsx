@@ -17,34 +17,32 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
 import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbPage,
-  BreadcrumbList,
-} from '@/components/ui/breadcrumb';
+	Breadcrumb,
+	BreadcrumbItem,
+	BreadcrumbPage,
+	BreadcrumbList,
+} from "@/components/ui/breadcrumb";
 
-import PasswordSearch from '@/components/PasswordSearch';
-import AddPasswordDialog from '@/components/addPassword/AddPasswordDialog';
-import { getSession } from '@/utils/session/sessionUtils';
+import PasswordSearch from "@/components/PasswordSearch";
+import AddPasswordDialog from "@/components/addPassword/AddPasswordDialog";
+import { getSession } from "@/utils/session/sessionUtils";
 
 export default async function DashboardHeader() {
 	const session = await getSession();
 
-	const greeting = session?.username
-		? `Hello, ${session.username}`
-		: "Hello";
+	const greeting = session?.username ? `Hello, ${session.username}` : "Hello";
 
-    return (
-        <>
-            <Breadcrumb>
+	return (
+		<>
+			<Breadcrumb>
 				<BreadcrumbList>
 					<BreadcrumbItem>
 						<BreadcrumbPage>Dashboard</BreadcrumbPage>
-					</BreadcrumbItem>	
-				</BreadcrumbList>	
+					</BreadcrumbItem>
+				</BreadcrumbList>
 			</Breadcrumb>
 			<header className="flex items-center justify-between">
 				<div className="flex items-center gap-5">
@@ -54,8 +52,8 @@ export default async function DashboardHeader() {
 					</div>
 				</div>
 				<AddPasswordDialog />
-			</header>    
-			<PasswordSearch placeholder="Search passwords..."/>
-        </>
-    )
+			</header>
+			<PasswordSearch placeholder="Search passwords..." />
+		</>
+	);
 }

@@ -17,74 +17,108 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-'use client';
+"use client";
 
-import { useEffect, useActionState } from 'react';
-import { toast } from 'sonner';
+import { useEffect, useActionState } from "react";
+import { toast } from "sonner";
 
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Button } from '@/components/ui/button';
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
-import type { ActivateUserState } from '@/types/activate';
-import { activateUserAction } from '@/actions/accountActivation/activateUserAction';
-import FormMessageBox from '@/components/FormMessageBox';
+import type { ActivateUserState } from "@/types/activate";
+import { activateUserAction } from "@/actions/accountActivation/activateUserAction";
+import FormMessageBox from "@/components/FormMessageBox";
 
 const initialState: ActivateUserState = { success: false };
 
-export default function ActivationUserInputForm({ token, role }: { token: string, role: "user" | "admin" }) {
-    const activateUserWithRoleAndTokenAction = activateUserAction.bind(null, token, role);
+export default function ActivationUserInputForm({
+	token,
+	role,
+}: {
+	token: string;
+	role: "user" | "admin";
+}) {
+	const activateUserWithRoleAndTokenAction = activateUserAction.bind(null, token, role);
 
-    const [state, formAction, pending] = useActionState(activateUserWithRoleAndTokenAction, initialState);
+	const [state, formAction, pending] = useActionState(
+		activateUserWithRoleAndTokenAction,
+		initialState,
+	);
 
 	useEffect(() => {
 		if (state.success) {
-			toast.success("Account activated successfully", { position: "bottom-right"} );
+			toast.success("Account activated successfully", {
+				position: "bottom-right",
+			});
 		}
-	}, [state.success])
+	}, [state.success]);
 
-    return (
-        <form action={formAction} className="flex flex-col gap-5" autoComplete="on">
+	return (
+		<form action={formAction} className="flex flex-col gap-5" autoComplete="on">
 			<small>Fields marked with * are required</small>
-            <div>
+			<div>
 				<Label htmlFor="username" className="my-2">
 					Full Name <span aria-hidden="true">*</span>
 					<span className="sr-only">(required)</span>
 				</Label>
-                <Input type="text" name="username" id="username" placeholder="Enter your full name" autoComplete="name" required/>
-                <div id="username-error" aria-live="polite" aria-atomic="true">
+				<Input
+					type="text"
+					name="username"
+					id="username"
+					placeholder="Enter your full name"
+					autoComplete="name"
+					required
+				/>
+				<div id="username-error" aria-live="polite" aria-atomic="true">
 					{!state.success && state.formErrors?.username && (
 						<FormMessageBox message={state.formErrors.username} />
 					)}
 				</div>
-            </div>
-            <div>
+			</div>
+			<div>
 				<Label htmlFor="email" className="my-2">
 					Email <span aria-hidden="true">*</span>
 					<span className="sr-only">(required)</span>
 				</Label>
-                <Input type="email" name="email" id="email" placeholder="Enter your email" autoComplete="email" required/>
-                <div id="email-error" aria-live="polite" aria-atomic="true">
+				<Input
+					type="email"
+					name="email"
+					id="email"
+					placeholder="Enter your email"
+					autoComplete="email"
+					required
+				/>
+				<div id="email-error" aria-live="polite" aria-atomic="true">
 					{!state.success && state.formErrors?.email && (
 						<FormMessageBox message={state.formErrors.email} />
 					)}
 				</div>
-            </div>
-            <div>
+			</div>
+			<div>
 				<Label htmlFor="password" className="my-2">
 					Password <span aria-hidden="true">*</span>
 					<span className="sr-only">(required)</span>
 				</Label>
-                <Input type="password" name="password" id="password" placeholder="Create a password" autoComplete="new-password" required/>
-                <div id="password-error" aria-live="polite" aria-atomic="true">
+				<Input
+					type="password"
+					name="password"
+					id="password"
+					placeholder="Create a password"
+					autoComplete="new-password"
+					required
+				/>
+				<div id="password-error" aria-live="polite" aria-atomic="true">
 					{!state.success && state.formErrors?.password && (
 						<FormMessageBox message={state.formErrors.password} />
 					)}
 				</div>
-            </div>
-			<Button type="submit" className="w-full" disabled={pending} aria-disabled={pending}>Activate Account</Button>
+			</div>
+			<Button type="submit" className="w-full" disabled={pending} aria-disabled={pending}>
+				Activate Account
+			</Button>
 		</form>
-    )
+	);
 }

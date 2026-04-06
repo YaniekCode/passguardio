@@ -17,9 +17,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import { Poppins, Fira_Code } from 'next/font/google';
+import { Poppins, Fira_Code } from "next/font/google";
 
 export const poppinsSans = Poppins({
 	subsets: ["latin"],

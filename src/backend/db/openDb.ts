@@ -17,13 +17,13 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import path from 'node:path';
-import sqlite3 from 'sqlite3';
-import { open, Database } from 'sqlite';
+import path from "node:path";
+import sqlite3 from "sqlite3";
+import { open, type Database } from "sqlite";
 
-import { getDataDirectory } from '@/utils/getDataDirectory';
+import { getDataDirectory } from "@/utils/getDataDirectory";
 
 sqlite3.verbose();
 
@@ -31,10 +31,10 @@ export async function openDb(): Promise<Database> {
 	const dataDir = getDataDirectory();
 	const dbPath = path.join(dataDir, "passguardio.db");
 
-  	const db = await open({
-    		filename: dbPath,
-    		driver: sqlite3.Database,
-  	});
+	const db = await open({
+		filename: dbPath,
+		driver: sqlite3.Database,
+	});
 
-  	return db;
-};
+	return db;
+}

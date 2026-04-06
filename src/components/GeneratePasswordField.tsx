@@ -17,40 +17,66 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { RefreshCw } from 'lucide-react';
+import { useState } from "react";
+import { RefreshCw } from "lucide-react";
 
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
-import PasswordLengthSlider from '@/components/PasswordLengthSlider';
+import PasswordLengthSlider from "@/components/PasswordLengthSlider";
 
-export default function GeneratePasswordField({ defaultPassword, ariaDescribedBy }: { defaultPassword: string, ariaDescribedBy?: string }) {
+export default function GeneratePasswordField({
+	defaultPassword,
+	ariaDescribedBy,
+}: {
+	defaultPassword: string;
+	ariaDescribedBy?: string;
+}) {
 	const [inputPassword, setInputPassword] = useState<string>(defaultPassword);
 	const [isOpen, setIsOpen] = useState<boolean>(false);
 	return (
 		<>
 			<Label htmlFor="password">Password *</Label>
 			<div className="flex gap-2">
-				<Input id="password" name="password" value={inputPassword} onChange={(e) => setInputPassword(e.target.value)} placeholder="Enter or generate a password" minLength={4} aria-describedby={ariaDescribedBy} required></Input>
+				<Input
+					id="password"
+					name="password"
+					value={inputPassword}
+					onChange={(e) => setInputPassword(e.target.value)}
+					placeholder="Enter or generate a password"
+					minLength={4}
+					aria-describedby={ariaDescribedBy}
+					required
+				></Input>
 				<Popover open={isOpen} onOpenChange={setIsOpen}>
 					<PopoverTrigger asChild>
-						<Button variant="outline" size="icon" title="Generate" onClick={() => setIsOpen(!isOpen)}><RefreshCw /></Button>
+						<Button
+							variant="outline"
+							size="icon"
+							title="Generate"
+							onClick={() => setIsOpen(!isOpen)}
+						>
+							<RefreshCw />
+						</Button>
 					</PopoverTrigger>
 					<PopoverContent>
 						<h1 className="text-lg font-semibold">Generate Password</h1>
-						<h2 className="text-muted-foreground text-sm mb-5">Select your preferred password length and click “Generate”.</h2>
-						<PasswordLengthSlider setPassword={setInputPassword} setIsOpen={setIsOpen}/>
+						<h2 className="text-muted-foreground text-sm mb-5">
+							Select your preferred password length and click “Generate”.
+						</h2>
+						<PasswordLengthSlider
+							setPassword={setInputPassword}
+							setIsOpen={setIsOpen}
+						/>
 					</PopoverContent>
 				</Popover>
 			</div>
 		</>
 	);
-
 }

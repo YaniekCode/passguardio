@@ -17,25 +17,26 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import type { UserDatabaseRecordType, Result } from '@/types';
-import type { UserLoginCredentials } from '@/types/login';
-import { compareHash } from '@/utils/hashing/compareHash';
-import { openDb } from '@/backend/db/openDb';
+import type { UserDatabaseRecordType, Result } from "@/types";
+import type { UserLoginCredentials } from "@/types/login";
+import { compareHash } from "@/utils/hashing/compareHash";
+import { openDb } from "@/backend/db/openDb";
 
-export async function authenticateUser(userData: UserLoginCredentials): Promise<Result<UserDatabaseRecordType>>{
+export async function authenticateUser(
+	userData: UserLoginCredentials,
+): Promise<Result<UserDatabaseRecordType>> {
 	const db = await openDb();
 
 	try {
 		// Get the user from the DB
-		const user = (await db.get(
-			"SELECT * FROM users WHERE email = ?",
-			userData.email
-		)) as UserDatabaseRecordType | undefined;
+		const user = (await db.get("SELECT * FROM users WHERE email = ?", userData.email)) as
+			| UserDatabaseRecordType
+			| undefined;
 		if (!user) {
 			return { success: false, error: "Invalid email or password" };
-		};
+		}
 
 		// Check if the password passed by the user matches it's password hash
 		const isEqual = compareHash(userData.password, user.passwordHash);
@@ -43,7 +44,7 @@ export async function authenticateUser(userData: UserLoginCredentials): Promise<
 			return { success: true, data: user };
 		} else {
 			return { success: false, error: "Invalid email or password" };
-		};
+		}
 	} catch (err: unknown) {
 		console.log(err);
 		return { success: false, error: "An error occurred when logging in" };

@@ -17,15 +17,15 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import crypto from 'node:crypto';
+import crypto from "node:crypto";
 
-import type { EncryptionDataType } from '@/types';
-import { deriveKEK } from '@/utils/encryption/deriveKEK'; 
+import type { EncryptionDataType } from "@/types";
+import { deriveKEK } from "@/utils/encryption/deriveKEK";
 
 export function generateEncryptionCredentials(password: string): EncryptionDataType {
-	const encryptionSalt = crypto.randomBytes(32);	
+	const encryptionSalt = crypto.randomBytes(32);
 
 	const dek = crypto.randomBytes(32);
 	const kek = deriveKEK(password, encryptionSalt);
@@ -36,11 +36,11 @@ export function generateEncryptionCredentials(password: string): EncryptionDataT
 		encryptionSalt,
 		wrappedDek: wrap.wrapped,
 		dekWrapIv: wrap.iv,
-		dekWrapTag: wrap.tag
+		dekWrapTag: wrap.tag,
 	};
 
 	return userEncryptionData;
-};
+}
 
 function wrapDEK(dek: Buffer, kek: Buffer) {
 	const iv = crypto.randomBytes(12);
@@ -49,4 +49,4 @@ function wrapDEK(dek: Buffer, kek: Buffer) {
 	const wrapped = Buffer.concat([cipher.update(dek), cipher.final()]);
 	const tag = cipher.getAuthTag();
 	return { wrapped, iv, tag };
-};
+}

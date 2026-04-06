@@ -17,7 +17,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
 import type { User } from "@/types";
 import type { CreateUserResult } from "@/types/signup";
@@ -29,13 +29,17 @@ import { generateEncryptionCredentials } from "@/utils/encryption/generateEncryp
 export async function handleSignup(userData: User): Promise<CreateUserResult> {
 	// Create the default tables in the DB unless they already exist
 	await createTables();
- 
+
 	// Generate the password hash
 	const passwordHash = generatePasswordHash(userData.password);
 
 	// Generate password encryption credentials
 	const userEncryptionData = generateEncryptionCredentials(userData.password);
-	const user = { ...userData, passwordHash: passwordHash, ...userEncryptionData};
+	const user = {
+		...userData,
+		passwordHash: passwordHash,
+		...userEncryptionData,
+	};
 
 	// Create the user in the DB
 	const createUserResult = await createUser(user);
@@ -45,6 +49,4 @@ export async function handleSignup(userData: User): Promise<CreateUserResult> {
 	}
 
 	return createUserResult;
-};
-
-
+}

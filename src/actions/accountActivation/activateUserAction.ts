@@ -17,11 +17,11 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-'use server';
+"use server";
 
-import type { UserRoleType } from "@/types"; 
+import type { UserRoleType } from "@/types";
 import type { ActivateUserState } from "@/types/activate";
 import { isTokenExpiredOrMissing } from "@/utils/isTokenExpiredOrMissing";
 import { handleSignup } from "@/backend/signup/handleSignup";
@@ -29,50 +29,47 @@ import { validateNewUserInput } from "@/utils/validation/validateNewUserInput";
 import { deleteToken } from "@/backend/db/deleteToken";
 
 export async function activateUserAction(
-    token: string,
-    role: UserRoleType,
-    prevState: ActivateUserState,
-    formData: FormData
+	token: string,
+	role: UserRoleType,
+	prevState: ActivateUserState,
+	formData: FormData,
 ): Promise<ActivateUserState> {
+	// Check if the token has expired, is missing or is valid
+	const tokenExpiredOrMissingResult = await isTokenExpiredOrMissing(token);
 
-    // Check if the token has expired, is missing or is valid
-    const tokenExpiredOrMissingResult = await isTokenExpiredOrMissing(token);
-    
-    // If the token is missing or has expired we return an error
-    if (!tokenExpiredOrMissingResult.success) {
-        return tokenExpiredOrMissingResult;
-    }
+	// If the token is missing or has expired we return an error
+	if (!tokenExpiredOrMissingResult.success) {
+		return tokenExpiredOrMissingResult;
+	}
 
-    // Validating the formData except for the role
-    const validationResult = validateNewUserInput(formData);
+	// Validating the formData except for the role
+	const validationResult = validateNewUserInput(formData);
 
-    if (!validationResult.success) {
-        return {
-            success: false,
-            formErrors: validationResult.formErrors,
-            error: validationResult.error
-        }
-    }
+	if (!validationResult.success) {
+		return {
+			success: false,
+			formErrors: validationResult.formErrors,
+			error: validationResult.error,
+		};
+	}
 
-    const { username, email, password } = validationResult.data;
+	const { username, email, password } = validationResult.data;
 
-    // Creating a new user in the database
-    const signupResult = await handleSignup({ username, email, password, role });
+	// Creating a new user in the database
+	const signupResult = await handleSignup({ username, email, password, role });
 
-    // If the user already exists in the DB an appropriate error is returned
-    if (!signupResult.success) {
-        return {
-            success: false,
-            error: signupResult.uniqueError
-                ? "This user already exists"
-                : "Something went wrong"
-        };
-    }
+	// If the user already exists in the DB an appropriate error is returned
+	if (!signupResult.success) {
+		return {
+			success: false,
+			error: signupResult.uniqueError ? "This user already exists" : "Something went wrong",
+		};
+	}
 
-    // Delete token after the user gets added
-    await deleteToken(token);
-    return {
-        success: true,
-        message: "Account activated successfully",
-    }
+	// Delete token after the user gets added
+	await deleteToken(token);
+	return {
+		success: true,
+		message: "Account activated successfully",
+	};
 }

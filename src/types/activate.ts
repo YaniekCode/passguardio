@@ -17,50 +17,50 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import type { TokenDatabaseRecordType } from '@/types';
+import type { TokenDatabaseRecordType } from "@/types";
 
 export type ActivateUserFieldErrors = {
-    username?: string;
-    email?: string;
-    password?: string;
-}
+	username?: string;
+	email?: string;
+	password?: string;
+};
 
-export type ActivateTokenState = 
-    | {
-        success: true;
-        data: TokenDatabaseRecordType
-    } | {
-        success: false,
-        notFound: boolean,
-        formError?: string,
-        error?: string
-    }
+export type ActivateTokenState =
+	| {
+			success: true;
+			data: TokenDatabaseRecordType;
+	  }
+	| {
+			success: false;
+			notFound: boolean;
+			formError?: string;
+			error?: string;
+	  };
 
-
-export type ActivateUserState = 
-    | {
-        success: true;
-        message: string;
-    }
-    | {
-        success: false;
-        formErrors?: ActivateUserFieldErrors;
-        error?: string;
-    }
+export type ActivateUserState =
+	| {
+			success: true;
+			message: string;
+	  }
+	| {
+			success: false;
+			formErrors?: ActivateUserFieldErrors;
+			error?: string;
+	  };
 
 export type ActivateUserValidationResult =
-  | {
-      success: true;
-      data: {
-        username: string;
-        email: string;
-        password: string;
-      };
-    }
-  | {
-      success: false;
-	  formErrors: ActivateUserFieldErrors;
-      error: string;
-    };
+	| {
+			success: true;
+			data: {
+				username: string;
+				email: string;
+				password: string;
+			};
+	  }
+	| {
+			success: false;
+			formErrors: ActivateUserFieldErrors;
+			error: string;
+	  };

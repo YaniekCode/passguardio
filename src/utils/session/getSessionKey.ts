@@ -17,13 +17,13 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import fs from 'node:fs';
-import path from 'node:path';
-import { randomBytes } from 'node:crypto';
+import fs from "node:fs";
+import path from "node:path";
+import { randomBytes } from "node:crypto";
 
-import { getDataDirectory } from '@/utils/getDataDirectory';
+import { getDataDirectory } from "@/utils/getDataDirectory";
 
 const SESSION_KEY_FILE = "session.key";
 const SESSION_KEY_SIZE = 32;
@@ -41,7 +41,7 @@ export function getSessionKey(): Uint8Array {
 		fs.writeFileSync(keyPath, key, { mode: 0o600 });
 
 		return key;
-	};
+	}
 
 	return fs.readFileSync(keyPath);
-};
+}

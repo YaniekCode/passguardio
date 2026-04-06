@@ -17,10 +17,10 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import { type PasswordCategoryType } from '@/types';
-import PasswordDialog from '@/components/PasswordDialog';
+import { type PasswordCategoryType } from "@/types";
+import PasswordDialog from "@/components/PasswordDialog";
 
 export default function EditPasswordDialog({
 	uuid,
@@ -28,17 +28,17 @@ export default function EditPasswordDialog({
 	websiteUrl,
 	usernameOrEmail,
 	password,
-	category 
+	category,
 }: {
-	uuid: string,
-	websiteName: string,
-	websiteUrl: string,
-	usernameOrEmail: string,
-	password: string,
-	category: PasswordCategoryType 
+	uuid: string;
+	websiteName: string;
+	websiteUrl: string;
+	usernameOrEmail: string;
+	password: string;
+	category: PasswordCategoryType;
 }) {
-
-	return <PasswordDialog 
+	return (
+		<PasswordDialog
 			mode="edit"
 			uuid={uuid}
 			websiteName={websiteName}
@@ -47,4 +47,5 @@ export default function EditPasswordDialog({
 			password={password}
 			category={category}
 		/>
-};
+	);
+}

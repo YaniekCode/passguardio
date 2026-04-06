@@ -17,9 +17,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import { Badge } from '@/components/ui/badge';
+import { Badge } from "@/components/ui/badge";
 
 import type { UserRoleType } from "@/types";
 
@@ -35,4 +35,4 @@ export default function UserRoleBadge({ role }: { role: UserRoleType }) {
 			</Badge>
 		</>
 	);
-};
+}

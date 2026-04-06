@@ -17,22 +17,28 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import { fromError } from 'zod-validation-error';
+import { fromError } from "zod-validation-error";
 
-import type { User, SignupValidationResultType } from '@/types';
-import { SignupSchema } from '@/utils/validation/userSchemas';
+import type { User, SignupValidationResultType } from "@/types";
+import { SignupSchema } from "@/utils/validation/userSchemas";
 
 export function validateSignupInput(userData: User): SignupValidationResultType {
 	const result = SignupSchema.safeParse(userData);
 
 	if (result.success) {
-		const validationResult: SignupValidationResultType = { success: true, data: result.data };
+		const validationResult: SignupValidationResultType = {
+			success: true,
+			data: result.data,
+		};
 		return validationResult;
 	}
-	
+
 	const errorMessage = fromError(result.error).details?.[0]?.message || "Unknown error";
-	const validationError: SignupValidationResultType = { success: false, error: errorMessage};
+	const validationError: SignupValidationResultType = {
+		success: false,
+		error: errorMessage,
+	};
 	return validationError;
 }

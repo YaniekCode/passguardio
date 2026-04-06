@@ -17,15 +17,15 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import type { Metadata } from 'next';
-import { Suspense } from 'react';
-import Skeleton from 'react-loading-skeleton';
+import type { Metadata } from "next";
+import { Suspense } from "react";
+import Skeleton from "react-loading-skeleton";
 
-import DashboardHeader from '@/components/dashboard/DashboardHeader';
-import DashboardPasswordStats from '@/components/dashboard/DashboardPasswordStats';
-import DashboardPasswords from '@/components/dashboard/DashboardPasswords';
+import DashboardHeader from "@/components/dashboard/DashboardHeader";
+import DashboardPasswordStats from "@/components/dashboard/DashboardPasswordStats";
+import DashboardPasswords from "@/components/dashboard/DashboardPasswords";
 
 export const metadata: Metadata = {
 	title: "Dashboard",
@@ -33,22 +33,22 @@ export const metadata: Metadata = {
 };
 
 export default async function Dashboard(props: {
-		searchParams?: Promise<{
-			query?: string;
-			page?: string;			
-		}>;
-	}) {
+	searchParams?: Promise<{
+		query?: string;
+		page?: string;
+	}>;
+}) {
 	const searchParams = await props.searchParams;
-	const query = searchParams?.query || '';
+	const query = searchParams?.query || "";
 	const currentPage = Number(searchParams?.page) || 1;
-	
+
 	return (
 		<main className="mt-5">
 			<DashboardHeader />
-			<Suspense fallback={<Skeleton count={6}/>}>
+			<Suspense fallback={<Skeleton count={6} />}>
 				<DashboardPasswordStats />
 			</Suspense>
-			<DashboardPasswords query={query} currentPage={currentPage}/>
+			<DashboardPasswords query={query} currentPage={currentPage} />
 		</main>
 	);
-};
+}

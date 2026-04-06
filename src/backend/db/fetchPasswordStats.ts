@@ -17,24 +17,27 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import { openDb } from '@/backend/db/openDb';
-import type { PasswordData } from '@/types';
+import { openDb } from "@/backend/db/openDb";
+import type { PasswordData } from "@/types";
 
 export async function fetchPasswordStats(userId: number) {
 	const db = await openDb();
 
 	try {
 		const passwordStatList = (await db.all(
-            		`SELECT strength, lastModified, createdAt FROM passwords WHERE userId=?`,
-			userId
-        	)) as Pick<PasswordData, 'strength' | 'lastModified' | 'createdAt'>[];
+			`SELECT strength, lastModified, createdAt FROM passwords WHERE userId=?`,
+			userId,
+		)) as Pick<PasswordData, "strength" | "lastModified" | "createdAt">[];
 
 		return { success: true, data: passwordStatList };
 	} catch (err: unknown) {
 		console.log(err);
-		return { success: false, error: "An error occurred when reading password stats" };
+		return {
+			success: false,
+			error: "An error occurred when reading password stats",
+		};
 	} finally {
 		try {
 			await db.close();
@@ -42,4 +45,4 @@ export async function fetchPasswordStats(userId: number) {
 			console.error("Failed to close DB: ", closeErr);
 		}
 	}
-};
+}

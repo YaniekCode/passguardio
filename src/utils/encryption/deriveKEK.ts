@@ -17,12 +17,12 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import crypto from 'node:crypto';
+import crypto from "node:crypto";
 
 const PBKDF2_ITER = 310000;
 
 export function deriveKEK(password: string, salt: Buffer): Buffer {
-	return crypto.pbkdf2Sync(password, salt, PBKDF2_ITER, 32, "sha512"); 
-};
+	return crypto.pbkdf2Sync(password, salt, PBKDF2_ITER, 32, "sha512");
+}

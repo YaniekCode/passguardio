@@ -17,14 +17,15 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
 export function generateRandomPassword(length: number): string {
-	const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" +
-        	"!@#$%^&*()-_=+[]{};:,.<>?/|~";
+	const charset =
+		"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789" +
+		"!@#$%^&*()-_=+[]{};:,.<>?/|~";
 
 	const randomValues = crypto.getRandomValues(new Uint32Array(length));
-	const randomPassword = Array.from(randomValues, x => charset[x % charset.length]).join("");
+	const randomPassword = Array.from(randomValues, (x) => charset[x % charset.length]).join("");
 
 	return randomPassword;
-};
+}

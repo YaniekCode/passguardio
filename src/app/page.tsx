@@ -17,16 +17,13 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import type { Metadata } from 'next';
-import { Shield } from 'lucide-react';
+import type { Metadata } from "next";
+import { Shield } from "lucide-react";
 
-import {
-	Card,
-	CardContent,
-} from '@/components/ui/card'
-import SignupForm from '@/components/signup/SignupForm';
+import { Card, CardContent } from "@/components/ui/card";
+import SignupForm from "@/components/signup/SignupForm";
 
 export const metadata: Metadata = {
 	title: "Sign up",
@@ -37,15 +34,17 @@ export default function SignupPage() {
 	return (
 		<main className="flex min-h-screen flex-col items-center justify-center px-4">
 			<header className="flex flex-col items-center my-8">
-				<Shield strokeWidth={2.5} size={40}/>
-      			<h1 className="text-3xl font-semibold">Create Account</h1>
-				<p className="text-muted-foreground text-center">Sign up to start managing your passwords securely</p>
+				<Shield strokeWidth={2.5} size={40} />
+				<h1 className="text-3xl font-semibold">Create Account</h1>
+				<p className="text-muted-foreground text-center">
+					Sign up to start managing your passwords securely
+				</p>
 			</header>
 			<Card className="w-full max-w-sm">
 				<CardContent>
 					<SignupForm />
 				</CardContent>
 			</Card>
-      	</main>
+		</main>
 	);
 }

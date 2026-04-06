@@ -17,7 +17,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
 import {
 	Table,
@@ -26,18 +26,24 @@ import {
 	TableCell,
 	TableHead,
 	TableHeader,
-	TableRow
-} from '@/components/ui/table';
+	TableRow,
+} from "@/components/ui/table";
 
-import type { PasswordData } from '@/types';
-import { handleGetPasswords } from '@/backend/password/handleGetPasswords';
-import EditPasswordDialog from '@/components/editPassword/EditPasswordDialog';
-import DeletePasswordDialog from '@/components/deletePassword/DeletePasswordDialog';
-import { formatTimeDifference } from '@/utils/timeDifference/formatTimeDifference';
-import PasswordCategoryBadge from '@/components/PasswordCategoryBadge';
-import PasswordField from '@/components/PasswordField';
+import type { PasswordData } from "@/types";
+import { handleGetPasswords } from "@/backend/password/handleGetPasswords";
+import EditPasswordDialog from "@/components/editPassword/EditPasswordDialog";
+import DeletePasswordDialog from "@/components/deletePassword/DeletePasswordDialog";
+import { formatTimeDifference } from "@/utils/timeDifference/formatTimeDifference";
+import PasswordCategoryBadge from "@/components/PasswordCategoryBadge";
+import PasswordField from "@/components/PasswordField";
 
-export default async function PasswordsTable({ query, currentPage } : { query: string, currentPage: number }) {
+export default async function PasswordsTable({
+	query,
+	currentPage,
+}: {
+	query: string;
+	currentPage: number;
+}) {
 	const getPasswordsResult = await handleGetPasswords(query, currentPage);
 
 	let passwords: PasswordData[] = [];
@@ -50,26 +56,33 @@ export default async function PasswordsTable({ query, currentPage } : { query: s
 				<TableCaption>A list of your passwords.</TableCaption>
 				<TableHeader>
 					<TableRow>
-						<TableHead>Website</TableHead>	
-						<TableHead>Username or Email</TableHead>	
-						<TableHead>Password</TableHead>	
-						<TableHead>Category</TableHead>	
-						<TableHead>Last Modified</TableHead>	
-						<TableHead>Actions</TableHead>	
+						<TableHead>Website</TableHead>
+						<TableHead>Username or Email</TableHead>
+						<TableHead>Password</TableHead>
+						<TableHead>Category</TableHead>
+						<TableHead>Last Modified</TableHead>
+						<TableHead>Actions</TableHead>
 					</TableRow>
 				</TableHeader>
-				<TableBody>	
+				<TableBody>
 					{passwords.map((passwordEntry, index) => (
 						<TableRow key={index}>
-							<TableCell className="font-medium">{passwordEntry.websiteName}</TableCell>
+							<TableCell className="font-medium">
+								{passwordEntry.websiteName}
+							</TableCell>
 							<TableCell>{passwordEntry.usernameOrEmail}</TableCell>
 							<TableCell>
-								<PasswordField password={passwordEntry.password}/>	
+								<PasswordField password={passwordEntry.password} />
 							</TableCell>
 							<TableCell>
 								<PasswordCategoryBadge category={passwordEntry.category} />
 							</TableCell>
-							<TableCell>{formatTimeDifference(passwordEntry.lastModified, new Date().getTime())}</TableCell>
+							<TableCell>
+								{formatTimeDifference(
+									passwordEntry.lastModified,
+									new Date().getTime(),
+								)}
+							</TableCell>
 							<TableCell>
 								<EditPasswordDialog
 									uuid={passwordEntry.uuid}
@@ -89,5 +102,5 @@ export default async function PasswordsTable({ query, currentPage } : { query: s
 				</TableBody>
 			</Table>
 		</section>
-    )
+	);
 }

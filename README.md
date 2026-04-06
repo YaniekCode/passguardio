@@ -1,16 +1,16 @@
 # 🔐 PassGuardio — Simple, Local & Fast Password Manager
 
-**PassGuardio** is a *simple, local and fast password manager* focused on privacy, minimalism, and performance. The project is **open source** and designed to work without sending any data to external servers.
+**PassGuardio** is a _simple, local and fast password manager_ focused on privacy, minimalism, and performance. The project is **open source** and designed to work without sending any data to external servers.
 
 ---
 
 ## ✨ Features
 
-* 🗄 **Local-first** – all data is stored locally on your device
-* ⚡ **Fast & lightweight** – no unnecessary dependencies
-* 🔒 **Privacy-focused** – no tracking, no cloud, no telemetry
-* 🧠 **Simple UX** – minimal interface, easy to use
-* 🧩 **Open Source** – transparent codebase, community-friendly
+- 🗄 **Local-first** – all data is stored locally on your device
+- ⚡ **Fast & lightweight** – no unnecessary dependencies
+- 🔒 **Privacy-focused** – no tracking, no cloud, no telemetry
+- 🧠 **Simple UX** – minimal interface, easy to use
+- 🧩 **Open Source** – transparent codebase, community-friendly
 
 ---
 
@@ -18,12 +18,12 @@
 
 This project was created with a clear goal:
 
-> *Your passwords should belong only to you.*
+> _Your passwords should belong only to you._
 
 Unlike many modern password managers, this application:
 
-* does **not** sync data to the cloud
-* does **not** collect analytics
+- does **not** sync data to the cloud
+- does **not** collect analytics
 
 Everything runs locally, giving you full control over your data.
 
@@ -33,11 +33,10 @@ PassGuardio is not a cloud password manager and never will be.
 
 ## 🛠 Tech Stack
 
-
-* **Frontend:** Next.js / React
-* **Backend:** Local-only logic (no external API)
-* **Storage:** Local Sqlite3 database
-* **Language:** TypeScript
+- **Frontend:** Next.js / React
+- **Backend:** Local-only logic (no external API)
+- **Storage:** Local Sqlite3 database
+- **Language:** TypeScript
 
 ---
 
@@ -51,14 +50,11 @@ PassGuardio can be installed in two ways: **using Docker (recommended)** or **ma
 
 Docker provides the easiest and fastest way to run PassGuardio without setting up the environment manually.
 
-
 #### 1. Pull and run the Docker container
 
 ```bash
 docker run -d -p 9820:9820 --restart=always --name passguardio yaniekcode/passguardio:latest
 ```
-
-
 
 The application will be available at:
 
@@ -103,9 +99,9 @@ http://localhost:9820
 
 ## 🔐 Security Notes
 
-* Passwords are stored **locally**
-* Encryption is always enabled
-* Always use a **strong master password**
+- Passwords are stored **locally**
+- Encryption is always enabled
+- Always use a **strong master password**
 
 > This project is provided as-is. Review the code before using it for sensitive data.
 
@@ -117,9 +113,9 @@ Contributions are welcome!
 
 You can:
 
-* open an issue
-* suggest features
-* submit a pull request
+- open an issue
+- suggest features
+- submit a pull request
 
 Please keep the project **simple**, **local**, and **privacy-respecting**.
 
@@ -131,9 +127,9 @@ This project is licensed under the **GNU GPL v3 License**.
 
 You are free to:
 
-* use
-* modify
-* distribute
+- use
+- modify
+- distribute
 
 as long as the license terms are respected.
 

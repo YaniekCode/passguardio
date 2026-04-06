@@ -17,16 +17,13 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import type { Metadata } from 'next';
-import { Shield } from 'lucide-react';
+import type { Metadata } from "next";
+import { Shield } from "lucide-react";
 
-import {
-	Card,
-	CardContent,
-} from '@/components/ui/card'
-import LoginForm from '@/components/login/LoginForm';
+import { Card, CardContent } from "@/components/ui/card";
+import LoginForm from "@/components/login/LoginForm";
 
 export const metadata: Metadata = {
 	title: "Log in",
@@ -35,17 +32,19 @@ export const metadata: Metadata = {
 
 export default function LoginPage() {
 	return (
-      	<main className="flex min-h-screen flex-col items-center justify-center px-4">
+		<main className="flex min-h-screen flex-col items-center justify-center px-4">
 			<header className="flex flex-col items-center my-8">
-				<Shield strokeWidth={2.5} size={40}/>
-      			<h1 className="text-3xl font-semibold">Welcome Back</h1>
-				<p className="text-muted-foreground text-center">Log in to access your password vault</p>
+				<Shield strokeWidth={2.5} size={40} />
+				<h1 className="text-3xl font-semibold">Welcome Back</h1>
+				<p className="text-muted-foreground text-center">
+					Log in to access your password vault
+				</p>
 			</header>
 			<Card className="w-full max-w-sm">
 				<CardContent>
-					<LoginForm/>
+					<LoginForm />
 				</CardContent>
 			</Card>
-      	</main>
+		</main>
 	);
-};
+}

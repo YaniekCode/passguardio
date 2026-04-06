@@ -17,22 +17,20 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-'use client';
+"use client";
 
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
-import { Button } from '@/components/ui/button';
+import { Button } from "@/components/ui/button";
 
 export default function RetryButton({ message }: { message: string }) {
-    const router = useRouter();
+	const router = useRouter();
 
-    return (
-        <Button variant="default"
-            onClick={() => router.refresh()} 
-        >
-            {message}
-        </Button>
-    )
+	return (
+		<Button variant="default" onClick={() => router.refresh()}>
+			{message}
+		</Button>
+	);
 }

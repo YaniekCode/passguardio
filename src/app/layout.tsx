@@ -17,19 +17,19 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import type { Metadata } from 'next';
+import type { Metadata } from "next";
 
-import './globals.css';
-import 'react-loading-skeleton/dist/skeleton.css';
-import { poppinsSans } from '@/app/fonts';
-import { Toaster } from '@/components/ui/sonner';
-import { TooltipProvider } from '@/components/ui/tooltip';
+import "./globals.css";
+import "react-loading-skeleton/dist/skeleton.css";
+import { poppinsSans } from "@/app/fonts";
+import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 export const metadata: Metadata = {
 	title: {
-    	default: "Passguardio",
+		default: "Passguardio",
 		template: "%s | Passguardio",
 	},
 	description: "A simple, local and fast password manager with a web interface.",

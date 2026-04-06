@@ -17,22 +17,21 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-'use client';
+"use client";
 
-import { useState } from 'react';
+import { useState } from "react";
 
-import { Slider } from '@/components/ui/slider';
-import { Button } from '@/components/ui/button';
+import { Slider } from "@/components/ui/slider";
+import { Button } from "@/components/ui/button";
 
-import { generateRandomPassword } from '@/utils/generateRandomPassword';
+import { generateRandomPassword } from "@/utils/generateRandomPassword";
 
 type Props = {
 	setPassword: (password: string) => void;
 	setIsOpen: (isOpen: boolean) => void;
 };
-
 
 export default function PasswordLengthSlider({ setPassword, setIsOpen }: Props) {
 	const [passwordLength, setPasswordLength] = useState(16);
@@ -42,22 +41,31 @@ export default function PasswordLengthSlider({ setPassword, setIsOpen }: Props) 
 		const generatedPassword = generateRandomPassword(passwordLength);
 		setPassword(generatedPassword);
 		setIsOpen(false);
-	};
+	}
 	return (
 		<>
-			{ <Slider
-				value={[passwordLength]}
-				min={4}
-				max={100}
-				step={1}
-				onValueChange={(value) => setPasswordLength(value[0] ?? 16)}
-			/>}
-			<p className="text-center"><span className="text-sm text-muted-foreground">Password Length: </span><span className="text-lg font-semibold">{passwordLength}</span></p>
+			{
+				<Slider
+					value={[passwordLength]}
+					min={4}
+					max={100}
+					step={1}
+					onValueChange={(value) => setPasswordLength(value[0] ?? 16)}
+				/>
+			}
+			<p className="text-center">
+				<span className="text-sm text-muted-foreground">Password Length: </span>
+				<span className="text-lg font-semibold">{passwordLength}</span>
+			</p>
 			<br></br>
 			<div className="flex justify-end gap-2">
-				<Button variant="outline" onClick={() => setIsOpen(false)}>Cancel</Button>
-				<Button variant="default" onClick={generatePassword}>Generate</Button>
+				<Button variant="outline" onClick={() => setIsOpen(false)}>
+					Cancel
+				</Button>
+				<Button variant="default" onClick={generatePassword}>
+					Generate
+				</Button>
 			</div>
 		</>
 	);
-};
+}

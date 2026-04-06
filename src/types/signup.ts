@@ -17,15 +17,15 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
 export type CreateUserResult =
-    {
-        success: true,
-        message: string
-    } |
-    {
-        success: false,
-        uniqueError: boolean,
-        error: string
-    }
+	| {
+			success: true;
+			message: string;
+	  }
+	| {
+			success: false;
+			uniqueError: boolean;
+			error: string;
+	  };

@@ -17,17 +17,17 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import type { Result, PasswordDatabaseRecordType } from '@/types';
-import { openDb } from '@/backend/db/openDb';
+import type { Result, PasswordDatabaseRecordType } from "@/types";
+import { openDb } from "@/backend/db/openDb";
 
 type GetPasswordsResult = Result<PasswordDatabaseRecordType[]>;
 
 export async function getPasswords(
 	userId: number,
 	query: string,
-	currentPage: number
+	currentPage: number,
 ): Promise<GetPasswordsResult> {
 	const ITEMS_PER_PAGE = 10;
 	const offset = (currentPage - 1) * ITEMS_PER_PAGE;
@@ -36,7 +36,7 @@ export async function getPasswords(
 
 	try {
 		const passwordList = (await db.all(
-            `
+			`
 			SELECT
 			*
 			FROM passwords
@@ -55,13 +55,16 @@ export async function getPasswords(
 			`%${query}%`,
 			`%${query}%`,
 			ITEMS_PER_PAGE,
-			offset
-        	)) as PasswordDatabaseRecordType[];
+			offset,
+		)) as PasswordDatabaseRecordType[];
 
 		return { success: true, data: passwordList };
 	} catch (err: unknown) {
 		console.log(err);
-		return { success: false, error: "An error occurred when reading passwords" };
+		return {
+			success: false,
+			error: "An error occurred when reading passwords",
+		};
 	} finally {
 		try {
 			await db.close();
@@ -69,4 +72,4 @@ export async function getPasswords(
 			console.error("Failed to close DB: ", closeErr);
 		}
 	}
-};
+}

@@ -17,28 +17,29 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-'use client';
+"use client";
 
-import DeleteDialog from '@/components/DeleteDialog';
-import { useDeletePassword } from '@/hooks/useDeletePassword';
+import DeleteDialog from "@/components/DeleteDialog";
+import { useDeletePassword } from "@/hooks/useDeletePassword";
 
 export default function DeletePasswordDialog({
 	uuid,
-	websiteName
-} : {
-	uuid: string,
-	websiteName: string
+	websiteName,
+}: {
+	uuid: string;
+	websiteName: string;
 }) {
 	const { isDialogOpen, setIsDialogOpen, formAction, pending } = useDeletePassword(uuid);
 
 	return (
-		<DeleteDialog 
-			title="Are you absolutely sure you want to delete the password?"	
+		<DeleteDialog
+			title="Are you absolutely sure you want to delete the password?"
 			description={
 				<>
-					This will permanently delete the password for <b>{websiteName}</b>. This action cannot be undone.
+					This will permanently delete the password for <b>{websiteName}</b>. This action
+					cannot be undone.
 				</>
 			}
 			confirmText="Delete Password"
@@ -49,4 +50,4 @@ export default function DeletePasswordDialog({
 			setIsDialogOpen={setIsDialogOpen}
 		/>
 	);
-};
+}

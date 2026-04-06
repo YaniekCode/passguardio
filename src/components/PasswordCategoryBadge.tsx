@@ -17,9 +17,9 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
-*/
+ */
 
-import { Badge } from '@/components/ui/badge';
+import { Badge } from "@/components/ui/badge";
 
 import type { PasswordCategoryType } from "@/types";
 
@@ -30,7 +30,7 @@ export default function PasswordCategoryBadge({ category }: { category: Password
 		finance: "text-emerald-600",
 		entertainment: "text-fuchsia-500",
 		shopping: "text-orange-500",
-		other: "text-gray-300"
+		other: "text-gray-300",
 	} as const;
 	return (
 		<>
@@ -39,4 +39,4 @@ export default function PasswordCategoryBadge({ category }: { category: Password
 			</Badge>
 		</>
 	);
-};
+}
