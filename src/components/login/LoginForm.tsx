@@ -23,6 +23,7 @@
 
 import { useActionState } from "react";
 import { startTransition } from "react";
+import Link from "next/link";
 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -79,9 +80,12 @@ export default function LoginForm() {
 				></Input>
 			</div>
 			{!state.success && state.error && <FormMessageBox message={state.error} />}
-			<Button className="w-full" disabled={isPending} aria-disabled={isPending}>
+			<Button className="w-full" type="submit" disabled={isPending} aria-disabled={isPending}>
 				Login
 			</Button>
+			<p className="text-muted-foreground text-center">
+				<Link href="/activate/">Activate your account</Link>
+			</p>
 		</form>
 	);
 }

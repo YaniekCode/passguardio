@@ -19,11 +19,17 @@
  * along with PassGuardio.  If not, see <https://www.gnu.org/licenses/>.
  */
 
+import type { Metadata } from "next";
 import { Shield } from "lucide-react";
 import Link from "next/link";
 
 import { Card, CardContent } from "@/components/ui/card";
 import ActivationTokenInputForm from "@/components/accountActivation/ActivationTokenInputForm";
+
+export const metadata: Metadata = {
+	title: "Activate Account",
+	description: "Activate your Passguardio account to start securely managing your passwords.",
+};
 
 export default function Page() {
 	return (
