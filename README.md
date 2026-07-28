@@ -1,8 +1,11 @@
+
 # 🔐 PassGuardio — Simple, Local & Fast Password Manager
 
-> Privacy-first password manager that keeps your data **100% local**
+[![GitHub Stars](https://img.shields.io/github/stars/YaniekCode/passguardio?style=for-the-badge&logo=github)](https://github.com/YaniekCode/passguardio/stargazers) [![Docker Pulls](https://img.shields.io/docker/pulls/yaniekcode/passguardio?style=for-the-badge&logo=docker)](https://hub.docker.com/r/yaniekcode/passguardio) [![Docker Image Size](https://img.shields.io/docker/image-size/yaniekcode/passguardio/latest?style=for-the-badge&logo=docker)](https://hub.docker.com/r/yaniekcode/passguardio) [![Docker Image Version](https://img.shields.io/docker/v/yaniekcode/passguardio?style=for-the-badge&logo=docker)](https://hub.docker.com/r/yaniekcode/passguardio)
 
-![License](https://img.shields.io/badge/license-GPLv3-blue?style=for-the-badge)
+> Privacy-first password manager that keeps your data **100% local**
+> 
+[![GitHub License](https://img.shields.io/github/license/YaniekCode/passguardio?style=for-the-badge)](LICENSE)
 ![Status](https://img.shields.io/badge/status-active-success?style=for-the-badge)
 ![Local First](https://img.shields.io/badge/data-local--only-informational?style=for-the-badge)
 
@@ -52,22 +55,27 @@ Everything runs locally — your data stays yours.
 ---
 
 ## 🛠 Tech Stack
+- **Framework:**
+![Next.js](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white)
 
-- **Frontend:**  
-  ![Next.js](https://img.shields.io/badge/Next.js-black?style=for-the-badge&logo=next.js&logoColor=white)
-  ![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-
-- **Backend:**  
-  ![Local-first](https://img.shields.io/badge/Architecture-Local--first-informational?style=for-the-badge)
-
-- **Storage:**  
-  ![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)
+- **UI:**  
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Shadcn/ui](https://img.shields.io/badge/shadcn/ui-%23000000.svg?style=for-the-badge&logo=shadcnui&logoColor=white)
 
 - **Language:**  
   ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 
-- **UI:**  
-  ![shadcn/ui](https://img.shields.io/badge/shadcn/ui-black?style=for-the-badge)
+- **Database:**  
+  ![SQLite](https://img.shields.io/badge/SQLite-07405E?style=for-the-badge&logo=sqlite&logoColor=white)
+
+- **Architecture:**  
+  ![Local-first](https://img.shields.io/badge/Local--first-informational?style=for-the-badge)
+
+- **Deployment:**
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+
+
+
 
 ---
 
